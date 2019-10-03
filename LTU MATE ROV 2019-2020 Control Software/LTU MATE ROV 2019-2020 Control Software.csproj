@@ -61,6 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InputControls\ControllerType.cs" />
+    <Compile Include="InputControls\IController.cs" />
+    <Compile Include="InputControls\IKeyboardListener.cs" />
+    <Compile Include="InputControls\JoystickController.cs" />
+    <Compile Include="InputControls\KeyboardController.cs" />
     <Compile Include="JoystickConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
