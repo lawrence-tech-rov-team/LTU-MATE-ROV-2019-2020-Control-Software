@@ -13,13 +13,15 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form, IKeyboardListener {
 
+		private ControllerType currentController = ControllerType.None;
+
 		public MainInterface() {
 			InitializeComponent();
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
 			RobotThread.Start();
-			RobotThread.SetControllerType(InputControls.ControllerType.Keyboard, this);
+			RobotThread.SetControllerType(currentController, this);
 			this.KeyPreview = true;
 
 			InputDataTimer.Start();
@@ -37,10 +39,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void KeyboardMenu_Click(object sender, EventArgs e) {
 			new KeyboardConfigForm().ShowDialog();
+			RobotThread.SetControllerType(currentController, this);
 		}
 
 		private void JoystickMenu_Click(object sender, EventArgs e) {
 			new JoystickConfigForm().ShowDialog();
+			RobotThread.SetControllerType(currentController, this);
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
@@ -52,11 +56,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private void ControllerTypeButton_CheckedChanged(object sender, EventArgs e) {
 			if (!(sender is RadioButton)) return;
 			if (((RadioButton)sender).Checked) {
-				ControllerType controls = ControllerType.None;
-				if (sender == KeyboardBtn) controls = ControllerType.Keyboard;
-				else if (sender == JoystickBtn) controls = ControllerType.Joystick;
+				currentController = ControllerType.None;
+				if (sender == KeyboardBtn) currentController = ControllerType.Keyboard;
+				else if (sender == JoystickBtn) currentController = ControllerType.Joystick;
 
-				RobotThread.SetControllerType(controls, this);
+				RobotThread.SetControllerType(currentController, this);
 			}
 		}
 	}

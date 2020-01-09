@@ -69,7 +69,6 @@
 			// KeyboardBtn
 			// 
 			this.KeyboardBtn.AutoSize = true;
-			this.KeyboardBtn.Checked = true;
 			this.KeyboardBtn.Location = new System.Drawing.Point(486, 31);
 			this.KeyboardBtn.Name = "KeyboardBtn";
 			this.KeyboardBtn.Size = new System.Drawing.Size(90, 21);
