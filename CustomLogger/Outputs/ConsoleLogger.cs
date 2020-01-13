@@ -6,6 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CustomLogger.Outputs {
+
+	/// <summary>
+	/// Writes the log to the console window.
+	/// </summary>
 	public class ConsoleLogger : TextWriterLogger {
 		public ConsoleLogger() : base(Console.Out) {
 		}

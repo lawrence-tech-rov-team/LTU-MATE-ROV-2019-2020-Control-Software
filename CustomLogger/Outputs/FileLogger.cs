@@ -6,12 +6,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CustomLogger.Outputs {
+	/// <summary>
+	/// Writes the log to a file.
+	/// </summary>
 	public class FileLogger : TextWriterLogger{
 
 		private FileLogger(TextWriter stream) : base(stream) {
 
 		}
 
+		/// <summary>
+		/// Attempts to save the log to the specified file. Returns null if the specified file could not be found.
+		/// </summary>
+		/// <param name="file"></param>
+		/// <returns></returns>
 		public static FileLogger LoadFile(string file) {
 			try {
 				string path = Path.GetFullPath(file);
