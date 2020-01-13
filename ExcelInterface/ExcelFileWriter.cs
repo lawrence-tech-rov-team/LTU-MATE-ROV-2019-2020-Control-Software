@@ -72,13 +72,13 @@ namespace ExcelInterface.Writer {
 			}
 		}
 
-		public void Close() {
+		public void Dispose() {
 			Close();
 			App = null; //We tried our best
 		}
 
 		~ExcelFileWriter() {
-			Close();
+			Dispose();
 		}
 
 	}

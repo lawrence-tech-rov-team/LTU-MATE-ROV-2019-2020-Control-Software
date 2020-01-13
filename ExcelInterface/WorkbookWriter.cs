@@ -70,13 +70,13 @@ namespace ExcelInterface.Writer {
 			}
 		}
 
-		public void Close() {
+		public void Dispose() {
 			Close();
 			workbook = null; //We tried our best.
 		}
 
 		~WorkbookWriter() {
-			Close();
+			Dispose();
 		}
 	}
 }
