@@ -27,12 +27,15 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.MenuStrip = new System.Windows.Forms.MenuStrip();
 			this.ControlsMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.KeyboardBtn = new System.Windows.Forms.RadioButton();
-			this.JoystickMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.KeyboardMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.JoystickMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.KeyboardBtn = new System.Windows.Forms.RadioButton();
 			this.PowerMeter = new Meters.LinearMeter();
 			this.InputDataTimer = new System.Windows.Forms.Timer(this.components);
 			this.JoystickBtn = new System.Windows.Forms.RadioButton();
+			this.developerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -49,7 +52,8 @@
 			// 
 			this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ControlsMenu});
+            this.ControlsMenu,
+            this.developerToolStripMenuItem});
 			this.MenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.MenuStrip.Name = "MenuStrip";
 			this.MenuStrip.Size = new System.Drawing.Size(938, 28);
@@ -66,6 +70,20 @@
 			this.ControlsMenu.Text = "Controls";
 			this.ControlsMenu.Click += new System.EventHandler(this.ControlsMenu_Click);
 			// 
+			// KeyboardMenu
+			// 
+			this.KeyboardMenu.Name = "KeyboardMenu";
+			this.KeyboardMenu.Size = new System.Drawing.Size(148, 26);
+			this.KeyboardMenu.Text = "Keyboard";
+			this.KeyboardMenu.Click += new System.EventHandler(this.KeyboardMenu_Click);
+			// 
+			// JoystickMenu
+			// 
+			this.JoystickMenu.Name = "JoystickMenu";
+			this.JoystickMenu.Size = new System.Drawing.Size(148, 26);
+			this.JoystickMenu.Text = "Joystick";
+			this.JoystickMenu.Click += new System.EventHandler(this.JoystickMenu_Click);
+			// 
 			// KeyboardBtn
 			// 
 			this.KeyboardBtn.AutoSize = true;
@@ -76,20 +94,6 @@
 			this.KeyboardBtn.Text = "Keyboard";
 			this.KeyboardBtn.UseVisualStyleBackColor = true;
 			this.KeyboardBtn.CheckedChanged += new System.EventHandler(this.ControllerTypeButton_CheckedChanged);
-			// 
-			// JoystickMenu
-			// 
-			this.JoystickMenu.Name = "JoystickMenu";
-			this.JoystickMenu.Size = new System.Drawing.Size(216, 26);
-			this.JoystickMenu.Text = "Joystick";
-			this.JoystickMenu.Click += new System.EventHandler(this.JoystickMenu_Click);
-			// 
-			// KeyboardMenu
-			// 
-			this.KeyboardMenu.Name = "KeyboardMenu";
-			this.KeyboardMenu.Size = new System.Drawing.Size(216, 26);
-			this.KeyboardMenu.Text = "Keyboard";
-			this.KeyboardMenu.Click += new System.EventHandler(this.KeyboardMenu_Click);
 			// 
 			// PowerMeter
 			// 
@@ -139,6 +143,29 @@
 			this.JoystickBtn.UseVisualStyleBackColor = true;
 			this.JoystickBtn.CheckedChanged += new System.EventHandler(this.ControllerTypeButton_CheckedChanged);
 			// 
+			// developerToolStripMenuItem
+			// 
+			this.developerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveExcelToolStripMenuItem,
+            this.saveCSVToolStripMenuItem});
+			this.developerToolStripMenuItem.Name = "developerToolStripMenuItem";
+			this.developerToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
+			this.developerToolStripMenuItem.Text = "Developer";
+			// 
+			// saveExcelToolStripMenuItem
+			// 
+			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveExcelToolStripMenuItem.Text = "Save Excel";
+			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
+			// 
+			// saveCSVToolStripMenuItem
+			// 
+			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveCSVToolStripMenuItem.Text = "Save CSV";
+			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -173,6 +200,9 @@
 		private Meters.LinearMeter PowerMeter;
 		private System.Windows.Forms.Timer InputDataTimer;
 		private System.Windows.Forms.RadioButton JoystickBtn;
+		private System.Windows.Forms.ToolStripMenuItem developerToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveExcelToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveCSVToolStripMenuItem;
 	}
 }
 

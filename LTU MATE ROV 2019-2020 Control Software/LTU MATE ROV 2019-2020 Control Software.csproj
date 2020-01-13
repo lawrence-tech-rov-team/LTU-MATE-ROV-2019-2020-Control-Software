@@ -120,5 +120,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExcelInterface\ExcelInterface.csproj">
+      <Project>{F3DD8FF1-740F-4B1B-ACDF-2D342CA04EFD}</Project>
+      <Name>ExcelInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
