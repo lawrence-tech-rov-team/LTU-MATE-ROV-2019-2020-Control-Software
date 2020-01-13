@@ -81,6 +81,12 @@
     <Compile Include="KeyboardConfigForm.Designer.cs">
       <DependentUpon>KeyboardConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="LogWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogWindow.Designer.cs">
+      <DependentUpon>LogWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainInterface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="KeyboardConfigForm.resx">
       <DependentUpon>KeyboardConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogWindow.resx">
+      <DependentUpon>LogWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainInterface.resx">
       <DependentUpon>MainInterface.cs</DependentUpon>
@@ -125,6 +134,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CustomLogger\CustomLogger.csproj">
+      <Project>{07D968C5-B24F-4F5C-B62D-2FD9CF6459A0}</Project>
+      <Name>CustomLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExcelInterface\ExcelInterface.csproj">
       <Project>{F3DD8FF1-740F-4B1B-ACDF-2D342CA04EFD}</Project>
       <Name>ExcelInterface</Name>

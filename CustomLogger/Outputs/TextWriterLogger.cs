@@ -10,7 +10,7 @@ namespace CustomLogger.Outputs {
 	/// <summary>
 	/// An abstract class used to implement a TextWriter output as a logger output.
 	/// </summary>
-	public abstract class TextWriterLogger : LogOutput {
+	public abstract class TextWriterLogger : LogOutputBase {
 
 		/// <summary>
 		/// The stream that is used as the output.
@@ -55,7 +55,7 @@ namespace CustomLogger.Outputs {
 			this.Stream = stream;
 		}
 		
-		internal override void Dispose() {
+		public override void Close() {
 			if (Stream != null) {
 				Stream.Flush();
 				Stream.Dispose();
@@ -63,11 +63,7 @@ namespace CustomLogger.Outputs {
 			Stream = null;
 		}
 
-		internal override void Flush() {
-			if (Stream != null) Stream.Flush();
-		}
-
-		internal override void WriteText(string msg) {
+		public override void Log(string msg) {
 			if (Stream != null) Stream.WriteLine(msg);
 		}
 	}

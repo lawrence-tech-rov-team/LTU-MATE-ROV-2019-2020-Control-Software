@@ -14,8 +14,7 @@ namespace CustomLogger.Outputs {
 		public ConsoleLogger() : base(Console.Out) {
 		}
 
-		internal override void Dispose() {
-			Flush();
+		public override void Close() {
 			Stream = null;
 		}
 	}

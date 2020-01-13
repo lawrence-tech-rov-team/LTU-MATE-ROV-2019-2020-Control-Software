@@ -45,6 +45,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="LogOutput.cs" />
     <Compile Include="LogLevel.cs" />
+    <Compile Include="Outputs\LogOutputBase.cs" />
     <Compile Include="Outputs\ConsoleLogger.cs" />
     <Compile Include="Outputs\FileLogger.cs" />
     <Compile Include="Outputs\TextWriterLogger.cs" />

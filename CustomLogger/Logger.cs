@@ -18,6 +18,8 @@ namespace CustomLogger {
 	/// </summary>
 	public class Logger {
 
+		private static LogFormat DefaultFormat = new LogFormat();
+
 		private ConcurrentBag<LogOutput> outputs = new ConcurrentBag<LogOutput>();
 		private ConcurrentQueue<Tuple<LogLevel, string, string, int, ThreadPriority>> logQueue = new ConcurrentQueue<Tuple<LogLevel, string, string, int, ThreadPriority>>();
 		private Thread logThread;
@@ -36,11 +38,24 @@ namespace CustomLogger {
 			logThread.Start();
 		}
 
+		private void broadcast(Tuple<LogLevel, string, string, int, ThreadPriority> log) {
+			foreach (LogOutput output in outputs) {
+				if (log.Item1 <= output.LogLevel) {
+					try {
+						LogFormat format = output.LogFormat;
+						if (format == null) format = DefaultFormat;
+						string header = format.GetHeader(log.Item1, log.Item3, log.Item4, log.Item5);
+						output.Log(header + log.Item2);
+					} catch (Exception) { } //If your logger throws an error, you have some serious issues.
+				}
+			}
+		}
+
 		private void logLoop() {
 			Tuple<LogLevel, string, string, int, ThreadPriority> log;
 			while (isLogging) {
 				while(logQueue.TryDequeue(out log)) {
-					foreach (LogOutput output in outputs) output.Log(log.Item1, log.Item2, log.Item3, log.Item4, log.Item5);
+					broadcast(log);
 				}
 				/*if (shouldFlush) {
 					shouldFlush = false;
@@ -50,12 +65,11 @@ namespace CustomLogger {
 			
 			//Ensure log is empty
 			while(logQueue.TryDequeue(out log)) {
-				foreach (LogOutput output in outputs) output.Log(log.Item1, log.Item2, log.Item3, log.Item4, log.Item5);
+				broadcast(log);
 			}
 
 			foreach(LogOutput output in outputs) {
-				output.Flush();
-				output.Dispose();
+				output.Close();
 			}
 		}
 
