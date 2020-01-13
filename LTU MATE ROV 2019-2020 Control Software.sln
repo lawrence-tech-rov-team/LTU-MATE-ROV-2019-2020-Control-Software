@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LTU MATE ROV 2019-2020 Cont
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomLogger", "CustomLogger\CustomLogger.csproj", "{07D968C5-B24F-4F5C-B62D-2FD9CF6459A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JSON", "JSON\JSON.csproj", "{8242B155-3863-4727-B1C5-A6B6082E8D4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{07D968C5-B24F-4F5C-B62D-2FD9CF6459A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07D968C5-B24F-4F5C-B62D-2FD9CF6459A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07D968C5-B24F-4F5C-B62D-2FD9CF6459A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8242B155-3863-4727-B1C5-A6B6082E8D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8242B155-3863-4727-B1C5-A6B6082E8D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8242B155-3863-4727-B1C5-A6B6082E8D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8242B155-3863-4727-B1C5-A6B6082E8D4B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
