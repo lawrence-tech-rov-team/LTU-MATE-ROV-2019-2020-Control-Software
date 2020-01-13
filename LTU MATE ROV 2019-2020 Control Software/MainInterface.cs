@@ -1,10 +1,12 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
+using LTU_MATE_ROV_2019_2020_Control_Software.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,9 +18,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form, IKeyboardListener {
 
 		private ControllerType currentController = ControllerType.None;
+		private Random rnd = new Random();
+		private EthernetInterface ethernet = new EthernetInterface();
+		private Stopwatch timer = new Stopwatch();
+		private int speedCounter = 0;
+		private bool ledState = false;
+		//TODO ethernet interface usage should be moved to Robot thingy (on its own thread)
 
 		public MainInterface() {
 			InitializeComponent();
+			ethernet.OnPacketReceived += RunCommand;
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
@@ -33,6 +42,50 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			RobotThread.RequestStop();
 			//Stop other threads
 			RobotThread.Stop();
+			if (ethernet != null) {
+				ethernet.Disconnect();
+			}
+		}
+
+		private void RunCommand(UdpPacket packet) {
+			switch (packet.Command) {
+				case Command.Ping:
+					CmdPing(packet);
+					return;
+				case Command.Echo:
+					CmdEcho(packet);
+					return;
+				default: return;
+			}
+		}
+
+		private void CmdPing(UdpPacket packet) {
+			/*
+			if(recvData.Count >= 3) {
+				byte[] buffer = fillFromBuffer(3);
+				if ((buffer == null) || (buffer.Length != 3)) return;
+				if (buffer[0] != 0x00) return;
+				else foundStart = false;
+				byte checksum = (byte)((0xFF + buffer[0] + buffer[1]) & 0x7F);
+				if(checksum == buffer[2]) {
+					Console.WriteLine("Ping! {0}", buffer[1]);
+				}
+			}*/
+			if (packet.Data.Length == 1) {
+				Console.WriteLine("Ping! {0}", packet.Data[0]);
+			}
+		}
+
+		private void CmdEcho(UdpPacket packet) {
+			if (timer.IsRunning && (packet.Data.Length == 255)) {
+				speedCounter++;
+				if (speedCounter >= 8) {
+					timer.Stop();
+					Console.WriteLine("Average Time: {0} ms", timer.Elapsed.TotalMilliseconds);
+				}
+			} else {
+				Console.WriteLine("Ehco! {0}", Encoding.UTF8.GetString(packet.Data));
+			}
 		}
 
 		private void ControlsMenu_Click(object sender, EventArgs e) {
@@ -125,6 +178,42 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			} catch (Exception) {
 				MessageBox.Show("Error");
 			}
+		}
+
+		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {
+			if (ethernet.TryConnect()) {
+				MessageBox.Show("Connected!");
+			} else {
+				MessageBox.Show("Could not connect to device.");
+			}
+		}
+
+		private void disconnectToolStripMenuItem_Click(object sender, EventArgs e) {
+			ethernet.Disconnect();
+		}
+
+		private void pingToolStripMenuItem_Click(object sender, EventArgs e) {
+			byte num = (byte)(rnd.Next(0, 255) & 0xFF);
+			if (!ethernet.Send(Command.Ping, num)) {
+				MessageBox.Show("Error sending ping.");
+			}
+		}
+
+		private void speedTestToolStripMenuItem_Click(object sender, EventArgs e) {
+			timer.Stop();
+			speedCounter = 0;
+			byte[] data = new byte[255];
+			rnd.NextBytes(data);
+
+			timer.Restart();
+			for (int i = 0; i < 8; i++) {
+				ethernet.Send(Command.Echo, data);
+			}
+		}
+
+		private void toggleLedToolStripMenuItem_Click(object sender, EventArgs e) {
+			ledState = !ledState;
+			ethernet.Send(Command.Led, ledState ? (byte)1 : (byte)0);
 		}
 	}
 }

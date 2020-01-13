@@ -29,13 +29,19 @@
 			this.ControlsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.KeyboardMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.JoystickMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.developerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.KeyboardBtn = new System.Windows.Forms.RadioButton();
 			this.PowerMeter = new Meters.LinearMeter();
 			this.InputDataTimer = new System.Windows.Forms.Timer(this.components);
 			this.JoystickBtn = new System.Windows.Forms.RadioButton();
-			this.developerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ethernetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.pingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.speedTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toggleLedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -83,6 +89,30 @@
 			this.JoystickMenu.Size = new System.Drawing.Size(148, 26);
 			this.JoystickMenu.Text = "Joystick";
 			this.JoystickMenu.Click += new System.EventHandler(this.JoystickMenu_Click);
+			// 
+			// developerToolStripMenuItem
+			// 
+			this.developerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveExcelToolStripMenuItem,
+            this.saveCSVToolStripMenuItem,
+            this.ethernetToolStripMenuItem});
+			this.developerToolStripMenuItem.Name = "developerToolStripMenuItem";
+			this.developerToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
+			this.developerToolStripMenuItem.Text = "Developer";
+			// 
+			// saveExcelToolStripMenuItem
+			// 
+			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveExcelToolStripMenuItem.Text = "Save Excel";
+			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
+			// 
+			// saveCSVToolStripMenuItem
+			// 
+			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveCSVToolStripMenuItem.Text = "Save CSV";
+			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
 			// 
 			// KeyboardBtn
 			// 
@@ -143,28 +173,52 @@
 			this.JoystickBtn.UseVisualStyleBackColor = true;
 			this.JoystickBtn.CheckedChanged += new System.EventHandler(this.ControllerTypeButton_CheckedChanged);
 			// 
-			// developerToolStripMenuItem
+			// ethernetToolStripMenuItem
 			// 
-			this.developerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveExcelToolStripMenuItem,
-            this.saveCSVToolStripMenuItem});
-			this.developerToolStripMenuItem.Name = "developerToolStripMenuItem";
-			this.developerToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
-			this.developerToolStripMenuItem.Text = "Developer";
+			this.ethernetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToolStripMenuItem,
+            this.disconnectToolStripMenuItem,
+            this.pingToolStripMenuItem,
+            this.speedTestToolStripMenuItem,
+            this.toggleLedToolStripMenuItem});
+			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
-			// saveExcelToolStripMenuItem
+			// connectToolStripMenuItem
 			// 
-			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
-			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.saveExcelToolStripMenuItem.Text = "Save Excel";
-			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
+			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+			this.connectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.connectToolStripMenuItem.Text = "Connect";
+			this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
 			// 
-			// saveCSVToolStripMenuItem
+			// disconnectToolStripMenuItem
 			// 
-			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.saveCSVToolStripMenuItem.Text = "Save CSV";
-			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
+			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
+			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.disconnectToolStripMenuItem.Text = "Disconnect";
+			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+			// 
+			// pingToolStripMenuItem
+			// 
+			this.pingToolStripMenuItem.Name = "pingToolStripMenuItem";
+			this.pingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.pingToolStripMenuItem.Text = "Ping";
+			this.pingToolStripMenuItem.Click += new System.EventHandler(this.pingToolStripMenuItem_Click);
+			// 
+			// speedTestToolStripMenuItem
+			// 
+			this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
+			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.speedTestToolStripMenuItem.Text = "Speed Test";
+			this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
+			// 
+			// toggleLedToolStripMenuItem
+			// 
+			this.toggleLedToolStripMenuItem.Name = "toggleLedToolStripMenuItem";
+			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
+			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
 			// 
 			// MainInterface
 			// 
@@ -203,6 +257,12 @@
 		private System.Windows.Forms.ToolStripMenuItem developerToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveExcelToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveCSVToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem ethernetToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem pingToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem speedTestToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toggleLedToolStripMenuItem;
 	}
 }
 
