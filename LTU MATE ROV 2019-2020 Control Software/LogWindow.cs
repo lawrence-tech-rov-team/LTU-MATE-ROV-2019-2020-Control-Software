@@ -14,27 +14,34 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class LogWindow : Form, LogOutput {
 
-		private ConcurrentDictionary<LogLevel, bool> levels = new ConcurrentDictionary<LogLevel, bool>();
+		public LogLevel LogLevel { get; private set; } = LogLevel.Info;
+		public LogFormat LogFormat { get; } = new LogFormat();
 
 		public LogWindow() {
 			InitializeComponent();
 		}
 
+		public void Log(string msg) {
+			if(LogTextBox.Text.Length + msg.Length > 4000) {
+				LogTextBox.Text = LogTextBox.Text.Substring(2000);
+			}
+
+			LogTextBox.AppendText(msg);
+			LogTextBox.AppendText(Environment.NewLine);
+		}
+
 		private void LogWindow_Load(object sender, EventArgs e) {
 			int y = 21;
 			foreach(LogLevel level in EnumUtil.GetValues<LogLevel>()) {
-				levels[level] = false;
 				if (level == LogLevel.None) continue;
-				CheckBox box = new CheckBox();
+				RadioButton box = new RadioButton();
 				box.Parent = LogLevelsGroup;
 				box.Location = new Point(6, y);
 				box.Text = level.ToString();
-				bool chcked = (level < LogLevel.Info);
-				box.Checked = chcked;
-				levels[level] = chcked;
+				box.Checked = (level == LogLevel);
 				box.CheckedChanged += 
 					(object checkSender, EventArgs checkArgs) => {
-						levels[level] = box.Checked;
+						if (box.Checked) LogLevel = level;
 					};
 
 				y += 27;

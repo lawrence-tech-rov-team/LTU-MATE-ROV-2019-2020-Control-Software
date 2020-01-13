@@ -32,9 +32,11 @@
 			this.LogTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.LogTextBox.BackColor = System.Drawing.SystemColors.HighlightText;
 			this.LogTextBox.Location = new System.Drawing.Point(12, 12);
 			this.LogTextBox.Multiline = true;
 			this.LogTextBox.Name = "LogTextBox";
+			this.LogTextBox.ReadOnly = true;
 			this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.LogTextBox.Size = new System.Drawing.Size(582, 387);
 			this.LogTextBox.TabIndex = 0;

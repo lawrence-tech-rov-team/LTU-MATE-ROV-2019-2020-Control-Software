@@ -24,6 +24,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private int speedCounter = 0;
 		private bool ledState = false;
 		//TODO ethernet interface usage should be moved to Robot thingy (on its own thread)
+		private LogWindow LogWindow = new LogWindow();
 
 		public MainInterface() {
 			InitializeComponent();
@@ -214,6 +215,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private void toggleLedToolStripMenuItem_Click(object sender, EventArgs e) {
 			ledState = !ledState;
 			ethernet.Send(Command.Led, ledState ? (byte)1 : (byte)0);
+		}
+
+		private void logToolStripMenuItem_Click(object sender, EventArgs e) {
+			LogWindow.Show();
 		}
 	}
 }
