@@ -38,11 +38,14 @@
 			this.pingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.speedTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toggleLedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.KeyboardBtn = new System.Windows.Forms.RadioButton();
 			this.PowerMeter = new Meters.LinearMeter();
 			this.InputDataTimer = new System.Windows.Forms.Timer(this.components);
 			this.JoystickBtn = new System.Windows.Forms.RadioButton();
-			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -105,14 +108,14 @@
 			// saveExcelToolStripMenuItem
 			// 
 			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
-			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveExcelToolStripMenuItem.Text = "Save Excel";
 			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
 			// 
 			// saveCSVToolStripMenuItem
 			// 
 			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveCSVToolStripMenuItem.Text = "Save CSV";
 			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
 			// 
@@ -125,7 +128,7 @@
             this.speedTestToolStripMenuItem,
             this.toggleLedToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
-			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
 			// connectToolStripMenuItem
@@ -162,6 +165,13 @@
 			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
 			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
 			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
+			// 
+			// logToolStripMenuItem
+			// 
+			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.logToolStripMenuItem.Text = "Log";
+			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
 			// KeyboardBtn
 			// 
@@ -222,18 +232,44 @@
 			this.JoystickBtn.UseVisualStyleBackColor = true;
 			this.JoystickBtn.CheckedChanged += new System.EventHandler(this.ControllerTypeButton_CheckedChanged);
 			// 
-			// logToolStripMenuItem
+			// button1
 			// 
-			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.logToolStripMenuItem.Text = "Log";
-			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
+			this.button1.Location = new System.Drawing.Point(851, 84);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 6;
+			this.button1.Text = "Warn";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(851, 113);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 7;
+			this.button2.Text = "Info";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(851, 142);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 8;
+			this.button3.Text = "Debug";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 450);
+			this.Controls.Add(this.button3);
+			this.Controls.Add(this.button2);
+			this.Controls.Add(this.button1);
 			this.Controls.Add(this.JoystickBtn);
 			this.Controls.Add(this.PowerMeter);
 			this.Controls.Add(this.KeyboardBtn);
@@ -273,6 +309,9 @@
 		private System.Windows.Forms.ToolStripMenuItem speedTestToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toggleLedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button3;
 	}
 }
 

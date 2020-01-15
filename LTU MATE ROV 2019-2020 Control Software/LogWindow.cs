@@ -22,12 +22,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		public void Log(string msg) {
-			if(LogTextBox.Text.Length + msg.Length > 4000) {
-				LogTextBox.Text = LogTextBox.Text.Substring(2000);
-			}
+			LogTextBox.Invoke(new Action(() => {
+				if (LogTextBox.Text.Length + msg.Length > 4000) {
+					LogTextBox.Text = LogTextBox.Text.Substring(2000);
+				}
 
-			LogTextBox.AppendText(msg);
-			LogTextBox.AppendText(Environment.NewLine);
+				LogTextBox.AppendText(msg);
+				LogTextBox.AppendText(Environment.NewLine);
+			}));
 		}
 
 		private void LogWindow_Load(object sender, EventArgs e) {
@@ -47,5 +49,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				y += 27;
 			}
 		}
+
 	}
 }

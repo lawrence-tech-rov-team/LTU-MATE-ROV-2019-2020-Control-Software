@@ -90,7 +90,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				if(swap != null) {
 					if (controller != null) controller.Disconnect();
 					controller = ((ControllerType)swap).GetNewController();
-					if (!controller.Connect()) {
+					if (!controller.Connect()) { //TODO crashes if doesn't exist
 						Console.WriteLine("Failed to connect to control device!");
 						controller = null;
 					}else if(controller is KeyboardController) {

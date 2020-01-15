@@ -64,6 +64,7 @@
     <Compile Include="Ethernet\Command.cs" />
     <Compile Include="Ethernet\EthernetInterface.cs" />
     <Compile Include="Ethernet\UdpPacket.cs" />
+    <Compile Include="ILogging.cs" />
     <Compile Include="InputControls\ControllerType.cs" />
     <Compile Include="InputControls\IController.cs" />
     <Compile Include="InputControls\IKeyboardListener.cs" />

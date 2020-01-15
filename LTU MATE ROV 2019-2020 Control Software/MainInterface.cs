@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
-	public partial class MainInterface : Form, IKeyboardListener {
+	public partial class MainInterface : Form, IKeyboardListener, ILogging {
 
 		private ControllerType currentController = ControllerType.None;
 		private Random rnd = new Random();
@@ -32,17 +32,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
-			RobotThread.Start();
-			RobotThread.SetControllerType(currentController, this);
+			//RobotThread.Start();
+			//RobotThread.SetControllerType(currentController, this);
+			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
 
-			InputDataTimer.Start();
+			//InputDataTimer.Start();
 		}
 
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
-			RobotThread.RequestStop();
+			//RobotThread.RequestStop();
 			//Stop other threads
-			RobotThread.Stop();
+			//RobotThread.Stop();
 			if (ethernet != null) {
 				ethernet.Disconnect();
 			}
@@ -73,7 +74,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				}
 			}*/
 			if (packet.Data.Length == 1) {
-				Console.WriteLine("Ping! {0}", packet.Data[0]);
+				Console.WriteLine("Ping! {0} Latency: {1} ms", packet.Data[0], timer.Elapsed.TotalMilliseconds);
 			}
 		}
 
@@ -82,7 +83,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				speedCounter++;
 				if (speedCounter >= 8) {
 					timer.Stop();
-					Console.WriteLine("Average Time: {0} ms", timer.Elapsed.TotalMilliseconds);
+					Console.WriteLine("Average Time: {0} ms or {1} bit/s", timer.Elapsed.TotalMilliseconds, (255 * 8 * 8) / timer.Elapsed.TotalSeconds);
 				}
 			} else {
 				Console.WriteLine("Ehco! {0}", Encoding.UTF8.GetString(packet.Data));
@@ -195,6 +196,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void pingToolStripMenuItem_Click(object sender, EventArgs e) {
 			byte num = (byte)(rnd.Next(0, 255) & 0xFF);
+			timer.Restart();
 			if (!ethernet.Send(Command.Ping, num)) {
 				MessageBox.Show("Error sending ping.");
 			}
@@ -219,6 +221,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void logToolStripMenuItem_Click(object sender, EventArgs e) {
 			LogWindow.Show();
+		}
+
+		private void button1_Click(object sender, EventArgs e) {
+			this.Log(CustomLogger.LogLevel.Warn, "I\'m warning you!");
+		}
+
+		private void button2_Click(object sender, EventArgs e) {
+			this.Log(CustomLogger.LogLevel.Info, "I am not the info desk.");
+		}
+
+		private void button3_Click(object sender, EventArgs e) {
+			this.Log(CustomLogger.LogLevel.Debug, "Bugs everywhere!");
 		}
 	}
 }
