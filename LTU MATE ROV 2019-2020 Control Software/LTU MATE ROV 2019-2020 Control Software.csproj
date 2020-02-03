@@ -65,6 +65,7 @@
     <Compile Include="Hardware\Ethernet\Command.cs" />
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
+    <Compile Include="Hardware\IActuator.cs" />
     <Compile Include="Hardware\IUpdatable.cs" />
     <Compile Include="Hardware\Sensors\DataTypes\BoolData.cs" />
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Hardware\Robot.cs" />
     <Compile Include="RobotThread.cs" />
     <Compile Include="ROV.cs" />
+    <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <EmbeddedResource Include="JoystickConfigForm.resx">
@@ -155,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
+    <Folder Include="Hardware\Actuators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Meters.dll">

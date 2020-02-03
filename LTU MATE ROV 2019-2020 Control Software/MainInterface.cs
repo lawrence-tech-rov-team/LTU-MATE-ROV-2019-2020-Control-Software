@@ -3,6 +3,7 @@ using JoystickInput;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -130,6 +131,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 				RobotThread.SetControllerType(currentController, this);
 			}
+			ByteArray array = new ByteArray();
+			array++;
 		}
 
 		private void saveExcelToolStripMenuItem_Click(object sender, EventArgs e) {

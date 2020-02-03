@@ -24,7 +24,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// The refresh rate of the sensor in hertz.
 		/// See <see cref="IUpdatable.RefreshRate"/>
 		/// </summary>
-		public float RefreshRate { get; set; }
+		public float RefreshRate { get; private set; }
 
 		/// <summary>
 		/// Indicates if the sensor requires an update. Always set to true

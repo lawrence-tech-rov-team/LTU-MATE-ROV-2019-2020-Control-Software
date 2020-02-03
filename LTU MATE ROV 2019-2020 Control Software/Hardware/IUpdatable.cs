@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
-	public interface IUpdatable {
+	public interface IUpdatable { //TODO rename to IDevice?
 
 		/// <summary>
 		/// The unique Id of the device.
