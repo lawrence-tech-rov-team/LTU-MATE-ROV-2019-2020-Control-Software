@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Ethernet {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 	public class UdpPacket {
 		public static readonly byte START_BYTE = 0xFF;
 		public static readonly byte CHECKSUM_MASK = 0xFF;
@@ -41,6 +41,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Ethernet {
 			Checksum = (byte)(START_BYTE + command);
 			foreach (byte b in Data) Checksum += b;
 			Checksum &= CHECKSUM_MASK;
+		}
+
+		public byte this[int i] {
+			get { return Data[i]; }
+			//set { InnerList[i] = value; }
 		}
 
 		public static UdpPacket ParseData(byte[] data) {

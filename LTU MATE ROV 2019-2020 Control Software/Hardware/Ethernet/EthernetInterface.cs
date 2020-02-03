@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Ethernet {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 	public class EthernetInterface {
 
 		public int DestinationPort { get; } = 6001;
@@ -135,7 +135,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Ethernet {
 		}
 
 		public bool Send(UdpPacket packet) {
-			try {
+			try { //TODO an option in logger to log all bytes sent and received.
 				byte[] data = packet.AllBytes;
 				client.Send(data, data.Length, TargetIp, DestinationPort);
 				return true;
@@ -166,7 +166,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Ethernet {
 				byte[] data = client.EndReceive(res, ref ip);
 				UdpPacket packet = UdpPacket.ParseData(data);
 				if (packet != null) OnPacketReceived?.Invoke(packet); //TODO don't catch exception for called function.
-				else Console.Out.WriteLine("Bad packet received.");
+				else Console.Out.WriteLine("Bad packet received."); //TODO logger
 				client.BeginReceive(new AsyncCallback(OnDataReceived), null);
 			} catch (Exception e) {
 				Disconnect();

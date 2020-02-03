@@ -1,6 +1,7 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
-using LTU_MATE_ROV_2019_2020_Control_Software.Ethernet;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private ControllerType currentController = ControllerType.None;
 		private Random rnd = new Random();
-		private EthernetInterface ethernet = new EthernetInterface();
+		private EthernetInterface ethernet;// = new EthernetInterface();
 		private Stopwatch timer = new Stopwatch();
 		private int speedCounter = 0;
 		private bool ledState = false;
 		//TODO ethernet interface usage should be moved to Robot thingy (on its own thread)
 		private LogWindow LogWindow = new LogWindow();
 
+		private ROV rov;
+
 		public MainInterface() {
 			InitializeComponent();
-			ethernet.OnPacketReceived += RunCommand;
+			//ethernet.OnPacketReceived += RunCommand;
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
@@ -36,8 +39,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
+			rov = new ROV(System.Threading.ThreadPriority.Normal);
+			while (rov.ether == null) {
+			}
+			ethernet = rov.ether;
 
-			//InputDataTimer.Start();
+			InputDataTimer.Start();
 		}
 
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
@@ -105,9 +112,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
-			InputControlData data = RobotThread.GetInputData();
-			if (data == null) data = new InputControlData(); 
-			PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
+			BoolData dataa = rov.TestButton.Data;
+			if (dataa == null) TestBtnMeter.Value = false;
+			else TestBtnMeter.Value = dataa.Value;
+
+			//InputControlData data = RobotThread.GetInputData();
+			//if (data == null) data = new InputControlData(); 
+			//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
 		}
 
 		private void ControllerTypeButton_CheckedChanged(object sender, EventArgs e) {

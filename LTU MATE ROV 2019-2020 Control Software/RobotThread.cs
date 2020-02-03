@@ -32,7 +32,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		public static bool Start() {
 			if (thread != null) return true;
 			runThread = true;
-			thread = ThreadHelper.StartNewThread("Robot", false, Loop);
+			//thread = ThreadHelper.StartNewThread("Robot", false, Loop);
 			return thread != null;
 		}
 
