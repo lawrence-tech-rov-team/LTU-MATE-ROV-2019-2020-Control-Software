@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -144,6 +145,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 				Console.Error.WriteLine(ex.StackTrace);
 				return false;
 			}
+		}
+
+		public bool Send(Command command, ByteArray data) {
+			return Send(new UdpPacket(command, data));
 		}
 
 		public bool Send(Command command, params byte[] data) {

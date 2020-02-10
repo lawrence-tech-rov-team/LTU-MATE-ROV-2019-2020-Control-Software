@@ -62,12 +62,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlSystem.cs" />
+    <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Hardware\Ethernet\Command.cs" />
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
     <Compile Include="Hardware\IActuator.cs" />
+    <Compile Include="Hardware\IDevice.cs" />
+    <Compile Include="Hardware\IRegister.cs" />
     <Compile Include="Hardware\IUpdatable.cs" />
     <Compile Include="Hardware\Sensors\DataTypes\BoolData.cs" />
+    <Compile Include="Hardware\Sensors\DataTypes\FloatData.cs" />
+    <Compile Include="Hardware\Sensors\DataTypes\IDataType.cs" />
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
     <Compile Include="Hardware\Sensors\IMU.cs" />
     <Compile Include="Hardware\ISensor.cs" />
@@ -157,7 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="Hardware\Actuators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Meters.dll">

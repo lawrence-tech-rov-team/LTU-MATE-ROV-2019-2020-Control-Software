@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 	public abstract class Robot {
-
+		//TODO detect congestion. Something along the lines of if 3 messages in a row don't get a quick enough response. Maybe instead of disconnecting when a timeout is found, just inform the user of congestion.
 		/// <summary>
 		/// The maximum number of devices that can be attached.
 		/// </summary>
@@ -70,7 +70,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 
 		private void SendUpdateRequest(int id) {
 			//Get the required bytes to send an update
-			byte[] updateBytes = devices[id].RequestUpdate;
+			byte[] updateBytes = devices[id].SendUpdate;
 			byte[] bytes = new byte[updateBytes.Length + 1];
 			bytes[0] = (byte)id;
 			updateBytes.CopyTo(bytes, 1);
@@ -134,23 +134,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			ether.Disconnect();
 		}
 
-		private void PingReceived(UdpPacket packet) {
+		private void PingReceived(ByteArray packet) {
 			//TODO ping
 			Console.WriteLine("Ping Received: {0}", packet[0]);
 		}
 
-		private void EchoReceived(UdpPacket packet) {
+		private void EchoReceived(ByteArray packet) {
 			//TODO echo
-			Console.WriteLine("Echo Received: Length = {0}", packet.Data.Length);
+			Console.WriteLine("Echo Received: Length = {0}", packet.Length);
 		}
 
-		private void UpdateDeviceReceived(UdpPacket packet) {
-			if (packet.Data.Length >= 1) {
-				int id = packet.Data[0];
+		private void UpdateDeviceReceived(ByteArray packet) {
+			if (packet.Length >= 1) {
+				int id = packet[0];
 				if (devices[id] != null) {
-					byte[] data = new byte[packet.Data.Length - 1];
-					Array.Copy(packet.Data, 1, data, 0, data.Length);
-					if (devices[id].Update(data)) {
+					if (devices[id].Update(packet++)) {
 						int size = updateSize[id];
 						updateAttempts[id] = 0;
 						lock (this) { //TODO take a good look at atomicity
@@ -162,16 +160,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 		//NOTE: OnReceived may be invoked on a secondary thread.
-		private void Ether_OnPacketReceived(UdpPacket packet) {
+		private void Ether_OnPacketReceived(UdpPacket packet) { 
 			switch (packet.Command) {
 				case Command.Ping:
-					PingReceived(packet);
+					PingReceived(packet.Data);
 					break;
 				case Command.Echo:
-					EchoReceived(packet);
+					EchoReceived(packet.Data);
 					break;
 				case Command.UpdateDevice:
-					UpdateDeviceReceived(packet);
+					UpdateDeviceReceived(packet.Data);
 					break;
 				default:
 					//TODO other commands

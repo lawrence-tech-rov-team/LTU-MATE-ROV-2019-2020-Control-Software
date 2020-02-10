@@ -1,4 +1,5 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// The data to be sent to update the sensor.
 		/// By default, just send the type of sensor as a check.
 		/// </summary>
-		public virtual byte[] RequestUpdate => new byte[] { (byte)Type };
+		public virtual byte[] SendUpdate => new byte[] { (byte)Type };
 
 		private volatile T data;
 		public T Data { get => data; }
@@ -52,11 +53,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns></returns>
-		protected abstract T ParseData(byte[] data);
+		protected abstract T ParseData(ByteArray data);
 
-		public bool Update(byte[] data) {
-			if (data[0] == (byte)Type) {
-				T parsed = ParseData(data);
+		public bool Update(ByteArray data) {
+			if ((data.Length > 0) && (data[0] == (byte)Type)) {
+				T parsed = ParseData(data++);
 				if (parsed == null) return false;
 				else {
 					this.data = parsed;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		//public byte StartByte;
 		public Command Command;
 		//public byte Length;
-		public byte[] Data;
+		public ByteArray Data;
 		public byte Checksum;
 
 		public byte[] AllBytes {
@@ -21,7 +22,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 				byte[] bytes = new byte[Data.Length + 3];
 				bytes[0] = START_BYTE;
 				bytes[1] = (byte)Command;
-				Array.Copy(Data, 0, bytes, 2, Data.Length);
+				Data.CopyTo(bytes, 2);
 				bytes[bytes.Length - 1] = Checksum;
 				return bytes;
 			}
@@ -30,17 +31,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		private UdpPacket() {
 		}
 
-		public UdpPacket(Command command, params byte[] data) {
+		public UdpPacket(Command command, ByteArray data) {
 			this.Command = command;
-			if (data == null) this.Data = new byte[0];
+			if (data == null) this.Data = new ByteArray();
 			else if (data.Length <= MAX_LENGTH) this.Data = data;
-			else {
-				this.Data = new byte[MAX_LENGTH];
-				Array.Copy(data, this.Data, MAX_LENGTH);
-			}
+			else this.Data = data.Resize(MAX_LENGTH);
 			Checksum = (byte)(START_BYTE + command);
 			foreach (byte b in Data) Checksum += b;
 			Checksum &= CHECKSUM_MASK;
+		}
+
+		public UdpPacket(Command command, params byte[] data) : this(command, new ByteArray(data)){
+			
 		}
 
 		public byte this[int i] {
@@ -71,8 +73,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 
 			if ((checksum & CHECKSUM_MASK) != data[data.Length - 1]) return null;
 
-			packet.Data = new byte[data.Length - 3];
-			Array.Copy(data, 2, packet.Data, 0, data.Length - 3);
+			packet.Data = new ByteArray(data, 2, data.Length - 3);
 
 			return packet;
 		}

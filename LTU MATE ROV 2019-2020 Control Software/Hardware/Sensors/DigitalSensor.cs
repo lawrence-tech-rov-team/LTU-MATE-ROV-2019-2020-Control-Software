@@ -1,4 +1,5 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
 			Inversed = inversed;
 		}
 
-		protected override BoolData ParseData(byte[] data) {
-			if(data.Length == 2) {
-				return new BoolData((data[1] > 0) ^ Inversed);
+		protected override BoolData ParseData(ByteArray data) {
+			if(data.Length == 1) {
+				return new BoolData((data[0] > 0) ^ Inversed);
 			} else {
 				return null;
 			}

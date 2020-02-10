@@ -6,36 +6,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//TODO Limit PWM values
-/*
-T-200:
-1180 - 1814 PMW input Value
-T-100:
-1140 - 1855 PWM input Value
-*/
-
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
-	public abstract class IActuator : IUpdatable {
-		
+	public abstract class IRegister : IUpdatable {
+
 		public byte Id { get; }
 
 		public float RefreshRate { get; }
 
-		protected IActuator(byte id, float refreshRate = 1f) {
+		protected IRegister(byte id, float refreshRate = 1f) {
 			Id = id;
 			RefreshRate = refreshRate;
 		}
 
 		public abstract bool Update(ByteArray data);
 		public abstract byte[] SendUpdate { get; }
+
 	}
 
-	public abstract class IActuator<T1> : IActuator where T1 : IDataType, new() {
+	public abstract class IRegister<T1> : IRegister where T1 : IDataType, new() {
 
 		protected volatile T1 Data1;
 
-		protected IActuator(byte id, float refreshRate = 1f) : base(id, refreshRate) {
-			
+		protected IRegister(byte id, float refreshRate = 1f) : base(id, refreshRate) {
+
 		}
 
 		public override bool Update(ByteArray data) {
@@ -55,12 +48,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 
 	}
 
-	public abstract class IActuator<T1, T2> : IActuator where T1 : IDataType, new() where T2 : IDataType, new() {
+	public abstract class IRegister<T1, T2> : IRegister where T1 : IDataType, new() where T2 : IDataType, new() {
 
 		protected volatile T1 Data1;
 		protected volatile T2 Data2;
 
-		protected IActuator(byte id, float refreshRate = 1f) : base(id, refreshRate) {
+		protected IRegister(byte id, float refreshRate = 1f) : base(id, refreshRate) {
 
 		}
 
@@ -80,7 +73,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 					bytes[0] |= 0x01;
 					bytes.AddRange(data1.Bytes);
 				}
-				if(data2 != null) {
+				if (data2 != null) {
 					bytes[0] |= 0x02;
 					bytes.AddRange(data2.Bytes);
 				}

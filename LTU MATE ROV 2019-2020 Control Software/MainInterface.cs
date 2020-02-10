@@ -94,7 +94,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 					Console.WriteLine("Average Time: {0} ms or {1} bit/s", timer.Elapsed.TotalMilliseconds, (255 * 8 * 8) / timer.Elapsed.TotalSeconds);
 				}
 			} else {
-				Console.WriteLine("Ehco! {0}", Encoding.UTF8.GetString(packet.Data));
+				Console.WriteLine("Ehco! {0}", Encoding.UTF8.GetString(packet.Data.ToArray()));
 			}
 		}
 
@@ -131,8 +131,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 				RobotThread.SetControllerType(currentController, this);
 			}
-			ByteArray array = new ByteArray();
-			array++;
 		}
 
 		private void saveExcelToolStripMenuItem_Click(object sender, EventArgs e) {
