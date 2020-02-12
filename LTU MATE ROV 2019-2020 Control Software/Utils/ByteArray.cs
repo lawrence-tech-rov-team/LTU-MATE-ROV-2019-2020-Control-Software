@@ -38,7 +38,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		public ByteArray(byte[] array) {
 			source = array;
 			index = 0;
-			Length = (array != null) ? array.Length : 0;
+			Length = array?.Length ?? 0;
 		}
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		/// <exception cref="NullReferenceException"></exception>
 		/// <exception cref="IndexOutOfRangeException"></exception>
 		public ByteArray Sub(int offset) {
-			return new ByteArray(source, index + offset, Length - 1);
+			return new ByteArray(source, index + offset, Length - offset);
 		}
 
 		/// <summary>
