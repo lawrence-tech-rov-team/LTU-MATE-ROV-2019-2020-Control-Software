@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 	public abstract class IWritableDevice<T1> : IDevice<T1> where T1 : IDataType, new() {
 
+		//TODO only send the value if it is different.
+
 		protected IWritableDevice(byte id, float refreshrate) : base(id, refreshrate) {
 		}
 
