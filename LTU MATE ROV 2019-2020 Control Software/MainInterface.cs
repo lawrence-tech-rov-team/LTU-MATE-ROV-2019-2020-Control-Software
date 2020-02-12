@@ -1,7 +1,7 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
@@ -113,9 +113,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
-			BoolData dataa = rov.TestButton.Data;
+			bool dataa = rov.TestButton.State;
 			if (dataa == null) TestBtnMeter.Value = false;
-			else TestBtnMeter.Value = dataa.Value;
+			else TestBtnMeter.Value = dataa;
 
 			//InputControlData data = RobotThread.GetInputData();
 			//if (data == null) data = new InputControlData(); 

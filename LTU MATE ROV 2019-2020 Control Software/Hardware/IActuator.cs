@@ -1,4 +1,4 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,78 +15,40 @@ T-100:
 */
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
-	public abstract class IActuator : IUpdatable {
-		
-		public byte Id { get; }
 
-		public float RefreshRate { get; }
-
-		protected IActuator(byte id, float refreshRate = 1f) {
-			Id = id;
-			RefreshRate = refreshRate;
-		}
-
-		public abstract bool Update(ByteArray data);
-		public abstract byte[] SendUpdate { get; }
-	}
-
-	public abstract class IActuator<T1> : IActuator where T1 : IDataType, new() {
-
-		protected volatile T1 Data1;
+	public abstract class IActuator<T1> : IWritableDevice<T1> where T1 : IDataType, new() {
 
 		protected IActuator(byte id, float refreshRate = 1f) : base(id, refreshRate) {
 			
 		}
 
-		public override bool Update(ByteArray data) {
-			return data.Length == 0;
-		}
-
 		public override byte[] SendUpdate {
 			get {
-				T1 data1 = Data1;
-				if(data1 != null) {
-					return data1.Bytes;
-				} else {
-					return null;
+				byte[] bytes = base.SendUpdate;
+				if (bytes == null) return null;
+				else {
+					//Add additional bytes here
+					return bytes;
 				}
 			}
 		}
 
 	}
 
-	public abstract class IActuator<T1, T2> : IActuator where T1 : IDataType, new() where T2 : IDataType, new() {
-
-		protected volatile T1 Data1;
-		protected volatile T2 Data2;
+	public abstract class IActuator<T1, T2> : IWritableDevice<T1, T2> where T1 : IDataType, new() where T2 : IDataType, new() {
 
 		protected IActuator(byte id, float refreshRate = 1f) : base(id, refreshRate) {
 
 		}
 
-		public override bool Update(ByteArray data) {
-			return data.Length == 0;
-		}
-
 		public override byte[] SendUpdate {
 			get {
-				T1 data1 = Data1;
-				T2 data2 = Data2;
-
-				List<byte> bytes = new List<byte>();
-				bytes.Add(0);
-
-				if (data1 != null) {
-					bytes[0] |= 0x01;
-					bytes.AddRange(data1.Bytes);
+				byte[] bytes = base.SendUpdate;
+				if (bytes == null) return null;
+				else {
+					//Add additional bytes here
+					return bytes;
 				}
-				if(data2 != null) {
-					bytes[0] |= 0x02;
-					bytes.AddRange(data2.Bytes);
-				}
-
-				if (bytes[0] == 0) return null; //There is nothing to update.
-				else return bytes.ToArray();
 			}
 		}
 

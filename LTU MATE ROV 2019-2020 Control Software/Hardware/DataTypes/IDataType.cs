@@ -5,12 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 	public abstract class IDataType {
-
-		public IDataType() {
-
-		}
 
 		public abstract int NumberOfBytes { get; }
 
@@ -18,5 +14,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes {
 
 		public abstract bool Parse(ByteArray bytes);
 
+		public IDataType() {
+
+		}
+
+		//protected abstract bool IsSameValue(IDataType obj1, IDataType obj2);
+
 	}
+
 }

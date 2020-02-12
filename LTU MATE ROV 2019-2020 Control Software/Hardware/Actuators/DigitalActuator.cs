@@ -1,4 +1,4 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors.DataTypes;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

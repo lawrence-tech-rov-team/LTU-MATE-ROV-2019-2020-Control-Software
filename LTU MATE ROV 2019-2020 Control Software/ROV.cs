@@ -15,7 +15,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		protected override int MessageTimemout => 500;
 
 		//public IMU IMU { get; } = new IMU(0);
-		public DigitalSensor TestButton { get; } = new DigitalSensor(0, false, 100);
+		public DigitalSensor TestButton { get; } = new DigitalSensor(0, 100);
 
 		public ROV(ThreadPriority priority) : base(priority) {
 			//RegisterDevice(IMU);
