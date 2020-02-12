@@ -270,7 +270,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 
 			public bool MoveNext() {
 				if(length-- > 0) {
-					Current = source[index++];
+					Current = source[++index];
 					return true;
 				} else {
 					return false;
