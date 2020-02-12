@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		public int DestinationPort { get; } = 6001;
 		public int ReceivePort { get; } = 6002;
 		public string TargetIp { get; set; } = "169.254.240.157"; //255.255.255.255
-		public bool Connected { get; private set; } = false;
+		private volatile bool connected = false;
+		public bool Connected { get => connected; private set => connected = value; }
 
 		private UdpClient client;
 		private Random random = new Random();
@@ -73,72 +75,81 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		}
 
 		public bool TryConnect() {
-			Disconnect();
+			lock (this) {
+				Disconnect();
 
-			try {
-				client = new UdpClient();
-				client.Client.Bind(new IPEndPoint(IPAddress.Any, ReceivePort));
-				bool success = AutoConnect();
-				//client.Connect(new IPEndPoint(IPAddress.Any, ReceivePort));
-				/*int origSend = client.Client.SendTimeout;
-				int origRecv = client.Client.ReceiveTimeout;
-				client.Client.SendTimeout = client.Client.ReceiveTimeout = 1000;
-				bool success = false;
 				try {
-					IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
-					byte[] pings = new byte[10];
-					random.NextBytes(pings);
-					int counts = 0;
-					for (int i = 0; i < 10; i++) {
-						Console.Out.WriteLine("Attempt #{0}...", i);
-						UdpPacket packet = new UdpPacket(Command.Ping, pings[i]);
-						byte[] data = packet.AllBytes;
-						client.Send(data, data.Length, TargetIp, DestinationPort);
-						try {
-							data = client.Receive(ref ip);
-						} catch (SocketException) { }
-						packet = UdpPacket.ParseData(data);
-						if((packet != null) && (packet.Command == Command.Ping) && (packet.Data != null) && (packet.Data.Length >= 1) && (packet.Data[0] == pings[0])) {
-							counts++;
-							if (counts >= 3) break;
+					client = new UdpClient();
+					client.Client.Bind(new IPEndPoint(IPAddress.Any, ReceivePort));
+					bool success = AutoConnect();
+					//client.Connect(new IPEndPoint(IPAddress.Any, ReceivePort));
+					/*int origSend = client.Client.SendTimeout;
+					int origRecv = client.Client.ReceiveTimeout;
+					client.Client.SendTimeout = client.Client.ReceiveTimeout = 1000;
+					bool success = false;
+					try {
+						IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
+						byte[] pings = new byte[10];
+						random.NextBytes(pings);
+						int counts = 0;
+						for (int i = 0; i < 10; i++) {
+							Console.Out.WriteLine("Attempt #{0}...", i);
+							UdpPacket packet = new UdpPacket(Command.Ping, pings[i]);
+							byte[] data = packet.AllBytes;
+							client.Send(data, data.Length, TargetIp, DestinationPort);
+							try {
+								data = client.Receive(ref ip);
+							} catch (SocketException) { }
+							packet = UdpPacket.ParseData(data);
+							if((packet != null) && (packet.Command == Command.Ping) && (packet.Data != null) && (packet.Data.Length >= 1) && (packet.Data[0] == pings[0])) {
+								counts++;
+								if (counts >= 3) break;
+							}
 						}
+						if (counts >= 3) success = true;
+					} catch (Exception ex2) {
+						Console.Error.WriteLine("Error trying to connect: {0}", ex2.Message);
+						Console.Error.WriteLine(ex2.StackTrace);
+						success = false;
 					}
-					if (counts >= 3) success = true;
-				} catch (Exception ex2) {
-					Console.Error.WriteLine("Error trying to connect: {0}", ex2.Message);
-					Console.Error.WriteLine(ex2.StackTrace);
-					success = false;
-				}
 
-				client.Client.SendTimeout = origSend;
-				client.Client.ReceiveTimeout = origRecv;*/
-				if (success) client.BeginReceive(new AsyncCallback(OnDataReceived), null);
-				return success;
-			} catch (Exception ex) {
-				try {
-					client.Close();
-				} catch (SocketException) {
-				}
+					client.Client.SendTimeout = origSend;
+					client.Client.ReceiveTimeout = origRecv;*/
+					if (success) {
+						client.BeginReceive(new AsyncCallback(OnDataReceived), null);
+						Connected = true;
+					}
+					return success;
+				} catch (Exception ex) {
+					Disconnect();
 
-				Console.Error.WriteLine("Could not connect to IP: {0}", ex.Message);
-				Console.Error.WriteLine(ex.StackTrace);
-				return false;
+					Console.Error.WriteLine("Could not connect to IP: {0}", ex.Message);
+					Console.Error.WriteLine(ex.StackTrace);
+					return false;
+				}
 			}
 		}
 
 		public void Disconnect() {
-			try {
-				if (client != null) client.Close();
-			} catch (SocketException e) {
-				//TODO exception thrown
+			lock (this) {
+				Connected = false;
+				try {
+					if (client != null) client.Close();
+				} catch (SocketException e) {
+					//TODO exception thrown
+				}
+				//TODO callback on close.
 			}
-			//TODO callback on close.
 		}
 
 		public bool Send(UdpPacket packet) {
 			try { //TODO an option in logger to log all bytes sent and received.
-				byte[] data = packet.AllBytes;
-				client.Send(data, data.Length, TargetIp, DestinationPort);
+				lock (this) {
+					if (Connected) {
+						byte[] data = packet.AllBytes;
+						client.Send(data, data.Length, TargetIp, DestinationPort);
+					}
+				}
 				return true;
 			} catch (Exception ex) {
 				Console.Error.WriteLine("Error sending packet: {0}", ex.Message);
@@ -167,15 +178,39 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 
 		private void OnDataReceived(IAsyncResult res) {
 			try {
-				IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
-				byte[] data = client.EndReceive(res, ref ip);
-				UdpPacket packet = UdpPacket.ParseData(data);
-				if (packet != null) OnPacketReceived?.Invoke(packet); //TODO don't catch exception for called function.
-				else Console.Out.WriteLine("Bad packet received."); //TODO logger
-				client.BeginReceive(new AsyncCallback(OnDataReceived), null);
+				lock (this) { //TODO only lock what is necessary. Don't lock the callback function
+					IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
+					byte[] data = client.EndReceive(res, ref ip);
+					UdpPacket packet = UdpPacket.ParseData(data);
+					if (packet != null) OnPacketReceived?.Invoke(packet); //TODO don't catch exception for called function.
+					else Console.Out.WriteLine("Bad packet received."); //TODO logger
+					client.BeginReceive(new AsyncCallback(OnDataReceived), null);
+				}
 			} catch (Exception e) {
 				Disconnect();
 			}
+		}
+
+		public long? PingHardware(int timeoutMs = 3000) {
+			long? time = null;
+			Ping pinger = null;
+
+			try {
+				pinger = new Ping();
+				PingReply reply = pinger.Send(TargetIp, timeoutMs);
+
+				if (reply.Status == IPStatus.Success) {
+					time = reply.RoundtripTime;
+				}
+			} catch (Exception) {
+				// Discard PingExceptions and return false;
+			} finally {
+				if (pinger != null) {
+					pinger.Dispose();
+				}
+			}
+
+			return time;
 		}
 	}
 }

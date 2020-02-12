@@ -246,5 +246,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private void button3_Click(object sender, EventArgs e) {
 			this.Log(CustomLogger.LogLevel.Debug, "Bugs everywhere!");
 		}
+
+		private void hardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
+			long? timeMs = ethernet.PingHardware(1000);
+			if(timeMs == null) {
+				MessageBox.Show("Ping failed.");
+			} else {
+				MessageBox.Show("Ping: " + (long)timeMs + " ms");
+			}
+		}
 	}
 }

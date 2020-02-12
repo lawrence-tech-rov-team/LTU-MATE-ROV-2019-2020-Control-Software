@@ -47,6 +47,7 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.TestBtnMeter = new Meters.IOMeter();
+			this.hardwarePingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -125,6 +126,7 @@
 			this.ethernetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectToolStripMenuItem,
             this.disconnectToolStripMenuItem,
+            this.hardwarePingToolStripMenuItem,
             this.pingToolStripMenuItem,
             this.speedTestToolStripMenuItem,
             this.toggleLedToolStripMenuItem});
@@ -277,6 +279,13 @@
 			this.TestBtnMeter.UseVisualStyleBackColor = true;
 			this.TestBtnMeter.Value = false;
 			// 
+			// hardwarePingToolStripMenuItem
+			// 
+			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
+			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
+			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -329,6 +338,7 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button3;
 		private Meters.IOMeter TestBtnMeter;
+		private System.Windows.Forms.ToolStripMenuItem hardwarePingToolStripMenuItem;
 	}
 }
 

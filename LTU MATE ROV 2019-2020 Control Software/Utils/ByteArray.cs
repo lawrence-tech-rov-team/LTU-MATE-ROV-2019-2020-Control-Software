@@ -176,13 +176,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			get {
 				if ((i < 0) || (i >= Length))
 					throw new IndexOutOfRangeException("Index is outside the bounds of the array.");
-				return source[i];
+				return source[index + i];
 			}
 
 			set {
 				if ((i < 0) || (i >= Length))
 					throw new IndexOutOfRangeException("Index is outside the bounds of the array.");
-				source[i] = value;
+				source[index + i] = value;
 			}
 		}
 
