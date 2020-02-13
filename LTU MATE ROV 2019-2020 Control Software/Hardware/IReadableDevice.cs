@@ -19,7 +19,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			T1 data1 = new T1();
 
 			if(data.Length == data1.NumberOfBytes) {
-				return data1.Parse(data);
+				if (data1.Parse(data)) {
+					Data1 = data1;
+					return true;
+				} else return false;
 			} else {
 				return false;
 			}
