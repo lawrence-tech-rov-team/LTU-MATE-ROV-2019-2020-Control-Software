@@ -21,7 +21,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			return base.Update(data);
 		}
 	}
-
+/*
 	public abstract class ISensor<T1, T2> : IReadableDevice<T1, T2>
 		where T1 : IDataType, new()
 		where T2 : IDataType, new()
@@ -49,5 +49,5 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			//Any code to check sensor type goes here.
 			return base.Update(data);
 		}
-	}
+	}*/
 }

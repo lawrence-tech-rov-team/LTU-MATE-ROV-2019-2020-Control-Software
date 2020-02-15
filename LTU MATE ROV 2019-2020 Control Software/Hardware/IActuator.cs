@@ -34,7 +34,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 	}
-
+/*
 	public abstract class IActuator<T1, T2> : IWritableDevice<T1, T2> where T1 : IDataType, new() where T2 : IDataType, new() {
 
 		protected IActuator(byte id, float refreshRate = 1f) : base(id, refreshRate) {
@@ -53,4 +53,5 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 	}
+	*/
 }

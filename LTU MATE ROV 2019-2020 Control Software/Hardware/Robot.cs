@@ -35,11 +35,32 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		private Thread thread;
 		private volatile int BytesSent = 0;
 
+		/// <summary>
+		/// Devices
+		/// </summary>
 		private IDevice[] devices = new IDevice[MaxNumDevices];
+
+		/// <summary>
+		/// Timer that activates at the refresh rate of the sensor
+		/// </summary>
 		private Stopwatch[] refreshTimers = new Stopwatch[MaxNumDevices];
-		private Stopwatch[] updateTimers = new Stopwatch[MaxNumDevices];
-		private byte[] updateAttempts = new byte[MaxNumDevices];
+
+		/// <summary>
+		/// Timer that checks for timeouts
+		/// </summary>
+		private Stopwatch[] updateTimers = new Stopwatch[MaxNumDevices]; //TODO rename to "timeouttimer"
+
+		private bool[] messageReceived = new bool[MaxNumDevices];
+
+		/// <summary>
+		/// The size of the message that was sent
+		/// </summary>
 		private int[] updateSize = new int[MaxNumDevices];
+
+		/// <summary>
+		/// Number of timeouts that have occured in a row.
+		/// </summary>
+		private volatile int numTimeouts = 0;
 
 		private volatile bool running = true;
 
@@ -47,7 +68,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			if(devices[device.Id] != null) {
 				throw new IndexOutOfRangeException(); //TODO id collisions
 			} else {
-				updateAttempts[device.Id] = 0;
+				//updateAttempts[device.Id] = 0;
 				updateTimers[device.Id] = new Stopwatch();
 				refreshTimers[device.Id] = new Stopwatch();
 				refreshTimers[device.Id].Start();
@@ -68,30 +89,74 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			thread.Join();
 		}
 
+
+		private bool SendMessage(int id, byte[] msg) {
+			byte[] bytes = new byte[msg.Length + 1];
+			bytes[0] = (byte)id;
+			Array.Copy(msg, 0, bytes, 1, msg.Length); //TODO ugh, memcopy
+			UdpPacket packet = new UdpPacket(Command.UpdateDevice, bytes);
+			int len = packet.AllBytes.Length; //TODO make a simple length function
+			while (true) {
+				lock (this) {
+					if ((BufferSize - BytesSent) >= len) {
+						BytesSent += len;
+						updateSize[id] = len;
+						break;
+					}
+				}
+				Thread.Sleep(1);
+			}
+
+			if (ether.Send(packet)) return true;
+			else {
+				lock (this) {
+					BytesSent -= len;
+				}
+				return false;
+			}
+		} 
+		
 		private void CheckForTimeout(int id) {
+			lock (devices[id]) {
+				if (messageReceived[id]) {
+					updateTimers[id].Reset();
+					return;
+				}
+			}
+
 			if (updateTimers[id].ElapsedMilliseconds >= MessageTimemout) {
 				/*if (updateAttempts[id] == TimeoutAttempts) {
 					Console.Error.WriteLine("Timeout!!!");
 					//throw new NotImplementedException(); //TODO timeout occured, disconnect.
 					updateAttempts[id] = 0;
 				} else {*/
-					//lock (this) {
-					//	BytesSent -= updateSize[id]; //Just in case the update packets are different sizes.
-						//if (updateBytes[id] == null) return;
-						//BytesSent -= updateBytes[id].Length + 1;
-					//}
-					//SendUpdateRequest(id, updateBytes[id]);
-					//updateAttempts[id] = 0;//++;
-										   //updateTimers[id].Restart();
-										   //}
+				//lock (this) {
+				//	BytesSent -= updateSize[id]; //Just in case the update packets are different sizes.
+				//if (updateBytes[id] == null) return;
+				//BytesSent -= updateBytes[id].Length + 1;
+				//}
+				//SendUpdateRequest(id, updateBytes[id]);
+				//updateAttempts[id] = 0;//++;
+				//updateTimers[id].Restart();
+				//}
+				int n;
 				lock (this) {
+					//BytesSent -= updateSize[id];
+					n = ++numTimeouts;
+					if(numTimeouts >= TimeoutAttempts) {
+						//TODO maybe trigger an event
+						StopAsync();
+						Console.Error.WriteLine("Robot Timeout!!");
+					}
 					BytesSent -= updateSize[id];
-					updateAttempts[id] = 0;
 				}
-				Console.Error.WriteLine("Message timeout!");
+				if (SendMessage(id, devices[id].ResendUpdate)) {
+					updateTimers[id].Restart();
+				}
+				Console.Error.WriteLine("Message timeout! #{0}", n);
 			}
 		}
-
+		/*
 		private bool SendUpdateRequest(int id, byte[] updateBytes) {
 			//Get the required bytes to send an update
 			//byte[] updateBytes = devices[id].SendUpdate;
@@ -120,13 +185,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 				return true;
 			}
 		}//TODO check refresh rate is > 0
-
+		*/
 		private void UpdateDevice(int id) {
 			refreshTimers[id].Restart(); //Absolute timing. Keeps refresh rate as close to the requested rate as possible.
-			byte[] update = devices[id].SendUpdate;
+			byte[] update = devices[id].SendUpdate; //TODO check if messageReceived is true. if so, we have a problem
 			if (update != null) {
-				if (SendUpdateRequest(id, update)) {
-					updateAttempts[id] = 1; //Indicates that an update message was sent.
+				//UdpPacket packet = new UdpPacket(Command.UpdateDevice, update);
+				//if (SendUpdateRequest(id, update)) {
+				if (SendMessage(id, update)) { //TODO better way to pass the size around
+					//updateSize[id] = update.Length + 4; //TODO make a simple length function
 					updateTimers[id].Restart();
 				}
 			}
@@ -138,7 +205,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			while (running) {
 				for(int i = 0; i < MaxNumDevices; i++) {
 					if(devices[i] != null) {
-						if(updateAttempts[i] > 0) {
+						if(updateTimers[i].IsRunning) {
 							//Message was sent, check for a timeout
 							CheckForTimeout(i);
 						}else if(/*updateAttempts[i] == 0 &&*/refreshTimers[i].ElapsedMilliseconds > (1000 / devices[i].RefreshRate)) {
@@ -160,16 +227,19 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			//TODO echo
 			Console.WriteLine("Echo Received: Length = {0}", packet.Length);
 		}
-
+		//TODO add warning if a message was received over 50% of the timeout time.
 		private void UpdateDeviceReceived(ByteArray packet) {
 			if (packet.Length >= 1) {
 				int id = packet[0];
 				if (devices[id] != null) {
-					if (devices[id].Update(++packet)) {
-						int size = updateSize[id];
-						updateAttempts[id] = 0;
-						lock (this) { //TODO take a good look at atomicity
-							BytesSent -= size;
+					lock (devices[id]) {
+						if (devices[id].Update(++packet)) {
+							//updateTimers[id].Reset();
+							messageReceived[id] = true;
+
+							lock (this) {
+								BytesSent -= updateSize[id];
+							}
 						}
 					}
 				}

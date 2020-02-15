@@ -17,6 +17,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 
 		public override byte[] SendUpdate => new byte[0];
 
+		public override byte[] ResendUpdate => SendUpdate;
+
 		public override bool Update(ByteArray data) {
 			T1 data1 = new T1();
 
@@ -31,7 +33,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 	}
-
+/*
 	public abstract class IReadableDevice<T1, T2> : IDevice<T1, T2> 
 		where T1 : IDataType, new() 
 		where T2 : IDataType, new() 
@@ -479,5 +481,5 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 	}
-
+	*/
 }

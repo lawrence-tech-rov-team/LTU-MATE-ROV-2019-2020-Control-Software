@@ -148,9 +148,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 					if (Connected) {
 						byte[] data = packet.AllBytes;
 						client.Send(data, data.Length, TargetIp, DestinationPort);
+						return true;
 					}
 				}
-				return true;
+				return false;
 			} catch (Exception ex) {
 				Console.Error.WriteLine("Error sending packet: {0}", ex.Message);
 				Console.Error.WriteLine(ex.StackTrace);

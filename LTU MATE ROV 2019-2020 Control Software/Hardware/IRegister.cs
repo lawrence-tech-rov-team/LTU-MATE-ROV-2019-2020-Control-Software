@@ -27,7 +27,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 	}
-
+/*
 	public abstract class IRegisterW<T1, T2> : IWritableDevice<T1, T2> where T1 : IDataType, new() where T2 : IDataType, new() {
 
 		protected IRegisterW(byte id, float refreshRate = 1f) : base(id, refreshRate) {
@@ -46,6 +46,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 	}
+*/	
 	#endregion
 	#region IRegisterR
 	public abstract class IRegisterR<T1> : IReadableDevice<T1> where T1 : IDataType, new() {
@@ -58,7 +59,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 	}
 	
-	public abstract class IRegisterR<T1, T2> : IReadableDevice<T1, T2> where T1 : IDataType, new() where T2 : IDataType, new() {
+	/*public abstract class IRegisterR<T1, T2> : IReadableDevice<T1, T2> where T1 : IDataType, new() where T2 : IDataType, new() {
 		protected IRegisterR(byte id, float refreshRate = 1f) : base(id, refreshRate) {
 		}
 
@@ -67,5 +68,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			return base.Update(data);
 		}
 	}
+	*/
 	#endregion
 }

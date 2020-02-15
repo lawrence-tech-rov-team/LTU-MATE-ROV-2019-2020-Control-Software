@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
-	public class IMU : ISensor<FloatData, FloatData, FloatData> {
+/*	public class IMU : ISensor<FloatData, FloatData, FloatData> {
 
 		float X { get => Data1?.Value ?? default(float); }
 		float Y { get => Data2?.Value ?? default(float); }
@@ -17,6 +17,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
 			
 		}
 
-	}
+	}*/
 
 }

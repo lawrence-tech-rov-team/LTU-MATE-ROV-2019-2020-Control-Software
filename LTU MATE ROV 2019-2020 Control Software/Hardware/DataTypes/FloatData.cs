@@ -18,6 +18,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 			}
 		}
 
+		public override bool IsSameValue(IDataType obj) {
+			if(obj is FloatData) {
+				return ((FloatData)obj).Value == Value;
+			} else {
+				return false;
+			}
+		}
+
 		public override bool Parse(ByteArray bytes) {
 			if (bytes.Length == NumberOfBytes) {
 				try {

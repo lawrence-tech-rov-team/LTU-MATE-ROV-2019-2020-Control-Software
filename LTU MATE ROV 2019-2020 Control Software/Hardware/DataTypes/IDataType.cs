@@ -18,7 +18,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 
 		}
 
-		//protected abstract bool IsSameValue(IDataType obj1, IDataType obj2);
+		public abstract bool IsSameValue(IDataType obj);
 
 	}
 

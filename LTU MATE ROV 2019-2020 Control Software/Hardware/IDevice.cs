@@ -30,6 +30,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// </summary>
 		public abstract byte[] SendUpdate { get; }
 
+		public abstract byte[] ResendUpdate { get; }
+
 		/// <summary>
 		/// Update the device with the returned data.
 		/// Returns true if updated, false if the data couldn't be parsed.
