@@ -65,15 +65,24 @@
     <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Hardware\Ethernet\Command.cs" />
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
+    <Compile Include="Hardware\Ethernet\IEthernetLayer.cs" />
     <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
     <Compile Include="Hardware\IActuator.cs" />
     <Compile Include="Hardware\IDevice.cs" />
     <Compile Include="Hardware\IReadableDevice.cs" />
     <Compile Include="Hardware\IRegister.cs" />
+    <Compile Include="Hardware\Simulator\DigitalSensorSimulator.cs" />
+    <Compile Include="Hardware\Simulator\RobotSimulator.cs" />
     <Compile Include="Hardware\IWritableDevice.cs" />
     <Compile Include="Hardware\DataTypes\BoolData.cs" />
     <Compile Include="Hardware\DataTypes\FloatData.cs" />
     <Compile Include="Hardware\DataTypes\IDataType.cs" />
+    <Compile Include="Hardware\Simulator\RobotSimulatorUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Hardware\Simulator\RobotSimulatorUI.Designer.cs">
+      <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
     <Compile Include="Hardware\Sensors\IMU.cs" />
     <Compile Include="Hardware\ISensor.cs" />
@@ -115,6 +124,9 @@
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
+    <EmbeddedResource Include="Hardware\Simulator\RobotSimulatorUI.resx">
+      <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="JoystickConfigForm.resx">
       <DependentUpon>JoystickConfigForm.cs</DependentUpon>
     </EmbeddedResource>

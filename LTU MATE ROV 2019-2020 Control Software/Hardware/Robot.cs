@@ -31,7 +31,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// </summary>
 		protected virtual int MessageTimemout { get; } = 100;
 
-		public volatile EthernetInterface ether; //TODO make private and not volatile, temporary testing
+		private IEthernetLayer ether;
 		private Thread thread;
 		private volatile int BytesSent = 0;
 
@@ -76,8 +76,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			}
 		}
 
-		protected Robot(ThreadPriority priority) {
+		protected Robot(ThreadPriority priority, IEthernetLayer commInterface) {
 			thread = ThreadHelper.StartNewThread("Robot Sender", true, RobotLoop, priority);
+			Volatile.Write<IEthernetLayer>(ref ether, commInterface);
+		}
+
+		public bool Connect() {
+			return ether.Connect();
+		}
+
+		public void Disconnect() {
+			ether.Disconnect();
 		}
 
 		public void StopAsync() {
@@ -107,7 +116,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 				Thread.Sleep(1);
 			}
 
-			if (ether.Send(packet)) return true;
+			if (ether?.Send(packet) ?? false) return true;
 			else {
 				lock (this) {
 					BytesSent -= len;
@@ -200,8 +209,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 		private void RobotLoop() {
-			ether = new EthernetInterface();
-			ether.OnPacketReceived += Ether_OnPacketReceived;
+			if(ether != null) ether.OnPacketReceived += Ether_OnPacketReceived;
 			while (running) {
 				for(int i = 0; i < MaxNumDevices; i++) {
 					if(devices[i] != null) {
@@ -215,7 +223,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 					}
 				}
 			}
-			ether.Disconnect();
+			if (ether != null) ether.OnPacketReceived -= Ether_OnPacketReceived;
+			ether?.Disconnect();
 		}
 
 		private void PingReceived(ByteArray packet) {

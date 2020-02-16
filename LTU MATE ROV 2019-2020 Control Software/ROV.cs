@@ -1,4 +1,5 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		//public IMU IMU { get; } = new IMU(0);
 		public DigitalSensor TestButton { get; } = new DigitalSensor(0, 100);
 
-		public ROV(ThreadPriority priority) : base(priority) {
+		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
 			//RegisterDevice(IMU);
 			RegisterDevice(TestButton);
 		}

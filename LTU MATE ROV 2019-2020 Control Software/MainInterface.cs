@@ -1,7 +1,9 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
@@ -21,7 +23,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private ControllerType currentController = ControllerType.None;
 		private Random rnd = new Random();
-		private EthernetInterface ethernet;// = new EthernetInterface();
+		//private EthernetInterface ethernet;// = new EthernetInterface();
 		private Stopwatch timer = new Stopwatch();
 		private int speedCounter = 0;
 		private bool ledState = false;
@@ -40,10 +42,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
-			rov = new ROV(System.Threading.ThreadPriority.Normal);
-			while (rov.ether == null) {
-			}
-			ethernet = rov.ether;
+			rov = new ROV(System.Threading.ThreadPriority.Normal, new RobotSimulator());
 
 			InputDataTimer.Start();
 		}
@@ -52,9 +51,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.RequestStop();
 			//Stop other threads
 			//RobotThread.Stop();
-			if (ethernet != null) {
-				ethernet.Disconnect();
-			}
+			rov.Stop();
 		}
 
 		private void RunCommand(UdpPacket packet) {
@@ -195,7 +192,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {
-			if (ethernet.TryConnect()) {
+			if (rov.Connect()) {
 				MessageBox.Show("Connected!");
 			} else {
 				MessageBox.Show("Could not connect to device.");
@@ -203,19 +200,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void disconnectToolStripMenuItem_Click(object sender, EventArgs e) {
-			ethernet.Disconnect();
+			rov.Disconnect();
 		}
 
 		private void pingToolStripMenuItem_Click(object sender, EventArgs e) {
-			byte num = (byte)(rnd.Next(0, 255) & 0xFF);
+			/*byte num = (byte)(rnd.Next(0, 255) & 0xFF);
 			timer.Restart();
 			if (!ethernet.Send(Command.Ping, num)) {
 				MessageBox.Show("Error sending ping.");
-			}
+			}*/
+			//TODO finish button code
 		}
 
 		private void speedTestToolStripMenuItem_Click(object sender, EventArgs e) {
-			timer.Stop();
+			/*timer.Stop();
 			speedCounter = 0;
 			byte[] data = new byte[255];
 			rnd.NextBytes(data);
@@ -223,12 +221,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			timer.Restart();
 			for (int i = 0; i < 8; i++) {
 				ethernet.Send(Command.Echo, data);
-			}
+			}*/
+			//TODO finish button code
 		}
 
 		private void toggleLedToolStripMenuItem_Click(object sender, EventArgs e) {
-			ledState = !ledState;
-			ethernet.Send(Command.Led, ledState ? (byte)1 : (byte)0);
+			//ledState = !ledState;
+			//ethernet.Send(Command.Led, ledState ? (byte)1 : (byte)0);
+			//TODO led toggle
 		}
 
 		private void logToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -248,12 +248,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void hardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
-			long? timeMs = ethernet.PingHardware(1000);
+			/*long? timeMs = rov.Ping(1000);
 			if(timeMs == null) {
 				MessageBox.Show("Ping failed.");
 			} else {
 				MessageBox.Show("Ping: " + (long)timeMs + " ms");
-			}
+			}*/
+			//TODO fix button
 		}
 	}
 }
