@@ -42,7 +42,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
-			rov = new ROV(System.Threading.ThreadPriority.Normal, new RobotSimulator());
+			rov = new ROV(System.Threading.ThreadPriority.Normal, new EthernetInterface());
 
 			InputDataTimer.Start();
 		}
@@ -248,13 +248,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void hardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
-			/*long? timeMs = rov.Ping(1000);
+			long? timeMs = rov.Ping(1000);
 			if(timeMs == null) {
 				MessageBox.Show("Ping failed.");
 			} else {
 				MessageBox.Show("Ping: " + (long)timeMs + " ms");
-			}*/
-			//TODO fix button
+			}
 		}
 	}
 }
