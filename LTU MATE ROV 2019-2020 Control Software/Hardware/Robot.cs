@@ -105,16 +105,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			Array.Copy(msg, 0, bytes, 1, msg.Length); //TODO ugh, memcopy
 			UdpPacket packet = new UdpPacket(Command.UpdateDevice, bytes);
 			int len = packet.AllBytes.Length; //TODO make a simple length function
-			while (true) {
-				lock (this) {
-					if ((BufferSize - BytesSent) >= len) {
-						BytesSent += len;
-						updateSize[id] = len;
-						break;
-					}
+			//while (true) {
+			lock (this) {
+				if ((BufferSize - BytesSent) >= len) {
+					BytesSent += len;
+					updateSize[id] = len;
+					//break;
+				} else {
+					return false; //TODO will this cause any problems?
 				}
-				Thread.Sleep(1);
 			}
+				//Thread.Sleep(1); //TODO this doesn't work. Need a better solution to waiting. 
+			//}
 
 			if (ether?.Send(packet) ?? false) return true;
 			else {
