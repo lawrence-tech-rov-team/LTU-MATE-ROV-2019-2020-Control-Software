@@ -114,6 +114,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			if (dataa == null) TestBtnMeter.Value = false; //TODO wtf why is this line here
 			else TestBtnMeter.Value = dataa;
 
+			TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
+
+			EulerX.Text = "X: " + rov.IMU.EulerX.ToString("0.00").PadLeft(10) + "°";
+			EulerY.Text = "Y: " + rov.IMU.EulerY.ToString("0.00").PadLeft(10) + "°";
+			EulerZ.Text = "Z: " + rov.IMU.EulerZ.ToString("0.00").PadLeft(10) + "°";
+
+			AccelX.Text = "X: " + rov.IMU.AccelX.ToString("0.00").PadLeft(10) + " m/s²";
+			AccelY.Text = "Y: " + rov.IMU.AccelY.ToString("0.00").PadLeft(10) + "m/s²";
+			AccelZ.Text = "Z: " + rov.IMU.AccelZ.ToString("0.00").PadLeft(10) + "m/s²";
+
 			//InputControlData data = RobotThread.GetInputData();
 			//if (data == null) data = new InputControlData(); 
 			//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));

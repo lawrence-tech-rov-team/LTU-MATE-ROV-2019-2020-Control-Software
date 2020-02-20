@@ -17,10 +17,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		//public IMU IMU { get; } = new IMU(0);
 		public DigitalSensor TestButton { get; } = new DigitalSensor(0, 100);
+		public IMU IMU { get; } = new IMU(1);
 
 		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
-			//RegisterDevice(IMU);
 			RegisterDevice(TestButton);
+			RegisterDevice(IMU);
 		}
 
 	}

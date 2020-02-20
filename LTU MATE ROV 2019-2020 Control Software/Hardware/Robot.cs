@@ -278,6 +278,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		public long? Ping(int timeoutMS = 3000) {
 			return ether.Ping(timeoutMS);
 		}
+
 	}
 }
 

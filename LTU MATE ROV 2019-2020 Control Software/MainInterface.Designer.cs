@@ -35,6 +35,7 @@
 			this.ethernetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.hardwarePingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.speedTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toggleLedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +48,15 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.TestBtnMeter = new Meters.IOMeter();
-			this.hardwarePingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.TempLabel = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.EulerX = new System.Windows.Forms.Label();
+			this.EulerY = new System.Windows.Forms.Label();
+			this.EulerZ = new System.Windows.Forms.Label();
+			this.AccelX = new System.Windows.Forms.Label();
+			this.AccelY = new System.Windows.Forms.Label();
+			this.AccelZ = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -110,14 +119,14 @@
 			// saveExcelToolStripMenuItem
 			// 
 			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
-			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveExcelToolStripMenuItem.Text = "Save Excel";
 			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
 			// 
 			// saveCSVToolStripMenuItem
 			// 
 			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveCSVToolStripMenuItem.Text = "Save CSV";
 			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
 			// 
@@ -131,48 +140,55 @@
             this.speedTestToolStripMenuItem,
             this.toggleLedToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
-			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
 			// connectToolStripMenuItem
 			// 
 			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-			this.connectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.connectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.connectToolStripMenuItem.Text = "Connect";
 			this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
 			// 
 			// disconnectToolStripMenuItem
 			// 
 			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.disconnectToolStripMenuItem.Text = "Disconnect";
 			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+			// 
+			// hardwarePingToolStripMenuItem
+			// 
+			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
+			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
+			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
 			// 
 			// pingToolStripMenuItem
 			// 
 			this.pingToolStripMenuItem.Name = "pingToolStripMenuItem";
-			this.pingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.pingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.pingToolStripMenuItem.Text = "Ping";
 			this.pingToolStripMenuItem.Click += new System.EventHandler(this.pingToolStripMenuItem_Click);
 			// 
 			// speedTestToolStripMenuItem
 			// 
 			this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
-			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.speedTestToolStripMenuItem.Text = "Speed Test";
 			this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
 			// 
 			// toggleLedToolStripMenuItem
 			// 
 			this.toggleLedToolStripMenuItem.Name = "toggleLedToolStripMenuItem";
-			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
 			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
@@ -279,18 +295,101 @@
 			this.TestBtnMeter.UseVisualStyleBackColor = true;
 			this.TestBtnMeter.Value = false;
 			// 
-			// hardwarePingToolStripMenuItem
+			// TempLabel
 			// 
-			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
-			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
-			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
+			this.TempLabel.AutoSize = true;
+			this.TempLabel.Location = new System.Drawing.Point(12, 313);
+			this.TempLabel.Name = "TempLabel";
+			this.TempLabel.Size = new System.Drawing.Size(133, 17);
+			this.TempLabel.TabIndex = 10;
+			this.TempLabel.Text = "Temperature: -99*C";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(12, 330);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(41, 17);
+			this.label1.TabIndex = 11;
+			this.label1.Text = "Euler";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(223, 330);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(42, 17);
+			this.label2.TabIndex = 12;
+			this.label2.Text = "Accel";
+			// 
+			// EulerX
+			// 
+			this.EulerX.AutoSize = true;
+			this.EulerX.Location = new System.Drawing.Point(12, 347);
+			this.EulerX.Name = "EulerX";
+			this.EulerX.Size = new System.Drawing.Size(41, 17);
+			this.EulerX.TabIndex = 13;
+			this.EulerX.Text = "Euler";
+			// 
+			// EulerY
+			// 
+			this.EulerY.AutoSize = true;
+			this.EulerY.Location = new System.Drawing.Point(12, 364);
+			this.EulerY.Name = "EulerY";
+			this.EulerY.Size = new System.Drawing.Size(41, 17);
+			this.EulerY.TabIndex = 14;
+			this.EulerY.Text = "Euler";
+			// 
+			// EulerZ
+			// 
+			this.EulerZ.AutoSize = true;
+			this.EulerZ.Location = new System.Drawing.Point(12, 381);
+			this.EulerZ.Name = "EulerZ";
+			this.EulerZ.Size = new System.Drawing.Size(41, 17);
+			this.EulerZ.TabIndex = 15;
+			this.EulerZ.Text = "Euler";
+			// 
+			// AccelX
+			// 
+			this.AccelX.AutoSize = true;
+			this.AccelX.Location = new System.Drawing.Point(223, 347);
+			this.AccelX.Name = "AccelX";
+			this.AccelX.Size = new System.Drawing.Size(42, 17);
+			this.AccelX.TabIndex = 16;
+			this.AccelX.Text = "Accel";
+			// 
+			// AccelY
+			// 
+			this.AccelY.AutoSize = true;
+			this.AccelY.Location = new System.Drawing.Point(223, 364);
+			this.AccelY.Name = "AccelY";
+			this.AccelY.Size = new System.Drawing.Size(42, 17);
+			this.AccelY.TabIndex = 17;
+			this.AccelY.Text = "Accel";
+			// 
+			// AccelZ
+			// 
+			this.AccelZ.AutoSize = true;
+			this.AccelZ.Location = new System.Drawing.Point(223, 381);
+			this.AccelZ.Name = "AccelZ";
+			this.AccelZ.Size = new System.Drawing.Size(42, 17);
+			this.AccelZ.TabIndex = 18;
+			this.AccelZ.Text = "Accel";
 			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 450);
+			this.Controls.Add(this.AccelZ);
+			this.Controls.Add(this.AccelY);
+			this.Controls.Add(this.AccelX);
+			this.Controls.Add(this.EulerZ);
+			this.Controls.Add(this.EulerY);
+			this.Controls.Add(this.EulerX);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.TempLabel);
 			this.Controls.Add(this.TestBtnMeter);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
@@ -339,6 +438,15 @@
 		private System.Windows.Forms.Button button3;
 		private Meters.IOMeter TestBtnMeter;
 		private System.Windows.Forms.ToolStripMenuItem hardwarePingToolStripMenuItem;
+		private System.Windows.Forms.Label TempLabel;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label EulerX;
+		private System.Windows.Forms.Label EulerY;
+		private System.Windows.Forms.Label EulerZ;
+		private System.Windows.Forms.Label AccelX;
+		private System.Windows.Forms.Label AccelY;
+		private System.Windows.Forms.Label AccelZ;
 	}
 }
 

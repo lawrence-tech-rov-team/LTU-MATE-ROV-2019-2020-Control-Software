@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="ControlSystem.cs" />
     <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
+    <Compile Include="Hardware\DataTypes\Int8Data.cs" />
     <Compile Include="Hardware\Ethernet\Command.cs" />
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Hardware\Ethernet\IEthernetLayer.cs" />
