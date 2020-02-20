@@ -111,7 +111,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
 			bool dataa = rov.TestButton.State;
-			if (dataa == null) TestBtnMeter.Value = false;
+			if (dataa == null) TestBtnMeter.Value = false; //TODO wtf why is this line here
 			else TestBtnMeter.Value = dataa;
 
 			//InputControlData data = RobotThread.GetInputData();
