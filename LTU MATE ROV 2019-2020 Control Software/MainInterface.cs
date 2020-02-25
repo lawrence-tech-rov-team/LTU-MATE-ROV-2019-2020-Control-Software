@@ -115,14 +115,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			else TestBtnMeter.Value = dataa;
 
 			TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
+			Vector3Data euler = rov.IMU.Euler;
+			Vector3Data accel = rov.IMU.Accelerometer;
 
-			EulerX.Text = "X: " + rov.IMU.EulerX.ToString("0.00").PadLeft(10) + "°";
-			EulerY.Text = "Y: " + rov.IMU.EulerY.ToString("0.00").PadLeft(10) + "°";
-			EulerZ.Text = "Z: " + rov.IMU.EulerZ.ToString("0.00").PadLeft(10) + "°";
+			if (euler != null) {
+				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
+				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
+				EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
+			}
 
-			AccelX.Text = "X: " + rov.IMU.AccelX.ToString("0.00").PadLeft(10) + " m/s²";
-			AccelY.Text = "Y: " + rov.IMU.AccelY.ToString("0.00").PadLeft(10) + "m/s²";
-			AccelZ.Text = "Z: " + rov.IMU.AccelZ.ToString("0.00").PadLeft(10) + "m/s²";
+			if (accel != null) {
+				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
+				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
+				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
+			}
 
 			//InputControlData data = RobotThread.GetInputData();
 			//if (data == null) data = new InputControlData(); 

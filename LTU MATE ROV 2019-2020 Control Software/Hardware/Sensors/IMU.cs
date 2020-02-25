@@ -7,17 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
-	public class IMU : ISensor<Int8Data, FloatData, FloatData, FloatData, FloatData, FloatData, FloatData> {
+	public class IMU : ISensor<Int8Data, Vector3Data, Vector3Data, Vector3Data, Vector3Data, Vector3Data, Vector3Data, Vector4Data> {
 
 		public sbyte Temperature { get => Data1?.Value ?? default(sbyte); }
-		
-		public float EulerX { get => Data2?.Value ?? default(float); }
-		public float EulerY { get => Data3?.Value ?? default(float); }
-		public float EulerZ { get => Data4?.Value ?? default(float); }
-
-		public float AccelX { get => Data5?.Value ?? default(float); }
-		public float AccelY { get => Data6?.Value ?? default(float); }
-		public float AccelZ { get => Data7?.Value ?? default(float); }
+		public Vector3Data Magnetometer { get => Data2; } //TODO return vector3 data
+		public Vector3Data Gyroscope { get => Data3; }
+		public Vector3Data Euler { get => Data4; }
+		public Vector3Data Accelerometer { get => Data5; }
+		public Vector3Data LinearAccelerometer { get => Data6; }
+		public Vector3Data Gravity { get => Data7; }
+		public Vector4Data Quaternion { get => Data8; }
 
 		public IMU(byte ID) : base(ID) {
 			
