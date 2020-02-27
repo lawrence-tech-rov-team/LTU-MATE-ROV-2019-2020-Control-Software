@@ -31,6 +31,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// </summary>
 		protected virtual int MessageTimemout { get; } = 100;
 
+		public bool IsSimulator => ether.IsSimulator;
+
 		private IEthernetLayer ether;
 		private Thread thread;
 		private volatile int BytesSent = 0;
@@ -84,11 +86,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		}
 
 		public bool Connect() {
-			return ether.Connect();
+			return ether?.Connect() ?? false;
 		}
 
 		public void Disconnect() {
-			ether.Disconnect();
+			ether?.Disconnect();
 		}
 
 		public void StopAsync() {

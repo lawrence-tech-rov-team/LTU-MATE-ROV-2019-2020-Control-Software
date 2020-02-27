@@ -15,6 +15,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
 		private IRegister[] registers = new IRegister[256];
 		private System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
 
+		public override bool IsSimulator => true;
+
 		public RobotSimulator(int latency = 5) {
 			Latency = latency;
 			updateTimer.Interval = 10;

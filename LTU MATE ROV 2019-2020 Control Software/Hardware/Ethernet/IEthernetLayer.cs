@@ -11,6 +11,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		private volatile bool connected = false;
 		public bool Connected { get => connected; protected set => connected = value; }
 
+		public abstract bool IsSimulator { get; }
+
 		public delegate void NewPacketHandler(UdpPacket packet);
 		public event NewPacketHandler OnPacketReceived;
 

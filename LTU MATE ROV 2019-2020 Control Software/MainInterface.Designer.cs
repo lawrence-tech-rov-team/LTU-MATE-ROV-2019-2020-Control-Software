@@ -57,6 +57,7 @@
 			this.AccelX = new System.Windows.Forms.Label();
 			this.AccelY = new System.Windows.Forms.Label();
 			this.AccelZ = new System.Windows.Forms.Label();
+			this.simulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -74,7 +75,8 @@
 			this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ControlsMenu,
-            this.developerToolStripMenuItem});
+            this.developerToolStripMenuItem,
+            this.simulatorToolStripMenuItem});
 			this.MenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.MenuStrip.Name = "MenuStrip";
 			this.MenuStrip.Size = new System.Drawing.Size(938, 28);
@@ -376,6 +378,13 @@
 			this.AccelZ.TabIndex = 18;
 			this.AccelZ.Text = "Accel";
 			// 
+			// simulatorToolStripMenuItem
+			// 
+			this.simulatorToolStripMenuItem.Name = "simulatorToolStripMenuItem";
+			this.simulatorToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
+			this.simulatorToolStripMenuItem.Text = "Simulator";
+			this.simulatorToolStripMenuItem.Click += new System.EventHandler(this.simulatorToolStripMenuItem_Click);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -447,6 +456,7 @@
 		private System.Windows.Forms.Label AccelX;
 		private System.Windows.Forms.Label AccelY;
 		private System.Windows.Forms.Label AccelZ;
+		private System.Windows.Forms.ToolStripMenuItem simulatorToolStripMenuItem;
 	}
 }
 

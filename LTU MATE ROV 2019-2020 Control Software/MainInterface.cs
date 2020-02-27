@@ -15,11 +15,14 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form, IKeyboardListener, ILogging {
+
+		private const ThreadPriority RovThreadPriority = ThreadPriority.Normal;
 
 		private ControllerType currentController = ControllerType.None;
 		private Random rnd = new Random();
@@ -42,7 +45,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
-			rov = new ROV(System.Threading.ThreadPriority.Normal, new EthernetInterface());
+			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
 
 			InputDataTimer.Start();
 		}
@@ -110,29 +113,31 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
-			bool dataa = rov.TestButton.State;
-			if (dataa == null) TestBtnMeter.Value = false; //TODO wtf why is this line here
-			else TestBtnMeter.Value = dataa;
+			lock (this) {
+				bool dataa = rov.TestButton.State;
+				if (dataa == null) TestBtnMeter.Value = false; //TODO wtf why is this line here
+				else TestBtnMeter.Value = dataa;
 
-			TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
-			//Vector3Data euler = rov.IMU.Euler;
-			Vector3Data accel = rov.IMU.Accelerometer;
+				TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
+				//Vector3Data euler = rov.IMU.Euler;
+				Vector3Data accel = rov.IMU.Accelerometer;
 
-			/*if (euler != null) {
-				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
-				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
-				EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
-			}*/
+				/*if (euler != null) {
+					EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
+					EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
+					EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
+				}*/
 
-			if (accel != null) {
-				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
-				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
-				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
+				if (accel != null) {
+					AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
+					AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
+					AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
+				}
+
+				//InputControlData data = RobotThread.GetInputData();
+				//if (data == null) data = new InputControlData(); 
+				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
 			}
-
-			//InputControlData data = RobotThread.GetInputData();
-			//if (data == null) data = new InputControlData(); 
-			//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
 		}
 
 		private void ControllerTypeButton_CheckedChanged(object sender, EventArgs e) {
@@ -208,6 +213,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {
+			if((rov == null) || (rov.IsSimulator)) {
+				rov?.Disconnect();
+				rov = new ROV(RovThreadPriority, new EthernetInterface());
+			}
+
 			if (rov.Connect()) {
 				MessageBox.Show("Connected!");
 			} else {
@@ -269,6 +279,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				MessageBox.Show("Ping failed.");
 			} else {
 				MessageBox.Show("Ping: " + (long)timeMs + " ms");
+			}
+		}
+
+		private void simulatorToolStripMenuItem_Click(object sender, EventArgs e) {
+			lock (this) {
+				rov?.Disconnect();
+
+				RobotSimulator sim = new RobotSimulator();
+				rov = new ROV(RovThreadPriority, sim);
+				rov.Connect();
 			}
 		}
 	}

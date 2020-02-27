@@ -14,6 +14,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		public int DestinationPort { get; } = 6001;
 		public int ReceivePort { get; } = 6002;
 		public string TargetIp { get; set; } = "169.254.240.157"; //255.255.255.255
+
+		public override bool IsSimulator => false;
+
 		//private volatile bool connected = false;
 		//public bool Connected { get => connected; private set => connected = value; }
 

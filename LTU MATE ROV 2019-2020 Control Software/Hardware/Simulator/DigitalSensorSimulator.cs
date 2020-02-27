@@ -8,7 +8,9 @@ using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
 	public class DigitalSensorSimulator : ISimulatorDevice {
-		public override IRegister[] Registers => throw new NotImplementedException();
+		public override IRegister[] Registers => new IRegister[]{
+			ioRegister
+		};
 
 		private WritableRegister<BoolData> ioRegister;
 
