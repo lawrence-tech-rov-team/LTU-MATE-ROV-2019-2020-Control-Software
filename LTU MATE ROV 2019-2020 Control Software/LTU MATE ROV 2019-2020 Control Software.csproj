@@ -73,18 +73,18 @@
     <Compile Include="Hardware\IDevice.cs" />
     <Compile Include="Hardware\ReadableRegister.cs" />
     <Compile Include="Hardware\IRegister.cs" />
-    <Compile Include="Hardware\Simulator\DigitalActuatorSimulator.cs" />
-    <Compile Include="Hardware\Simulator\ISimulatorDevice.cs" />
+    <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
+    <Compile Include="Simulator\ISimulatorDevice.cs" />
     <Compile Include="Hardware\WritableRegister.cs" />
-    <Compile Include="Hardware\Simulator\DigitalSensorSimulator.cs" />
-    <Compile Include="Hardware\Simulator\RobotSimulator.cs" />
+    <Compile Include="Simulator\Sensors\DigitalSensorSimulator.cs" />
+    <Compile Include="Simulator\RobotSimulator.cs" />
     <Compile Include="Hardware\DataTypes\BoolData.cs" />
     <Compile Include="Hardware\DataTypes\FloatData.cs" />
     <Compile Include="Hardware\DataTypes\IDataType.cs" />
-    <Compile Include="Hardware\Simulator\RobotSimulatorUI.cs">
+    <Compile Include="Simulator\RobotSimulatorUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Hardware\Simulator\RobotSimulatorUI.Designer.cs">
+    <Compile Include="Simulator\RobotSimulatorUI.Designer.cs">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
@@ -127,7 +127,7 @@
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
-    <EmbeddedResource Include="Hardware\Simulator\RobotSimulatorUI.resx">
+    <EmbeddedResource Include="Simulator\RobotSimulatorUI.resx">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JoystickConfigForm.resx">

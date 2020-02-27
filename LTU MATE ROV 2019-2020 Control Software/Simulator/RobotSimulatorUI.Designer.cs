@@ -1,4 +1,4 @@
-﻿namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
+﻿namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 	partial class RobotSimulatorUI {
 		/// <summary>
 		/// Required designer variable.

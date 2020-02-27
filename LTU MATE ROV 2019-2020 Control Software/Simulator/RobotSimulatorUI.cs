@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Actuators;
+using LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 	public partial class RobotSimulatorUI : Form {
 
 		private RobotSimulator simulator;
