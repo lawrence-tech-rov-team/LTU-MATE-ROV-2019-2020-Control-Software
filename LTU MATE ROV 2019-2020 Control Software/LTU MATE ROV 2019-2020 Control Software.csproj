@@ -124,6 +124,7 @@
     <Compile Include="Hardware\Robot.cs" />
     <Compile Include="RobotThread.cs" />
     <Compile Include="ROV.cs" />
+    <Compile Include="Simulator\Sensors\ImuSimulator.cs" />
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />

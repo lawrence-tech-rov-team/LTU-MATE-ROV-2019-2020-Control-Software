@@ -25,6 +25,9 @@
 		private void InitializeComponent() {
 			this.TestBtn0 = new System.Windows.Forms.Button();
 			this.Led = new Meters.IOMeter();
+			this.TempTrackBar = new System.Windows.Forms.TrackBar();
+			this.TempLabel = new System.Windows.Forms.Label();
+			((System.ComponentModel.ISupportInitialize)(this.TempTrackBar)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// TestBtn0
@@ -50,18 +53,41 @@
 			this.Led.UseVisualStyleBackColor = true;
 			this.Led.Value = false;
 			// 
+			// TempTrackBar
+			// 
+			this.TempTrackBar.Location = new System.Drawing.Point(12, 90);
+			this.TempTrackBar.Maximum = 127;
+			this.TempTrackBar.Minimum = -128;
+			this.TempTrackBar.Name = "TempTrackBar";
+			this.TempTrackBar.Size = new System.Drawing.Size(583, 56);
+			this.TempTrackBar.TabIndex = 2;
+			this.TempTrackBar.Value = 25;
+			// 
+			// TempLabel
+			// 
+			this.TempLabel.AutoSize = true;
+			this.TempLabel.Location = new System.Drawing.Point(12, 70);
+			this.TempLabel.Name = "TempLabel";
+			this.TempLabel.Size = new System.Drawing.Size(94, 17);
+			this.TempLabel.TabIndex = 3;
+			this.TempLabel.Text = "Temperature:";
+			// 
 			// RobotSimulatorUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(607, 321);
+			this.Controls.Add(this.TempLabel);
+			this.Controls.Add(this.TempTrackBar);
 			this.Controls.Add(this.Led);
 			this.Controls.Add(this.TestBtn0);
 			this.Name = "RobotSimulatorUI";
 			this.Text = "RobotSimulatorUI";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RobotSimulatorUI_FormClosing);
 			this.Load += new System.EventHandler(this.RobotSimulatorUI_Load);
+			((System.ComponentModel.ISupportInitialize)(this.TempTrackBar)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -69,5 +95,7 @@
 
 		private System.Windows.Forms.Button TestBtn0;
 		private Meters.IOMeter Led;
+		private System.Windows.Forms.TrackBar TempTrackBar;
+		private System.Windows.Forms.Label TempLabel;
 	}
 }

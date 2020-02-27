@@ -9,7 +9,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 	public class Int8Data : IDataType {
 		public override int NumberOfBytes => 1;
 
-		public override byte[] Bytes => throw new NotImplementedException();
+		public override byte[] Bytes => new byte[] { (byte)Value };
 
 		public sbyte Value { get; private set; }
 

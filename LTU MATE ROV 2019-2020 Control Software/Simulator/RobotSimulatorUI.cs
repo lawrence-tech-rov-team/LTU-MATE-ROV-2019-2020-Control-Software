@@ -24,6 +24,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 		private void RobotSimulatorUI_Load(object sender, EventArgs e) {
 			simulator.RegisterDevice(new DigitalSensorSimulator(0, TestBtn0));
 			simulator.RegisterDevice(new DigitalActuatorSimulator(3, Led));
+			simulator.RegisterDevice(new ImuSimulator(1, TempTrackBar, TempLabel));
 		}
 
 		private void RobotSimulatorUI_FormClosing(object sender, FormClosingEventArgs e) {
@@ -31,5 +32,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 			invokedClose = true;
 			simulator.Disconnect();
 		}
+
 	}
 }
