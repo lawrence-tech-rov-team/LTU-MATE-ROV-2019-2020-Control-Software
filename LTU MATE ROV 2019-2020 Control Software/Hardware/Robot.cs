@@ -38,7 +38,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// <summary>
 		/// Devices
 		/// </summary>
-		private IDevice[] devices = new IDevice[MaxNumDevices];
+		private IRegister[] registers = new IRegister[MaxNumDevices];
 
 		/// <summary>
 		/// Timer that activates at the refresh rate of the sensor
@@ -65,14 +65,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		private volatile bool running = true;
 
 		protected void RegisterDevice(IDevice device) {
-			if(devices[device.Id] != null) {
-				throw new IndexOutOfRangeException(); //TODO id collisions
-			} else {
-				//updateAttempts[device.Id] = 0;
-				updateTimers[device.Id] = new Stopwatch();
-				refreshTimers[device.Id] = new Stopwatch();
-				refreshTimers[device.Id].Start();
-				devices[device.Id] = device;
+			foreach(IRegister register in device) {
+				if (registers[register.Id] != null) {
+					throw new IndexOutOfRangeException(); //TODO id collisions
+				} else {
+					//updateAttempts[device.Id] = 0;
+					updateTimers[register.Id] = new Stopwatch();
+					refreshTimers[register.Id] = new Stopwatch();
+					refreshTimers[register.Id].Start();
+					registers[register.Id] = register;
+				}
 			}
 		}
 
@@ -128,7 +130,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		} 
 		
 		private void CheckForTimeout(int id) {
-			lock (devices[id]) {
+			lock (registers[id]) {
 				if (messageReceived[id]) {
 					updateTimers[id].Reset();
 					return;
@@ -161,7 +163,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 					}
 					BytesSent -= updateSize[id];
 				}
-				if (SendMessage(id, devices[id].ResendUpdate)) {
+				if (SendMessage(id, registers[id].ResendUpdate)) {
 					updateTimers[id].Restart();
 				}
 				Console.Error.WriteLine("Message timeout! #{0}", n);
@@ -199,7 +201,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		*/
 		private void UpdateDevice(int id) {
 			refreshTimers[id].Restart(); //Absolute timing. Keeps refresh rate as close to the requested rate as possible.
-			byte[] update = devices[id].SendUpdate; //TODO check if messageReceived is true. if so, we have a problem
+			byte[] update = registers[id].SendUpdate; //TODO check if messageReceived is true. if so, we have a problem
 			if (update != null) {
 				//UdpPacket packet = new UdpPacket(Command.UpdateDevice, update);
 				//if (SendUpdateRequest(id, update)) {
@@ -214,11 +216,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			if(ether != null) ether.OnPacketReceived += Ether_OnPacketReceived;
 			while (running) {
 				for(int i = 0; i < MaxNumDevices; i++) {
-					if(devices[i] != null) {
+					if(registers[i] != null) {
 						if(updateTimers[i].IsRunning) {
 							//Message was sent, check for a timeout
 							CheckForTimeout(i);
-						}else if(/*updateAttempts[i] == 0 &&*/refreshTimers[i].ElapsedMilliseconds > (1000 / devices[i].RefreshRate)) {
+						}else if(/*updateAttempts[i] == 0 &&*/refreshTimers[i].ElapsedMilliseconds > (1000 / registers[i].RefreshRate)) {
 							//Sensor is due for an update, send the message
 							UpdateDevice(i);
 						}
@@ -242,9 +244,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		private void UpdateDeviceReceived(ByteArray packet) {
 			if (packet.Length >= 1) {
 				int id = packet[0];
-				if (devices[id] != null) {
-					lock (devices[id]) {
-						if (devices[id].Update(++packet)) {
+				if (registers[id] != null) {
+					lock (registers[id]) {
+						if (registers[id].Update(++packet)) {
 							//updateTimers[id].Reset();
 							messageReceived[id] = true;
 

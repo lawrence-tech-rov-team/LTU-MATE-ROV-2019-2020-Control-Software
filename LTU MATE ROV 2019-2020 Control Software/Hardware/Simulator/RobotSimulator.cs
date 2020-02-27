@@ -11,17 +11,35 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
 
 		private int Latency;
 		private RobotSimulatorUI UI;
-		private IDevice[] devices = new IDevice[256];
+		private List<ISimulatorDevice> devices = new List<ISimulatorDevice>();
+		private IRegister[] registers = new IRegister[256];
+		private System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
 
 		public RobotSimulator(int latency = 5) {
 			Latency = latency;
+			updateTimer.Interval = 10;
+			updateTimer.Tick += UpdateTimer_Tick;
+			updateTimer.Start();
 		}
 
-		public void RegisterDevice(IDevice simDevice) {
-			if(devices[simDevice.Id] == null) {
-				devices[simDevice.Id] = simDevice;
-			} else {
-				//TODO warn of collision
+		private void UpdateTimer_Tick(object sender, EventArgs e) {
+			lock (devices) {
+				foreach (ISimulatorDevice device in devices) {
+					device.Update();
+				}
+			}
+		}
+
+		public void RegisterDevice(ISimulatorDevice simDevice) {
+			foreach(IRegister register in simDevice) {
+				if (registers[register.Id] == null) {
+					registers[register.Id] = register;
+				} else {
+					//TODO warn of collision
+				}
+			}
+			lock (devices) {
+				devices.Add(simDevice);
 			}
 		}
 
@@ -77,9 +95,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
 			if ((packet != null) && (packet.Command == Command.UpdateDevice)) {
 				if (packet.Data.Length > 0) {
 					byte id = packet.Data[0];
-					if (devices[id] != null) {
-						byte[] data = devices[id].SendUpdate;
-						if (data == null) data = devices[id].ResendUpdate;
+					if (registers[id] != null) {
+						byte[] data = registers[id].SendUpdate;
+						if (data == null) data = registers[id].ResendUpdate;
 						if (data == null) return null;
 						byte[] responseBytes = new byte[data.Length + 1];
 						Array.Copy(data, 0, responseBytes, 1, data.Length);

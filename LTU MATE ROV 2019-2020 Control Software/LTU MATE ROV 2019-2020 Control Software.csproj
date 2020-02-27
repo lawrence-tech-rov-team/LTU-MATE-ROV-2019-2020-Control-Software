@@ -70,13 +70,14 @@
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Hardware\Ethernet\IEthernetLayer.cs" />
     <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
-    <Compile Include="Hardware\IActuator.cs" />
     <Compile Include="Hardware\IDevice.cs" />
-    <Compile Include="Hardware\IReadableDevice.cs" />
+    <Compile Include="Hardware\ReadableRegister.cs" />
     <Compile Include="Hardware\IRegister.cs" />
+    <Compile Include="Hardware\Simulator\DigitalActuatorSimulator.cs" />
+    <Compile Include="Hardware\Simulator\ISimulatorDevice.cs" />
+    <Compile Include="Hardware\WritableRegister.cs" />
     <Compile Include="Hardware\Simulator\DigitalSensorSimulator.cs" />
     <Compile Include="Hardware\Simulator\RobotSimulator.cs" />
-    <Compile Include="Hardware\IWritableDevice.cs" />
     <Compile Include="Hardware\DataTypes\BoolData.cs" />
     <Compile Include="Hardware\DataTypes\FloatData.cs" />
     <Compile Include="Hardware\DataTypes\IDataType.cs" />
@@ -88,7 +89,6 @@
     </Compile>
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
     <Compile Include="Hardware\Sensors\IMU.cs" />
-    <Compile Include="Hardware\ISensor.cs" />
     <Compile Include="ILogging.cs" />
     <Compile Include="InputControls\ControllerType.cs" />
     <Compile Include="InputControls\IController.cs" />

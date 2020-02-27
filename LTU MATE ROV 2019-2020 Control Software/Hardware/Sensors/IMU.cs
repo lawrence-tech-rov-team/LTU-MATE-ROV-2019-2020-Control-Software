@@ -9,10 +9,17 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
 	public class IMU : IDevice {
 
-		private IRegister[] allRegisters;
-		public override IEnumerable<IRegister> Registers => allRegisters;
+		public override IRegister[] Registers => new IRegister[]{
+			TemperatureRegister,
+			AccelerometerRegister
+		};
 
-		public sbyte Temperature { get => Data1?.Value ?? default(sbyte); }
+		private ReadableRegister<Int8Data> TemperatureRegister;
+		public sbyte Temperature => TemperatureRegister.Value?.Value ?? default(sbyte); //TODO rename register ".Value" to ".Data"
+
+		private ReadableRegister<Vector3Data> AccelerometerRegister;
+		public Vector3Data Accelerometer => AccelerometerRegister.Value;
+
 		//public Vector3Data Magnetometer { get => Data2; } //TODO return vector3 data
 		//public Vector3Data Gyroscope { get => Data3; }
 		//public Vector3Data Euler { get => Data4; }
@@ -21,10 +28,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
 		//public Vector3Data Gravity { get => Data7; }
 		//public Vector4Data Quaternion { get => Data8; }
 
-		public IMU(byte ID) : base(ID) {
-			allRegisters = new IRegister[] {
-
-			};
+		public IMU(byte TemperatureId, float TemperatureRefreshRate, byte AccelerometerId, float AccelerometerRefreshRate) {
+			TemperatureRegister = new ReadableRegister<Int8Data>(TemperatureId, TemperatureRefreshRate);
+			AccelerometerRegister = new ReadableRegister<Vector3Data>(AccelerometerId, AccelerometerRefreshRate);
 		}
 
 	}

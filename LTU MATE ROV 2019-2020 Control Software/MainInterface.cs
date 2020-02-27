@@ -115,14 +115,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			else TestBtnMeter.Value = dataa;
 
 			TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
-			Vector3Data euler = rov.IMU.Euler;
+			//Vector3Data euler = rov.IMU.Euler;
 			Vector3Data accel = rov.IMU.Accelerometer;
 
-			if (euler != null) {
+			/*if (euler != null) {
 				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
 				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
 				EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
-			}
+			}*/
 
 			if (accel != null) {
 				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";

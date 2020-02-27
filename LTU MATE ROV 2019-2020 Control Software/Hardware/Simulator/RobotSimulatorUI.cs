@@ -21,6 +21,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
 
 		private void RobotSimulatorUI_Load(object sender, EventArgs e) {
 			simulator.RegisterDevice(new DigitalSensorSimulator(0, TestBtn0));
+			simulator.RegisterDevice(new DigitalActuatorSimulator(3, Led));
 		}
 
 		private void RobotSimulatorUI_FormClosing(object sender, FormClosingEventArgs e) {

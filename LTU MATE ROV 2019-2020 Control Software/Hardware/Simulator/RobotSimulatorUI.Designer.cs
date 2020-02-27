@@ -24,6 +24,7 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.TestBtn0 = new System.Windows.Forms.Button();
+			this.Led = new Meters.IOMeter();
 			this.SuspendLayout();
 			// 
 			// TestBtn0
@@ -35,11 +36,26 @@
 			this.TestBtn0.Text = "Test Button";
 			this.TestBtn0.UseVisualStyleBackColor = true;
 			// 
+			// Led
+			// 
+			this.Led.BorderColor = System.Drawing.Color.Black;
+			this.Led.Location = new System.Drawing.Point(314, 9);
+			this.Led.Name = "Led";
+			this.Led.OffColor = System.Drawing.Color.Firebrick;
+			this.Led.OnColor = System.Drawing.Color.Red;
+			this.Led.Size = new System.Drawing.Size(35, 35);
+			this.Led.Style = Meters.ButtonStyle.Round;
+			this.Led.TabIndex = 1;
+			this.Led.Text = "LED";
+			this.Led.UseVisualStyleBackColor = true;
+			this.Led.Value = false;
+			// 
 			// RobotSimulatorUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(607, 321);
+			this.Controls.Add(this.Led);
 			this.Controls.Add(this.TestBtn0);
 			this.Name = "RobotSimulatorUI";
 			this.Text = "RobotSimulatorUI";
@@ -52,5 +68,6 @@
 		#endregion
 
 		private System.Windows.Forms.Button TestBtn0;
+		private Meters.IOMeter Led;
 	}
 }

@@ -7,20 +7,28 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator {
-	public class DigitalSensorSimulator : IWritableDevice<BoolData> {
+	public class DigitalSensorSimulator : ISimulatorDevice {
+		public override IRegister[] Registers => throw new NotImplementedException();
 
-		public DigitalSensorSimulator(byte id, Button button) : base(id, 0) {
+		private WritableRegister<BoolData> ioRegister;
+
+		public DigitalSensorSimulator(byte id, Button button) {
+			ioRegister = new WritableRegister<BoolData>(id, 0f);
+			ioRegister.Value = new BoolData(false);
 			button.MouseDown += Button_MouseDown;
 			button.MouseUp += Button_MouseUp;
-			base.Data1 = new BoolData(false);
 		}
 
 		private void Button_MouseUp(object sender, MouseEventArgs e) {
-			base.Data1 = new BoolData(false);
+			ioRegister.Value = new BoolData(false);
 		}
 
 		private void Button_MouseDown(object sender, MouseEventArgs e) {
-			base.Data1 = new BoolData(true);
+			ioRegister.Value = new BoolData(true);
+		}
+
+		public override void Update() {
+			
 		}
 	}
 }
