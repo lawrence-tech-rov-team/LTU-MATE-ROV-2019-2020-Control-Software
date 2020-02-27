@@ -7,7 +7,20 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
+
 	public abstract class IDevice {
+
+		public abstract IEnumerable<IRegister> Registers { get; }
+
+		public byte Id { get; }
+
+		protected IDevice(byte id) {
+			Id = id;
+		}
+
+	}
+
+	/*public abstract class IDevice {
 
 		/// <summary>
 		/// The unique Id of the device.
@@ -191,6 +204,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 
 		}
 
-	}
+	}*/
 
 }
