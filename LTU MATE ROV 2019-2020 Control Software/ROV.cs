@@ -27,7 +27,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
 			RegisterDevice(TestButton);
-		//	RegisterDevice(IMU);
+			RegisterDevice(IMU);
 		//	RegisterDevice(Led);
 		}
 
