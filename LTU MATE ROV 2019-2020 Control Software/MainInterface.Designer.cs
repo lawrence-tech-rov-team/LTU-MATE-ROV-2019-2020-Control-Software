@@ -60,6 +60,8 @@
 			this.AccelZ = new System.Windows.Forms.Label();
 			this.WaterTempLabel = new System.Windows.Forms.Label();
 			this.PressureLabel = new System.Windows.Forms.Label();
+			this.AltitudeLabel = new System.Windows.Forms.Label();
+			this.DepthLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -405,11 +407,31 @@
 			this.PressureLabel.TabIndex = 20;
 			this.PressureLabel.Text = "Pressure:";
 			// 
+			// AltitudeLabel
+			// 
+			this.AltitudeLabel.AutoSize = true;
+			this.AltitudeLabel.Location = new System.Drawing.Point(519, 347);
+			this.AltitudeLabel.Name = "AltitudeLabel";
+			this.AltitudeLabel.Size = new System.Drawing.Size(63, 17);
+			this.AltitudeLabel.TabIndex = 21;
+			this.AltitudeLabel.Text = "Altitude: ";
+			// 
+			// DepthLabel
+			// 
+			this.DepthLabel.AutoSize = true;
+			this.DepthLabel.Location = new System.Drawing.Point(519, 364);
+			this.DepthLabel.Name = "DepthLabel";
+			this.DepthLabel.Size = new System.Drawing.Size(54, 17);
+			this.DepthLabel.TabIndex = 22;
+			this.DepthLabel.Text = "Depth: ";
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 450);
+			this.Controls.Add(this.DepthLabel);
+			this.Controls.Add(this.AltitudeLabel);
 			this.Controls.Add(this.PressureLabel);
 			this.Controls.Add(this.WaterTempLabel);
 			this.Controls.Add(this.AccelZ);
@@ -481,6 +503,8 @@
 		private System.Windows.Forms.ToolStripMenuItem simulatorToolStripMenuItem;
 		private System.Windows.Forms.Label WaterTempLabel;
 		private System.Windows.Forms.Label PressureLabel;
+		private System.Windows.Forms.Label AltitudeLabel;
+		private System.Windows.Forms.Label DepthLabel;
 	}
 }
 

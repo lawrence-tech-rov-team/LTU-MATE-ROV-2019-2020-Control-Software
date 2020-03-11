@@ -136,6 +136,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 				WaterTempLabel.Text = "Water Temp: " + rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10) + "°C";
 				PressureLabel.Text = "Pressure: " + rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10) + " mBar";
+				AltitudeLabel.Text = "Altitude: " + rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10) + " m above mean sea";
+				DepthLabel.Text = "Depth: " + rov.PressureSensor.Depth.ToString("0.00").PadLeft(10) + " m";
 
 				//InputControlData data = RobotThread.GetInputData();
 				//if (data == null) data = new InputControlData(); 
