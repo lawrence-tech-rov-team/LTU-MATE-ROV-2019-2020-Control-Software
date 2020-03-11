@@ -37,7 +37,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 		public override bool Parse(ByteArray bytes) {
 			if (bytes.Length == NumberOfBytes) {
 				try {
-					Value = BitConverter.ToSingle(bytes.ToArray(), 0);
+					Value = BitConverter.ToSingle(bytes.ToArray(), 0); //TODO can this be built-in?
 					return true;
 				}catch(Exception) {
 					return false;

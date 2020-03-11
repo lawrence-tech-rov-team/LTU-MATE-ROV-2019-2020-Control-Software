@@ -45,14 +45,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			
 		}
 	}
-	/*
-	public abstract class IRegister<T1, T2>
+	
+	public abstract class IRegister<T1, T2> : IRegister
 		where T1 : IDataType, new()
 		where T2 : IDataType, new()
 	{
 		protected volatile T1 Data1;
 		protected volatile T2 Data2;
-	}*/
+
+		protected IRegister(byte id, float refreshRate) : base(id, refreshRate) {
+
+		}
+	}
 
 
 	/*

@@ -73,6 +73,7 @@
     <Compile Include="Hardware\IDevice.cs" />
     <Compile Include="Hardware\ReadableRegister.cs" />
     <Compile Include="Hardware\IRegister.cs" />
+    <Compile Include="Hardware\Sensors\PressureSensor.cs" />
     <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
     <Compile Include="Simulator\ISimulatorDevice.cs" />
     <Compile Include="Hardware\WritableRegister.cs" />

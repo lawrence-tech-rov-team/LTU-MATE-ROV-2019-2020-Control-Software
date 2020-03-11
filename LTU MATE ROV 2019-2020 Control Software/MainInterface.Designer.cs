@@ -40,6 +40,7 @@
 			this.speedTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toggleLedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.simulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.KeyboardBtn = new System.Windows.Forms.RadioButton();
 			this.PowerMeter = new Meters.LinearMeter();
 			this.InputDataTimer = new System.Windows.Forms.Timer(this.components);
@@ -57,7 +58,8 @@
 			this.AccelX = new System.Windows.Forms.Label();
 			this.AccelY = new System.Windows.Forms.Label();
 			this.AccelZ = new System.Windows.Forms.Label();
-			this.simulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.WaterTempLabel = new System.Windows.Forms.Label();
+			this.PressureLabel = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -121,14 +123,14 @@
 			// saveExcelToolStripMenuItem
 			// 
 			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
-			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.saveExcelToolStripMenuItem.Text = "Save Excel";
 			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
 			// 
 			// saveCSVToolStripMenuItem
 			// 
 			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.saveCSVToolStripMenuItem.Text = "Save CSV";
 			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
 			// 
@@ -142,57 +144,64 @@
             this.speedTestToolStripMenuItem,
             this.toggleLedToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
-			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
 			// connectToolStripMenuItem
 			// 
 			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-			this.connectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.connectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.connectToolStripMenuItem.Text = "Connect";
 			this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
 			// 
 			// disconnectToolStripMenuItem
 			// 
 			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.disconnectToolStripMenuItem.Text = "Disconnect";
 			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
 			// 
 			// hardwarePingToolStripMenuItem
 			// 
 			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
-			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
 			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
 			// 
 			// pingToolStripMenuItem
 			// 
 			this.pingToolStripMenuItem.Name = "pingToolStripMenuItem";
-			this.pingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.pingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.pingToolStripMenuItem.Text = "Ping";
 			this.pingToolStripMenuItem.Click += new System.EventHandler(this.pingToolStripMenuItem_Click);
 			// 
 			// speedTestToolStripMenuItem
 			// 
 			this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
-			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.speedTestToolStripMenuItem.Text = "Speed Test";
 			this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
 			// 
 			// toggleLedToolStripMenuItem
 			// 
 			this.toggleLedToolStripMenuItem.Name = "toggleLedToolStripMenuItem";
-			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
 			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
+			// 
+			// simulatorToolStripMenuItem
+			// 
+			this.simulatorToolStripMenuItem.Name = "simulatorToolStripMenuItem";
+			this.simulatorToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
+			this.simulatorToolStripMenuItem.Text = "Simulator";
+			this.simulatorToolStripMenuItem.Click += new System.EventHandler(this.simulatorToolStripMenuItem_Click);
 			// 
 			// KeyboardBtn
 			// 
@@ -378,18 +387,31 @@
 			this.AccelZ.TabIndex = 18;
 			this.AccelZ.Text = "Accel";
 			// 
-			// simulatorToolStripMenuItem
+			// WaterTempLabel
 			// 
-			this.simulatorToolStripMenuItem.Name = "simulatorToolStripMenuItem";
-			this.simulatorToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
-			this.simulatorToolStripMenuItem.Text = "Simulator";
-			this.simulatorToolStripMenuItem.Click += new System.EventHandler(this.simulatorToolStripMenuItem_Click);
+			this.WaterTempLabel.AutoSize = true;
+			this.WaterTempLabel.Location = new System.Drawing.Point(519, 313);
+			this.WaterTempLabel.Name = "WaterTempLabel";
+			this.WaterTempLabel.Size = new System.Drawing.Size(129, 17);
+			this.WaterTempLabel.TabIndex = 19;
+			this.WaterTempLabel.Text = "Water Temp: -99*C";
+			// 
+			// PressureLabel
+			// 
+			this.PressureLabel.AutoSize = true;
+			this.PressureLabel.Location = new System.Drawing.Point(519, 330);
+			this.PressureLabel.Name = "PressureLabel";
+			this.PressureLabel.Size = new System.Drawing.Size(69, 17);
+			this.PressureLabel.TabIndex = 20;
+			this.PressureLabel.Text = "Pressure:";
 			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 450);
+			this.Controls.Add(this.PressureLabel);
+			this.Controls.Add(this.WaterTempLabel);
 			this.Controls.Add(this.AccelZ);
 			this.Controls.Add(this.AccelY);
 			this.Controls.Add(this.AccelX);
@@ -457,6 +479,8 @@
 		private System.Windows.Forms.Label AccelY;
 		private System.Windows.Forms.Label AccelZ;
 		private System.Windows.Forms.ToolStripMenuItem simulatorToolStripMenuItem;
+		private System.Windows.Forms.Label WaterTempLabel;
+		private System.Windows.Forms.Label PressureLabel;
 	}
 }
 

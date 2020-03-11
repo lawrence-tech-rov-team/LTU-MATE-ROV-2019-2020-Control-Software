@@ -134,6 +134,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 					AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
 				}
 
+				WaterTempLabel.Text = "Water Temp: " + rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10) + "°C";
+				PressureLabel.Text = "Pressure: " + rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10) + " mBar";
+
 				//InputControlData data = RobotThread.GetInputData();
 				//if (data == null) data = new InputControlData(); 
 				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
