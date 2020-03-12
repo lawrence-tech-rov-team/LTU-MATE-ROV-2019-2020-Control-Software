@@ -63,7 +63,10 @@
   <ItemGroup>
     <Compile Include="ControlSystem.cs" />
     <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
+    <Compile Include="Hardware\Actuators\Servo.cs" />
     <Compile Include="Hardware\DataTypes\Int8Data.cs" />
+    <Compile Include="Hardware\DataTypes\UInt16Data.cs" />
+    <Compile Include="Hardware\DataTypes\UInt8Data.cs" />
     <Compile Include="Hardware\DataTypes\Vector3Data.cs" />
     <Compile Include="Hardware\DataTypes\Vector4Data.cs" />
     <Compile Include="Hardware\Ethernet\Command.cs" />

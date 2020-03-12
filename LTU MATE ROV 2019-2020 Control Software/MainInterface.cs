@@ -296,5 +296,53 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				rov.Connect();
 			}
 		}
+
+		private void PosTrackBar_Scroll(object sender, EventArgs e) {
+			byte val = (byte)PosTrackBar.Value;
+			PosLabel.Text = val.ToString();
+			rov.ServoA1.SetPosition(val);
+		}
+
+		private void MinTrackBar_Scroll(object sender, EventArgs e) {
+			MinNum.Value = MinTrackBar.Value;
+		}
+
+		private void MinNum_ValueChanged(object sender, EventArgs e) {
+			ushort us = 0;
+
+			try {
+				us = decimal.ToUInt16(MinNum.Value);
+				
+			} catch (Exception) {
+				return;
+			}
+
+			if (us < 500) us = 500;
+			else if (us > 1499) us = 1499;
+			rov.ServoA1.MinimumPulse = us;
+		}
+
+		private void MaxTrackBar_Scroll(object sender, EventArgs e) {
+			MaxNum.Value = MaxTrackBar.Value;
+		}
+
+		private void MaxNum_ValueChanged(object sender, EventArgs e) {
+			ushort us = 0;
+
+			try {
+				us = decimal.ToUInt16(MaxNum.Value);
+
+			} catch (Exception) {
+				return;
+			}
+
+			if (us < 1501) us = 1501;
+			else if (us > 2500) us = 2500;
+			rov.ServoA1.MaximumPulse = us;
+		}
+
+		private void EnableServo_CheckedChanged(object sender, EventArgs e) {
+			rov.ServoA1.Enable = EnableServo.Checked;
+		}
 	}
 }

@@ -62,8 +62,20 @@
 			this.PressureLabel = new System.Windows.Forms.Label();
 			this.AltitudeLabel = new System.Windows.Forms.Label();
 			this.DepthLabel = new System.Windows.Forms.Label();
+			this.PosTrackBar = new System.Windows.Forms.TrackBar();
+			this.MinTrackBar = new System.Windows.Forms.TrackBar();
+			this.PosLabel = new System.Windows.Forms.Label();
+			this.MaxTrackBar = new System.Windows.Forms.TrackBar();
+			this.MinNum = new System.Windows.Forms.NumericUpDown();
+			this.MaxNum = new System.Windows.Forms.NumericUpDown();
+			this.EnableServo = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MinTrackBar)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MaxTrackBar)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MinNum)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MaxNum)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
@@ -392,7 +404,7 @@
 			// WaterTempLabel
 			// 
 			this.WaterTempLabel.AutoSize = true;
-			this.WaterTempLabel.Location = new System.Drawing.Point(519, 313);
+			this.WaterTempLabel.Location = new System.Drawing.Point(461, 274);
 			this.WaterTempLabel.Name = "WaterTempLabel";
 			this.WaterTempLabel.Size = new System.Drawing.Size(129, 17);
 			this.WaterTempLabel.TabIndex = 19;
@@ -401,7 +413,7 @@
 			// PressureLabel
 			// 
 			this.PressureLabel.AutoSize = true;
-			this.PressureLabel.Location = new System.Drawing.Point(519, 330);
+			this.PressureLabel.Location = new System.Drawing.Point(461, 291);
 			this.PressureLabel.Name = "PressureLabel";
 			this.PressureLabel.Size = new System.Drawing.Size(69, 17);
 			this.PressureLabel.TabIndex = 20;
@@ -410,7 +422,7 @@
 			// AltitudeLabel
 			// 
 			this.AltitudeLabel.AutoSize = true;
-			this.AltitudeLabel.Location = new System.Drawing.Point(519, 347);
+			this.AltitudeLabel.Location = new System.Drawing.Point(461, 308);
 			this.AltitudeLabel.Name = "AltitudeLabel";
 			this.AltitudeLabel.Size = new System.Drawing.Size(63, 17);
 			this.AltitudeLabel.TabIndex = 21;
@@ -419,17 +431,121 @@
 			// DepthLabel
 			// 
 			this.DepthLabel.AutoSize = true;
-			this.DepthLabel.Location = new System.Drawing.Point(519, 364);
+			this.DepthLabel.Location = new System.Drawing.Point(461, 325);
 			this.DepthLabel.Name = "DepthLabel";
 			this.DepthLabel.Size = new System.Drawing.Size(54, 17);
 			this.DepthLabel.TabIndex = 22;
 			this.DepthLabel.Text = "Depth: ";
 			// 
+			// PosTrackBar
+			// 
+			this.PosTrackBar.Location = new System.Drawing.Point(461, 347);
+			this.PosTrackBar.Maximum = 255;
+			this.PosTrackBar.Name = "PosTrackBar";
+			this.PosTrackBar.Size = new System.Drawing.Size(442, 56);
+			this.PosTrackBar.TabIndex = 23;
+			this.PosTrackBar.Scroll += new System.EventHandler(this.PosTrackBar_Scroll);
+			// 
+			// MinTrackBar
+			// 
+			this.MinTrackBar.Location = new System.Drawing.Point(461, 409);
+			this.MinTrackBar.Maximum = 1499;
+			this.MinTrackBar.Minimum = 500;
+			this.MinTrackBar.Name = "MinTrackBar";
+			this.MinTrackBar.Size = new System.Drawing.Size(442, 56);
+			this.MinTrackBar.TabIndex = 24;
+			this.MinTrackBar.Value = 500;
+			this.MinTrackBar.Scroll += new System.EventHandler(this.MinTrackBar_Scroll);
+			// 
+			// PosLabel
+			// 
+			this.PosLabel.AutoSize = true;
+			this.PosLabel.Location = new System.Drawing.Point(423, 364);
+			this.PosLabel.Name = "PosLabel";
+			this.PosLabel.Size = new System.Drawing.Size(32, 17);
+			this.PosLabel.TabIndex = 25;
+			this.PosLabel.Text = "255";
+			// 
+			// MaxTrackBar
+			// 
+			this.MaxTrackBar.Location = new System.Drawing.Point(461, 471);
+			this.MaxTrackBar.Maximum = 2500;
+			this.MaxTrackBar.Minimum = 1501;
+			this.MaxTrackBar.Name = "MaxTrackBar";
+			this.MaxTrackBar.Size = new System.Drawing.Size(442, 56);
+			this.MaxTrackBar.TabIndex = 26;
+			this.MaxTrackBar.Value = 1501;
+			this.MaxTrackBar.Scroll += new System.EventHandler(this.MaxTrackBar_Scroll);
+			// 
+			// MinNum
+			// 
+			this.MinNum.Location = new System.Drawing.Point(375, 418);
+			this.MinNum.Maximum = new decimal(new int[] {
+            1499,
+            0,
+            0,
+            0});
+			this.MinNum.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+			this.MinNum.Name = "MinNum";
+			this.MinNum.Size = new System.Drawing.Size(80, 22);
+			this.MinNum.TabIndex = 27;
+			this.MinNum.Value = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+			this.MinNum.ValueChanged += new System.EventHandler(this.MinNum_ValueChanged);
+			// 
+			// MaxNum
+			// 
+			this.MaxNum.Location = new System.Drawing.Point(375, 471);
+			this.MaxNum.Maximum = new decimal(new int[] {
+            2500,
+            0,
+            0,
+            0});
+			this.MaxNum.Minimum = new decimal(new int[] {
+            1501,
+            0,
+            0,
+            0});
+			this.MaxNum.Name = "MaxNum";
+			this.MaxNum.Size = new System.Drawing.Size(80, 22);
+			this.MaxNum.TabIndex = 28;
+			this.MaxNum.Value = new decimal(new int[] {
+            1501,
+            0,
+            0,
+            0});
+			this.MaxNum.ValueChanged += new System.EventHandler(this.MaxNum_ValueChanged);
+			// 
+			// EnableServo
+			// 
+			this.EnableServo.AutoSize = true;
+			this.EnableServo.Location = new System.Drawing.Point(748, 325);
+			this.EnableServo.Name = "EnableServo";
+			this.EnableServo.Size = new System.Drawing.Size(74, 21);
+			this.EnableServo.TabIndex = 29;
+			this.EnableServo.Text = "Enable";
+			this.EnableServo.UseVisualStyleBackColor = true;
+			this.EnableServo.CheckedChanged += new System.EventHandler(this.EnableServo_CheckedChanged);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(938, 450);
+			this.ClientSize = new System.Drawing.Size(938, 532);
+			this.Controls.Add(this.EnableServo);
+			this.Controls.Add(this.MaxNum);
+			this.Controls.Add(this.MinNum);
+			this.Controls.Add(this.MaxTrackBar);
+			this.Controls.Add(this.PosLabel);
+			this.Controls.Add(this.MinTrackBar);
+			this.Controls.Add(this.PosTrackBar);
 			this.Controls.Add(this.DepthLabel);
 			this.Controls.Add(this.AltitudeLabel);
 			this.Controls.Add(this.PressureLabel);
@@ -460,6 +576,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MinTrackBar)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MaxTrackBar)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MinNum)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MaxNum)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -505,6 +626,13 @@
 		private System.Windows.Forms.Label PressureLabel;
 		private System.Windows.Forms.Label AltitudeLabel;
 		private System.Windows.Forms.Label DepthLabel;
+		private System.Windows.Forms.TrackBar PosTrackBar;
+		private System.Windows.Forms.TrackBar MinTrackBar;
+		private System.Windows.Forms.Label PosLabel;
+		private System.Windows.Forms.TrackBar MaxTrackBar;
+		private System.Windows.Forms.NumericUpDown MinNum;
+		private System.Windows.Forms.NumericUpDown MaxNum;
+		private System.Windows.Forms.CheckBox EnableServo;
 	}
 }
 
