@@ -298,36 +298,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void PosTrackBar_Scroll(object sender, EventArgs e) {
-			byte val = (byte)PosTrackBar.Value;
-			PosLabel.Text = val.ToString();
-			rov.ServoA1.SetPosition(val);
-		}
-
-		private void MinTrackBar_Scroll(object sender, EventArgs e) {
-			MinNum.Value = MinTrackBar.Value;
-		}
-
-		private void MinNum_ValueChanged(object sender, EventArgs e) {
-			ushort us = 0;
-
-			try {
-				us = decimal.ToUInt16(MinNum.Value);
-				
-			} catch (Exception) {
-				return;
-			}
-
-			if (us < 500) us = 500;
-			else if (us > 1499) us = 1499;
-			rov.ServoA1.MinimumPulse = us;
-		}
-
-		private void MaxTrackBar_Scroll(object sender, EventArgs e) {
-			MaxNum.Value = MaxTrackBar.Value;
+			//byte val = (byte)PosTrackBar.Value;
+			//PosLabel.Text = val.ToString();
+			//rov.ServoA1.SetPosition(val);
+			PosNum.Value = PosTrackBar.Value;
 		}
 
 		private void MaxNum_ValueChanged(object sender, EventArgs e) {
-			ushort us = 0;
+			/*ushort us = 0;
 
 			try {
 				us = decimal.ToUInt16(MaxNum.Value);
@@ -338,11 +316,26 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 			if (us < 1501) us = 1501;
 			else if (us > 2500) us = 2500;
-			rov.ServoA1.MaximumPulse = us;
+			rov.ServoA1.MaximumPulse = us;*/
 		}
 
 		private void EnableServo_CheckedChanged(object sender, EventArgs e) {
 			rov.ServoA1.Enable = EnableServo.Checked;
+		}
+
+		private void PosNum_ValueChanged(object sender, EventArgs e) {
+			ushort us = 0;
+
+			try {
+				us = decimal.ToUInt16(PosNum.Value);
+
+			} catch (Exception) {
+				return;
+			}
+
+			if (us < 0) us = 0;
+			else if (us > 3000) us = 3000;
+			rov.ServoA1.Pulse = us;
 		}
 	}
 }

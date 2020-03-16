@@ -28,9 +28,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		public Servo ServoA1 { get; } = new Servo(
 			//Register			Id		Refresh Rate
 			/*Position*/		5,
-			/*Min*/				6,
-			/*Max*/				7,
-			/*Enable*/			8
+			/*Enable*/			6
 		);
 
 		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
