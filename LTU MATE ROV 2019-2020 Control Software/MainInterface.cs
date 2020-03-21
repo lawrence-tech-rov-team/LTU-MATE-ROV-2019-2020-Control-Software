@@ -54,7 +54,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.RequestStop();
 			//Stop other threads
 			//RobotThread.Stop();
-			rov.Stop();
+			rov.Stop(); //TODO before disconnecting, release all servos
 		}
 
 		private void RunCommand(UdpPacket packet) {
@@ -114,9 +114,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
 			lock (this) {
-				bool dataa = rov.TestButton.State;
-				if (dataa == null) TestBtnMeter.Value = false; //TODO wtf why is this line here
-				else TestBtnMeter.Value = dataa;
+				TestBtnMeter.Value = rov.TestButton.State;
+				TestBtn2.Value = rov.TestButton2.State;
 
 				TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
 				//Vector3Data euler = rov.IMU.Euler;
@@ -304,21 +303,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			PosNum.Value = PosTrackBar.Value;
 		}
 
-		private void MaxNum_ValueChanged(object sender, EventArgs e) {
-			/*ushort us = 0;
-
-			try {
-				us = decimal.ToUInt16(MaxNum.Value);
-
-			} catch (Exception) {
-				return;
-			}
-
-			if (us < 1501) us = 1501;
-			else if (us > 2500) us = 2500;
-			rov.ServoA1.MaximumPulse = us;*/
-		}
-
 		private void EnableServo_CheckedChanged(object sender, EventArgs e) {
 			rov.ServoA1.Enable = EnableServo.Checked;
 		}
@@ -336,6 +320,37 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			if (us < 0) us = 0;
 			else if (us > 3000) us = 3000;
 			rov.ServoA1.Pulse = us;
+		}
+
+		private void EnableServo2_CheckedChanged(object sender, EventArgs e) {
+			rov.ServoC1.Enable = EnableServo2.Checked;
+		}
+
+		private void PosTrackBar2_Scroll(object sender, EventArgs e) {
+			PosNum2.Value = PosTrackBar2.Value;
+		}
+
+		private void PosNum2_ValueChanged(object sender, EventArgs e) {
+			ushort us = 0;
+
+			try {
+				us = decimal.ToUInt16(PosNum2.Value);
+
+			} catch (Exception) {
+				return;
+			}
+
+			if (us < 0) us = 0;
+			else if (us > 3000) us = 3000;
+			rov.ServoC1.Pulse = us;
+		}
+
+		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
+			rov.LED.Enabled = true;
+		}
+
+		private void LedBtn_MouseUp(object sender, MouseEventArgs e) {
+			rov.LED.Enabled = false;
 		}
 	}
 }

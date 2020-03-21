@@ -17,7 +17,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		protected override int MessageTimemout => 500;
 
 		//public IMU IMU { get; } = new IMU(0);
-		public DigitalSensor TestButton { get; } = new DigitalSensor(0, 100);
+		public DigitalSensor TestButton { get; } = new DigitalSensor(0, 20);
 		public IMU IMU { get; } = new IMU(
 			//Register			Id		Refresh Rate
 			/*Temperature*/		1,		0.5f,
@@ -30,13 +30,24 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			/*Position*/		5,
 			/*Enable*/			6
 		);
+		public Servo ServoC1 { get; } = new Servo(
+			//Register			Id		Refresh Rate
+			/*Position*/        7,
+			/*Enable*/          8
+		);
+		//TODO if a device isn't registered, it times out?
+		public DigitalSensor TestButton2 { get; } = new DigitalSensor(9, 20);
+		public DigitalActuator LED { get; } = new DigitalActuator(10, 20);
 
 		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
 			RegisterDevice(TestButton);
+			RegisterDevice(TestButton2);
+			RegisterDevice(LED);
 			RegisterDevice(IMU);
 			//	RegisterDevice(Led);
 			RegisterDevice(PressureSensor);
 			RegisterDevice(ServoA1);
+			RegisterDevice(ServoC1);
 		}
 
 	}

@@ -64,13 +64,18 @@
 			this.DepthLabel = new System.Windows.Forms.Label();
 			this.PosTrackBar = new System.Windows.Forms.TrackBar();
 			this.PosNum = new System.Windows.Forms.NumericUpDown();
-			this.MaxNum = new System.Windows.Forms.NumericUpDown();
+			this.PosNum2 = new System.Windows.Forms.NumericUpDown();
 			this.EnableServo = new System.Windows.Forms.CheckBox();
+			this.EnableServo2 = new System.Windows.Forms.CheckBox();
+			this.PosTrackBar2 = new System.Windows.Forms.TrackBar();
+			this.TestBtn2 = new Meters.IOMeter();
+			this.LedBtn = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PosNum)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.MaxNum)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PosNum2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
@@ -132,14 +137,14 @@
 			// saveExcelToolStripMenuItem
 			// 
 			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
-			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveExcelToolStripMenuItem.Text = "Save Excel";
 			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
 			// 
 			// saveCSVToolStripMenuItem
 			// 
 			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveCSVToolStripMenuItem.Text = "Save CSV";
 			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
 			// 
@@ -153,55 +158,55 @@
             this.speedTestToolStripMenuItem,
             this.toggleLedToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
-			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
 			// connectToolStripMenuItem
 			// 
 			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-			this.connectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.connectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.connectToolStripMenuItem.Text = "Connect";
 			this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
 			// 
 			// disconnectToolStripMenuItem
 			// 
 			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.disconnectToolStripMenuItem.Text = "Disconnect";
 			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
 			// 
 			// hardwarePingToolStripMenuItem
 			// 
 			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
-			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
 			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
 			// 
 			// pingToolStripMenuItem
 			// 
 			this.pingToolStripMenuItem.Name = "pingToolStripMenuItem";
-			this.pingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.pingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.pingToolStripMenuItem.Text = "Ping";
 			this.pingToolStripMenuItem.Click += new System.EventHandler(this.pingToolStripMenuItem_Click);
 			// 
 			// speedTestToolStripMenuItem
 			// 
 			this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
-			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.speedTestToolStripMenuItem.Text = "Speed Test";
 			this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
 			// 
 			// toggleLedToolStripMenuItem
 			// 
 			this.toggleLedToolStripMenuItem.Name = "toggleLedToolStripMenuItem";
-			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
 			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
@@ -460,28 +465,23 @@
             0});
 			this.PosNum.ValueChanged += new System.EventHandler(this.PosNum_ValueChanged);
 			// 
-			// MaxNum
+			// PosNum2
 			// 
-			this.MaxNum.Location = new System.Drawing.Point(485, 424);
-			this.MaxNum.Maximum = new decimal(new int[] {
-            2500,
+			this.PosNum2.Location = new System.Drawing.Point(375, 470);
+			this.PosNum2.Maximum = new decimal(new int[] {
+            3000,
             0,
             0,
             0});
-			this.MaxNum.Minimum = new decimal(new int[] {
-            1501,
+			this.PosNum2.Name = "PosNum2";
+			this.PosNum2.Size = new System.Drawing.Size(80, 22);
+			this.PosNum2.TabIndex = 28;
+			this.PosNum2.Value = new decimal(new int[] {
+            1500,
             0,
             0,
             0});
-			this.MaxNum.Name = "MaxNum";
-			this.MaxNum.Size = new System.Drawing.Size(80, 22);
-			this.MaxNum.TabIndex = 28;
-			this.MaxNum.Value = new decimal(new int[] {
-            1501,
-            0,
-            0,
-            0});
-			this.MaxNum.ValueChanged += new System.EventHandler(this.MaxNum_ValueChanged);
+			this.PosNum2.ValueChanged += new System.EventHandler(this.PosNum2_ValueChanged);
 			// 
 			// EnableServo
 			// 
@@ -494,13 +494,63 @@
 			this.EnableServo.UseVisualStyleBackColor = true;
 			this.EnableServo.CheckedChanged += new System.EventHandler(this.EnableServo_CheckedChanged);
 			// 
+			// EnableServo2
+			// 
+			this.EnableServo2.AutoSize = true;
+			this.EnableServo2.Location = new System.Drawing.Point(748, 409);
+			this.EnableServo2.Name = "EnableServo2";
+			this.EnableServo2.Size = new System.Drawing.Size(74, 21);
+			this.EnableServo2.TabIndex = 30;
+			this.EnableServo2.Text = "Enable";
+			this.EnableServo2.UseVisualStyleBackColor = true;
+			this.EnableServo2.CheckedChanged += new System.EventHandler(this.EnableServo2_CheckedChanged);
+			// 
+			// PosTrackBar2
+			// 
+			this.PosTrackBar2.Location = new System.Drawing.Point(464, 436);
+			this.PosTrackBar2.Maximum = 3000;
+			this.PosTrackBar2.Name = "PosTrackBar2";
+			this.PosTrackBar2.Size = new System.Drawing.Size(442, 56);
+			this.PosTrackBar2.TabIndex = 31;
+			this.PosTrackBar2.Value = 1500;
+			this.PosTrackBar2.Scroll += new System.EventHandler(this.PosTrackBar2_Scroll);
+			// 
+			// TestBtn2
+			// 
+			this.TestBtn2.BorderColor = System.Drawing.Color.Black;
+			this.TestBtn2.Location = new System.Drawing.Point(53, 265);
+			this.TestBtn2.Name = "TestBtn2";
+			this.TestBtn2.OffColor = System.Drawing.Color.Firebrick;
+			this.TestBtn2.OnColor = System.Drawing.Color.Red;
+			this.TestBtn2.Size = new System.Drawing.Size(35, 35);
+			this.TestBtn2.Style = Meters.ButtonStyle.Round;
+			this.TestBtn2.TabIndex = 32;
+			this.TestBtn2.Text = "Test";
+			this.TestBtn2.UseVisualStyleBackColor = true;
+			this.TestBtn2.Value = false;
+			// 
+			// LedBtn
+			// 
+			this.LedBtn.Location = new System.Drawing.Point(15, 469);
+			this.LedBtn.Name = "LedBtn";
+			this.LedBtn.Size = new System.Drawing.Size(83, 32);
+			this.LedBtn.TabIndex = 33;
+			this.LedBtn.Text = "LED";
+			this.LedBtn.UseVisualStyleBackColor = true;
+			this.LedBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseDown);
+			this.LedBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseUp);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 532);
+			this.Controls.Add(this.LedBtn);
+			this.Controls.Add(this.TestBtn2);
+			this.Controls.Add(this.PosTrackBar2);
+			this.Controls.Add(this.EnableServo2);
 			this.Controls.Add(this.EnableServo);
-			this.Controls.Add(this.MaxNum);
+			this.Controls.Add(this.PosNum2);
 			this.Controls.Add(this.PosNum);
 			this.Controls.Add(this.PosTrackBar);
 			this.Controls.Add(this.DepthLabel);
@@ -535,7 +585,8 @@
 			this.MenuStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.PosNum)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.MaxNum)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PosNum2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -583,8 +634,12 @@
 		private System.Windows.Forms.Label DepthLabel;
 		private System.Windows.Forms.TrackBar PosTrackBar;
 		private System.Windows.Forms.NumericUpDown PosNum;
-		private System.Windows.Forms.NumericUpDown MaxNum;
+		private System.Windows.Forms.NumericUpDown PosNum2;
 		private System.Windows.Forms.CheckBox EnableServo;
+		private System.Windows.Forms.CheckBox EnableServo2;
+		private System.Windows.Forms.TrackBar PosTrackBar2;
+		private Meters.IOMeter TestBtn2;
+		private System.Windows.Forms.Button LedBtn;
 	}
 }
 
