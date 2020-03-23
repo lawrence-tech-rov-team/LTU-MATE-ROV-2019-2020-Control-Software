@@ -1,6 +1,7 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
@@ -34,9 +35,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private LogWindow LogWindow = new LogWindow();
 
 		private ROV rov;
+		private Servo selectedServo;
 
 		public MainInterface() {
 			InitializeComponent();
+
 			//ethernet.OnPacketReceived += RunCommand;
 		}
 
@@ -46,6 +49,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
 			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
+			foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
 			InputDataTimer.Start();
 		}
@@ -102,8 +106,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
 			lock (this) {
-				TestBtnMeter.Value = rov.TestButton.State;
-				TestBtn2.Value = rov.TestButton2.State;
+				TestBtnMeter.Value = rov.Button0.State;
+				TestBtn2.Value = rov.Button1.State;
 
 				TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
 				//Vector3Data euler = rov.IMU.Euler;
@@ -292,45 +296,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void EnableServo_CheckedChanged(object sender, EventArgs e) {
-			rov.ServoA1.Enable = EnableServo.Checked;
+			updateServo();
 		}
 
 		private void PosNum_ValueChanged(object sender, EventArgs e) {
-			ushort us = 0;
-
-			try {
-				us = decimal.ToUInt16(PosNum.Value);
-
-			} catch (Exception) {
-				return;
-			}
-
-			if (us < 0) us = 0;
-			else if (us > 3000) us = 3000;
-			rov.ServoA1.Pulse = us;
-		}
-
-		private void EnableServo2_CheckedChanged(object sender, EventArgs e) {
-			rov.ServoC1.Enable = EnableServo2.Checked;
-		}
-
-		private void PosTrackBar2_Scroll(object sender, EventArgs e) {
-			PosNum2.Value = PosTrackBar2.Value;
-		}
-
-		private void PosNum2_ValueChanged(object sender, EventArgs e) {
-			ushort us = 0;
-
-			try {
-				us = decimal.ToUInt16(PosNum2.Value);
-
-			} catch (Exception) {
-				return;
-			}
-
-			if (us < 0) us = 0;
-			else if (us > 3000) us = 3000;
-			rov.ServoC1.Pulse = us;
+			updateServo();
 		}
 
 		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
@@ -341,8 +311,51 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			rov.Led.Enabled = false;
 		}
 
-		private void button4_Click(object sender, EventArgs e) {
+		private void LetterBox_SelectedIndexChanged(object sender, EventArgs e) {
+			selectedServo = null;
+			int n = -1;
+			if (NumberBox.SelectedItem != null) n = (int)NumberBox.SelectedItem;
+			if(LetterBox.SelectedItem != null) {
+				char c = (char)LetterBox.SelectedItem;
+				NumberBox.Items.Clear();
+				for (int i = 0; i < rov.Servos[c].Length; i++)
+					NumberBox.Items.Add(i + 1);
+				if (n != -1) NumberBox.SelectedIndex = n - 1;
+			}
+			changeSelection();
+			updateServo();
+		}
 
+		private void NumberBox_SelectedIndexChanged(object sender, EventArgs e) {
+			selectedServo = null;
+			changeSelection();
+			updateServo();
+		}
+
+		void changeSelection() {
+			if ((LetterBox.SelectedItem != null) && (NumberBox.SelectedItem != null)) {
+				char c = (char)LetterBox.SelectedItem;
+				int i = (int)NumberBox.SelectedItem - 1;
+				selectedServo = rov.Servos[c][i];
+			}
+		}
+
+		void updateServo() {
+			if (selectedServo == null) return;
+
+			selectedServo.Enable = EnableServo.Checked;
+
+			ushort us = 0;
+			try {
+				us = decimal.ToUInt16(PosNum.Value);
+
+			} catch (Exception) {
+				return;
+			}
+
+			if (us < 0) us = 0;
+			else if (us > 3000) us = 3000;
+			selectedServo.Pulse = us;
 		}
 	}
 }

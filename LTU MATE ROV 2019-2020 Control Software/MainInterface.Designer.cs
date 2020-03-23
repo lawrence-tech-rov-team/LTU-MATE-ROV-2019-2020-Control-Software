@@ -64,19 +64,15 @@
 			this.DepthLabel = new System.Windows.Forms.Label();
 			this.PosTrackBar = new System.Windows.Forms.TrackBar();
 			this.PosNum = new System.Windows.Forms.NumericUpDown();
-			this.PosNum2 = new System.Windows.Forms.NumericUpDown();
 			this.EnableServo = new System.Windows.Forms.CheckBox();
-			this.EnableServo2 = new System.Windows.Forms.CheckBox();
-			this.PosTrackBar2 = new System.Windows.Forms.TrackBar();
 			this.TestBtn2 = new Meters.IOMeter();
 			this.LedBtn = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
+			this.LetterBox = new System.Windows.Forms.ComboBox();
+			this.NumberBox = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.PosNum)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.PosNum2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar2)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
@@ -138,14 +134,14 @@
 			// saveExcelToolStripMenuItem
 			// 
 			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
-			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.saveExcelToolStripMenuItem.Text = "Save Excel";
 			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
 			// 
 			// saveCSVToolStripMenuItem
 			// 
 			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
-			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.saveCSVToolStripMenuItem.Text = "Save CSV";
 			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
 			// 
@@ -159,55 +155,55 @@
             this.speedTestToolStripMenuItem,
             this.toggleLedToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
-			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
 			// connectToolStripMenuItem
 			// 
 			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-			this.connectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.connectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.connectToolStripMenuItem.Text = "Connect";
 			this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
 			// 
 			// disconnectToolStripMenuItem
 			// 
 			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.disconnectToolStripMenuItem.Text = "Disconnect";
 			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
 			// 
 			// hardwarePingToolStripMenuItem
 			// 
 			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
-			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
 			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
 			// 
 			// pingToolStripMenuItem
 			// 
 			this.pingToolStripMenuItem.Name = "pingToolStripMenuItem";
-			this.pingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.pingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.pingToolStripMenuItem.Text = "Ping";
 			this.pingToolStripMenuItem.Click += new System.EventHandler(this.pingToolStripMenuItem_Click);
 			// 
 			// speedTestToolStripMenuItem
 			// 
 			this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
-			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.speedTestToolStripMenuItem.Text = "Speed Test";
 			this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
 			// 
 			// toggleLedToolStripMenuItem
 			// 
 			this.toggleLedToolStripMenuItem.Name = "toggleLedToolStripMenuItem";
-			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
 			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
 			// 
@@ -466,24 +462,6 @@
             0});
 			this.PosNum.ValueChanged += new System.EventHandler(this.PosNum_ValueChanged);
 			// 
-			// PosNum2
-			// 
-			this.PosNum2.Location = new System.Drawing.Point(375, 470);
-			this.PosNum2.Maximum = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-			this.PosNum2.Name = "PosNum2";
-			this.PosNum2.Size = new System.Drawing.Size(80, 22);
-			this.PosNum2.TabIndex = 28;
-			this.PosNum2.Value = new decimal(new int[] {
-            1500,
-            0,
-            0,
-            0});
-			this.PosNum2.ValueChanged += new System.EventHandler(this.PosNum2_ValueChanged);
-			// 
 			// EnableServo
 			// 
 			this.EnableServo.AutoSize = true;
@@ -494,27 +472,6 @@
 			this.EnableServo.Text = "Enable";
 			this.EnableServo.UseVisualStyleBackColor = true;
 			this.EnableServo.CheckedChanged += new System.EventHandler(this.EnableServo_CheckedChanged);
-			// 
-			// EnableServo2
-			// 
-			this.EnableServo2.AutoSize = true;
-			this.EnableServo2.Location = new System.Drawing.Point(748, 409);
-			this.EnableServo2.Name = "EnableServo2";
-			this.EnableServo2.Size = new System.Drawing.Size(74, 21);
-			this.EnableServo2.TabIndex = 30;
-			this.EnableServo2.Text = "Enable";
-			this.EnableServo2.UseVisualStyleBackColor = true;
-			this.EnableServo2.CheckedChanged += new System.EventHandler(this.EnableServo2_CheckedChanged);
-			// 
-			// PosTrackBar2
-			// 
-			this.PosTrackBar2.Location = new System.Drawing.Point(464, 436);
-			this.PosTrackBar2.Maximum = 3000;
-			this.PosTrackBar2.Name = "PosTrackBar2";
-			this.PosTrackBar2.Size = new System.Drawing.Size(442, 56);
-			this.PosTrackBar2.TabIndex = 31;
-			this.PosTrackBar2.Value = 1500;
-			this.PosTrackBar2.Scroll += new System.EventHandler(this.PosTrackBar2_Scroll);
 			// 
 			// TestBtn2
 			// 
@@ -541,28 +498,34 @@
 			this.LedBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseDown);
 			this.LedBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseUp);
 			// 
-			// button4
+			// LetterBox
 			// 
-			this.button4.Location = new System.Drawing.Point(182, 469);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(83, 32);
-			this.button4.TabIndex = 34;
-			this.button4.Text = "Ping2.0";
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click);
+			this.LetterBox.FormattingEnabled = true;
+			this.LetterBox.Location = new System.Drawing.Point(469, 420);
+			this.LetterBox.Name = "LetterBox";
+			this.LetterBox.Size = new System.Drawing.Size(121, 24);
+			this.LetterBox.TabIndex = 35;
+			this.LetterBox.SelectedIndexChanged += new System.EventHandler(this.LetterBox_SelectedIndexChanged);
+			// 
+			// NumberBox
+			// 
+			this.NumberBox.FormattingEnabled = true;
+			this.NumberBox.Location = new System.Drawing.Point(596, 420);
+			this.NumberBox.Name = "NumberBox";
+			this.NumberBox.Size = new System.Drawing.Size(121, 24);
+			this.NumberBox.TabIndex = 36;
+			this.NumberBox.SelectedIndexChanged += new System.EventHandler(this.NumberBox_SelectedIndexChanged);
 			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 532);
-			this.Controls.Add(this.button4);
+			this.Controls.Add(this.NumberBox);
+			this.Controls.Add(this.LetterBox);
 			this.Controls.Add(this.LedBtn);
 			this.Controls.Add(this.TestBtn2);
-			this.Controls.Add(this.PosTrackBar2);
-			this.Controls.Add(this.EnableServo2);
 			this.Controls.Add(this.EnableServo);
-			this.Controls.Add(this.PosNum2);
 			this.Controls.Add(this.PosNum);
 			this.Controls.Add(this.PosTrackBar);
 			this.Controls.Add(this.DepthLabel);
@@ -597,8 +560,6 @@
 			this.MenuStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.PosNum)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.PosNum2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar2)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -646,13 +607,11 @@
 		private System.Windows.Forms.Label DepthLabel;
 		private System.Windows.Forms.TrackBar PosTrackBar;
 		private System.Windows.Forms.NumericUpDown PosNum;
-		private System.Windows.Forms.NumericUpDown PosNum2;
 		private System.Windows.Forms.CheckBox EnableServo;
-		private System.Windows.Forms.CheckBox EnableServo2;
-		private System.Windows.Forms.TrackBar PosTrackBar2;
 		private Meters.IOMeter TestBtn2;
 		private System.Windows.Forms.Button LedBtn;
-		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.ComboBox LetterBox;
+		private System.Windows.Forms.ComboBox NumberBox;
 	}
 }
 
