@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 	public class UdpPacket {
-		public static readonly byte START_BYTE = 0xFF;
+		//public static readonly byte START_BYTE = 0xFF;
 		public static readonly byte CHECKSUM_MASK = 0xFF;
 		public static readonly int MAX_LENGTH = 255;
 
 		//public byte StartByte;
-		public Command Command;
+		public byte Id;
 		//public byte Length;
 		public ByteArray Data;
 		public byte Checksum;
 
 		public byte[] AllBytes {
 			get {
-				byte[] bytes = new byte[Data.Length + 3];
-				bytes[0] = START_BYTE;
-				bytes[1] = (byte)Command;
-				Data.CopyTo(bytes, 2);
+				byte[] bytes = new byte[Data.Length + 2];
+				//bytes[0] = START_BYTE;
+				bytes[0] = Id;
+				Data.CopyTo(bytes, 1);
 				bytes[bytes.Length - 1] = Checksum;
 				return bytes;
 			}
@@ -31,17 +31,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		private UdpPacket() {
 		}
 
-		public UdpPacket(Command command, ByteArray data) {
-			this.Command = command;
+		public UdpPacket(byte id, ByteArray data) {
+			this.Id = id;
 			if (data == null) this.Data = new ByteArray();
 			else if (data.Length <= MAX_LENGTH) this.Data = data;
 			else this.Data = data.Resize(MAX_LENGTH);
-			Checksum = (byte)(START_BYTE + command);
+			Checksum = /*(byte)(START_BYTE +*/ id;//);
 			foreach (byte b in Data) Checksum += b;
 			Checksum &= CHECKSUM_MASK;
 		}
 
-		public UdpPacket(Command command, params byte[] data) : this(command, new ByteArray(data)){
+		public UdpPacket(byte id, params byte[] data) : this(id, new ByteArray(data)){
 			
 		}
 
@@ -51,18 +51,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		}
 
 		public static UdpPacket ParseData(byte[] data) {
-			if (data.Length < 3) return null;
+			if (data.Length < 2) return null;
 
 			UdpPacket packet = new UdpPacket();
 			//packet.StartByte = data[0];
-			packet.Command = (Command)data[1];
+			packet.Id = data[0];
 			//packet.Length = data[2];
 			packet.Checksum = data[data.Length - 1];
 
-			if ((data[0] != START_BYTE)
+			//if ((data[0] != START_BYTE)
 				//|| (packet.Command == START_BYTE)
 				//|| (packet.Length == START_BYTE)
-				/*|| (packet.Checksum == START_BYTE)*/) return null;
+				/*|| (packet.Checksum == START_BYTE)*///) return null;
 
 			//Check both for invalid bytes and the checksum.
 			byte checksum = 0;
@@ -73,7 +73,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 
 			if ((checksum & CHECKSUM_MASK) != data[data.Length - 1]) return null;
 
-			packet.Data = new ByteArray(data, 2, data.Length - 3);
+			packet.Data = new ByteArray(data, 1, data.Length - 2);
 
 			return packet;
 		}

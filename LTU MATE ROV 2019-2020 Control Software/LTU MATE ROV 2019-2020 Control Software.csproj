@@ -69,7 +69,6 @@
     <Compile Include="Hardware\DataTypes\UInt8Data.cs" />
     <Compile Include="Hardware\DataTypes\Vector3Data.cs" />
     <Compile Include="Hardware\DataTypes\Vector4Data.cs" />
-    <Compile Include="Hardware\Ethernet\Command.cs" />
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Hardware\Ethernet\IEthernetLayer.cs" />
     <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
@@ -182,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
+    <Folder Include="Hardware\Registers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Meters.dll">

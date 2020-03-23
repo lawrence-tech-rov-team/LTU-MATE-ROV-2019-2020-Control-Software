@@ -53,12 +53,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 			for (int i = 0; i < 10; i++) {
 				try {
 					Console.Out.WriteLine("Attempt #{0}...", i);
-					UdpPacket packet = new UdpPacket(Command.Ping, pings[i]);
+
+					/*UdpPacket packet = new UdpPacket(Command.Ping, pings[i]);
 					byte[] data = packet.AllBytes;
 					client.Send(data, data.Length, TargetIp, DestinationPort);
 					data = client.Receive(ref ip);
 					packet = UdpPacket.ParseData(data);
 					if ((packet != null) && (packet.Command == Command.Ping) && (packet.Data.Length == 1) && (packet.Data[0] == pings[i])) {
+					*/
+					if (Ping(200) != null) { 
 						counts++;
 					}
 				} catch (Exception ex) {

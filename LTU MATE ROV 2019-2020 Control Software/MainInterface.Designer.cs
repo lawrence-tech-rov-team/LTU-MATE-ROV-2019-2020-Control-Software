@@ -70,6 +70,7 @@
 			this.PosTrackBar2 = new System.Windows.Forms.TrackBar();
 			this.TestBtn2 = new Meters.IOMeter();
 			this.LedBtn = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).BeginInit();
@@ -540,11 +541,22 @@
 			this.LedBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseDown);
 			this.LedBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseUp);
 			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(182, 469);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(83, 32);
+			this.button4.TabIndex = 34;
+			this.button4.Text = "Ping2.0";
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.button4_Click);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 532);
+			this.Controls.Add(this.button4);
 			this.Controls.Add(this.LedBtn);
 			this.Controls.Add(this.TestBtn2);
 			this.Controls.Add(this.PosTrackBar2);
@@ -640,6 +652,7 @@
 		private System.Windows.Forms.TrackBar PosTrackBar2;
 		private Meters.IOMeter TestBtn2;
 		private System.Windows.Forms.Button LedBtn;
+		private System.Windows.Forms.Button button4;
 	}
 }
 

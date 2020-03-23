@@ -53,21 +53,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 			return false;
 		}
 
-		public bool Send(Command command, ByteArray data) {
-			return Send(new UdpPacket(command, data));
+		public bool Send(byte id, ByteArray data) {
+			return Send(new UdpPacket(id, data));
 		}
 
-		public bool Send(Command command, params byte[] data) {
-			return Send(new UdpPacket(command, data));
+		public bool Send(byte id, params byte[] data) {
+			return Send(new UdpPacket(id, data));
 		}
 
-		public bool Send(Command command, string message, bool clip = true) {
+		public bool Send(byte id, string message, bool clip = true) {
 			if (clip || (message.Length <= UdpPacket.MAX_LENGTH))
-				return Send(new UdpPacket(command, Encoding.UTF8.GetBytes(message)));
+				return Send(new UdpPacket(id, Encoding.UTF8.GetBytes(message)));
 			else {
-				bool result = Send(new UdpPacket(command, Encoding.UTF8.GetBytes(message.Substring(0, UdpPacket.MAX_LENGTH))));
+				bool result = Send(new UdpPacket(id, Encoding.UTF8.GetBytes(message.Substring(0, UdpPacket.MAX_LENGTH))));
 				if (!result) return false;
-				return Send(command, message.Substring(UdpPacket.MAX_LENGTH), clip);
+				return Send(id, message.Substring(UdpPacket.MAX_LENGTH), clip);
 			}
 		}
 

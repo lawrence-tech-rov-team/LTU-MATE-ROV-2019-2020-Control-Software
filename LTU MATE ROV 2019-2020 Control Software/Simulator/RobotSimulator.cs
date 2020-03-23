@@ -95,19 +95,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 
 		private UdpPacket GetResponse(byte[] bytes) {
 			UdpPacket packet = UdpPacket.ParseData(bytes);
-			if ((packet != null) && (packet.Command == Command.UpdateDevice)) {
-				if (packet.Data.Length > 0) {
-					byte id = packet.Data[0];
+			if ((packet != null)/* && (packet.Command == Command.UpdateDevice)*/) {
+				//if (packet.Data.Length > 0) {
+					byte id = packet.Id; //packet.Data[0];
 					if (registers[id] != null) {
 						byte[] data = registers[id].SendUpdate;
 						if (data == null) data = registers[id].ResendUpdate;
 						if (data == null) return null;
-						byte[] responseBytes = new byte[data.Length + 1];
-						Array.Copy(data, 0, responseBytes, 1, data.Length);
-						responseBytes[0] = id;
-						return new UdpPacket(Command.UpdateDevice, responseBytes);
+						//byte[] responseBytes = new byte[data.Length + 1];
+						//Array.Copy(data, 0, responseBytes, 1, data.Length);
+						//responseBytes[0] = id;
+						//return new UdpPacket(Command.UpdateDevice, responseBytes);
+						return new UdpPacket(id, data);
 					}
-				}
+				//}
 			}
 
 			return null;

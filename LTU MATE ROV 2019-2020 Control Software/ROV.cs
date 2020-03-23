@@ -37,14 +37,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		);
 		//TODO if a device isn't registered, it times out?
 		public DigitalSensor TestButton2 { get; } = new DigitalSensor(9, 20);
-		public DigitalActuator LED { get; } = new DigitalActuator(10, 20);
+		//public DigitalActuator LED { get; } = new DigitalActuator(10, 20);
 
 		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
 			RegisterDevice(TestButton);
 			RegisterDevice(TestButton2);
-			RegisterDevice(LED);
 			RegisterDevice(IMU);
-			//	RegisterDevice(Led);
+			RegisterDevice(Led);
 			RegisterDevice(PressureSensor);
 			RegisterDevice(ServoA1);
 			RegisterDevice(ServoC1);

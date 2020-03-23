@@ -57,18 +57,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			rov.Stop(); //TODO before disconnecting, release all servos
 		}
 
-		private void RunCommand(UdpPacket packet) {
-			switch (packet.Command) {
-				case Command.Ping:
-					CmdPing(packet);
-					return;
-				case Command.Echo:
-					CmdEcho(packet);
-					return;
-				default: return;
-			}
-		}
-
 		private void CmdPing(UdpPacket packet) {
 			/*
 			if(recvData.Count >= 3) {
@@ -346,11 +334,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
-			rov.LED.Enabled = true;
+			rov.Led.Enabled = true;
 		}
 
 		private void LedBtn_MouseUp(object sender, MouseEventArgs e) {
-			rov.LED.Enabled = false;
+			rov.Led.Enabled = false;
+		}
+
+		private void button4_Click(object sender, EventArgs e) {
+
 		}
 	}
 }

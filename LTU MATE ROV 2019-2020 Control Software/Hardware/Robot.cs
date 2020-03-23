@@ -102,12 +102,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			thread.Join();
 		}
 
-
 		private bool SendMessage(int id, byte[] msg) {
-			byte[] bytes = new byte[msg.Length + 1];
-			bytes[0] = (byte)id;
-			Array.Copy(msg, 0, bytes, 1, msg.Length); //TODO ugh, memcopy
-			UdpPacket packet = new UdpPacket(Command.UpdateDevice, bytes);
+			//byte[] bytes = new byte[msg.Length + 1];
+			//bytes[0] = (byte)id;
+			//Array.Copy(msg, 0, bytes, 1, msg.Length); //TODO ugh, memcopy
+			UdpPacket packet = new UdpPacket((byte)id, msg);
 			int len = packet.AllBytes.Length; //TODO make a simple length function
 			//while (true) {
 			lock (this) {
@@ -232,23 +231,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			if (ether != null) ether.OnPacketReceived -= Ether_OnPacketReceived;
 			ether?.Disconnect();
 		}
-
-		private void PingReceived(ByteArray packet) {
-			//TODO ping
-			Console.WriteLine("Ping Received: {0}", packet[0]);
-		}
-
-		private void EchoReceived(ByteArray packet) {
-			//TODO echo
-			Console.WriteLine("Echo Received: Length = {0}", packet.Length);
-		}
+		
 		//TODO add warning if a message was received over 50% of the timeout time.
-		private void UpdateDeviceReceived(ByteArray packet) {
-			if (packet.Length >= 1) {
-				int id = packet[0];
+
+		//NOTE: OnReceived may be invoked on a secondary thread.
+		private void Ether_OnPacketReceived(UdpPacket packet) {
+			//if (packet.Data.Length >= 1) {
+				int id = packet.Id;//packet[0];
 				if (registers[id] != null) {
 					lock (registers[id]) {
-						if (registers[id].Update(++packet)) {
+						if (registers[id].Update(packet.Data/* + 1*/)) {
 							//updateTimers[id].Reset();
 							messageReceived[id] = true;
 
@@ -258,25 +250,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 						}
 					}
 				}
-			}
-		}
-
-		//NOTE: OnReceived may be invoked on a secondary thread.
-		private void Ether_OnPacketReceived(UdpPacket packet) { 
-			switch (packet.Command) {
-				case Command.Ping:
-					PingReceived(packet.Data);
-					break;
-				case Command.Echo:
-					EchoReceived(packet.Data);
-					break;
-				case Command.UpdateDevice:
-					UpdateDeviceReceived(packet.Data);
-					break;
-				default:
-					//TODO other commands
-					throw new NotImplementedException();
-			}
+			//}
 		}
 
 		public long? Ping(int timeoutMS = 3000) {
