@@ -16,6 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		//public byte Length;
 		public ByteArray Data;
 		public byte Checksum;
+		public int Length { get => Data.Length; }
 
 		public byte[] AllBytes {
 			get {

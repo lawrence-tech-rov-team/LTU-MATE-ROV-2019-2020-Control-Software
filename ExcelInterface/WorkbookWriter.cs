@@ -37,7 +37,7 @@ namespace ExcelInterface.Writer {
 				return new WorksheetWriter(this, ws);
 			} else return null;
 		}
-		//TODO cancel button not working on popup, (for uploading), but force closing the window worked.
+		// cancel button not working on popup, (for uploading), but force closing the window worked.
 		public bool Save(string path) {
 			if (workbook == null) Console.Error.WriteLine("Error saving workbook: Excel workbook is already closed.");
 			else {

@@ -10,7 +10,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 	public class ReadableRegister<T> : IRegister<T>
 		where T : IDataType, new() 
 	{
-		public T Value { get => Data; }
+		public new T Data { get => base.Data; }
 
 		public override byte[] SendUpdate => new byte[0];
 		public override byte[] ResendUpdate => SendUpdate;
@@ -23,7 +23,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 
 			if (data.Length == data1.NumberOfBytes) {
 				if (data1.Parse(data)) {
-					Data = data1;
+					base.Data = data1;
 					return true;
 				} else return false;
 			} else {
@@ -36,8 +36,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		where T1 : IDataType, new()
 		where T2 : IDataType, new()
 	{
-		public T1 Value1 { get => Data1; }
-		public T2 Value2 { get => Data2; }
+		public new T1 Data1 { get => base.Data1; }
+		public new T2 Data2 { get => base.Data2; }
 
 		public override byte[] SendUpdate => new byte[0];
 		public override byte[] ResendUpdate => SendUpdate;
@@ -51,11 +51,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 
 			if (data.Length == (data1.NumberOfBytes + data2.NumberOfBytes)) {
 				if (data1.Parse(data.Sub(0, data1.NumberOfBytes))) {
-					Data1 = data1;
+					base.Data1 = data1;
 					//return true;
 				} else return false;
 				if (data2.Parse(data.Sub(data1.NumberOfBytes, data2.NumberOfBytes))) {
-					Data2 = data2;
+					base.Data2 = data2;
 				} else return false;
 
 				return true;

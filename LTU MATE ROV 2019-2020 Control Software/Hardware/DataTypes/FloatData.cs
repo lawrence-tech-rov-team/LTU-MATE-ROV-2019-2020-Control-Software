@@ -8,7 +8,8 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 	public class FloatData : IDataType {
 
-		public float Value { get; private set; }
+		private volatile float value;
+		public float Value { get => value; private set => this.value = value; }
 
 		public override int NumberOfBytes => 4;
 
@@ -37,7 +38,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 		public override bool Parse(ByteArray bytes) {
 			if (bytes.Length == NumberOfBytes) {
 				try {
-					Value = BitConverter.ToSingle(bytes.ToArray(), 0); //TODO can this be built-in?
+					Value = BitConverter.ToSingle(bytes.ToArray(), 0); 
 					return true;
 				}catch(Exception) {
 					return false;

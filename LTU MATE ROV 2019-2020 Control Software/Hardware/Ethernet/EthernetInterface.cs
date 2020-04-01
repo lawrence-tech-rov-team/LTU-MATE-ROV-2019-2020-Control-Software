@@ -103,7 +103,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 				try {
 					if (client != null) client.Close();
 				} catch (SocketException) {
-					//TODO exception thrown
+					
 				}
 			}
 		}
@@ -122,16 +122,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		private void OnDataReceived(IAsyncResult res) {
 			try {
 				byte[] data = null;
-				lock (this) { //TODO only lock what is necessary. Don't lock the callback function
+				lock (this) { 
 					IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
 					data = client.EndReceive(res, ref ip);
 					client.BeginReceive(new AsyncCallback(OnDataReceived), null);
 				}
 
 				UdpPacket packet = UdpPacket.ParseData(data);
-				if (packet != null) InvokePacketReceived(packet); //TODO don't catch exception for called function.
-				else Console.Out.WriteLine("Bad packet received."); //TODO logger
-			} catch (Exception e) {
+				if (packet != null) {
+					try {
+						InvokePacketReceived(packet); 
+					} catch (Exception ex) {
+						throw ex;
+					}
+				} else Console.Out.WriteLine("Bad packet received.");
+			} catch (Exception) {
 				Disconnect();
 			}
 		}

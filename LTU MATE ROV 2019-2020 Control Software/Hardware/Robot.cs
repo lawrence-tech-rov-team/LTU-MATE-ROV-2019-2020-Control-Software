@@ -10,7 +10,14 @@ using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 	public abstract class Robot {
-		//TODO detect congestion. Something along the lines of if 3 messages in a row don't get a quick enough response. Maybe instead of disconnecting when a timeout is found, just inform the user of congestion.
+
+		public delegate void GenericEvent();
+		public event GenericEvent IdCollisionDetected; //TODO make use of event
+		public event GenericEvent RobotStarted;
+		public event GenericEvent RobotStopped;
+		public event GenericEvent TimeoutWarning; //Called when a message is received at greater than 50% of the timeout time.
+		public event GenericEvent RobotTimeout;
+
 		/// <summary>
 		/// The maximum number of devices that can be attached.
 		/// </summary>
@@ -50,7 +57,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// <summary>
 		/// Timer that checks for timeouts
 		/// </summary>
-		private Stopwatch[] updateTimers = new Stopwatch[MaxNumDevices]; //TODO rename to "timeouttimer"
+		private Stopwatch[] timeoutTimers = new Stopwatch[MaxNumDevices];
 
 		private bool[] messageReceived = new bool[MaxNumDevices];
 
@@ -69,10 +76,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		protected void RegisterDevice(IDevice device) {
 			foreach(IRegister register in device) {
 				if (registers[register.Id] != null) {
-					throw new IndexOutOfRangeException(); //TODO id collisions
+					IdCollisionDetected?.Invoke();
 				} else {
 					//updateAttempts[device.Id] = 0;
-					updateTimers[register.Id] = new Stopwatch();
+					timeoutTimers[register.Id] = new Stopwatch();
 					refreshTimers[register.Id] = new Stopwatch();
 					refreshTimers[register.Id].Start();
 					registers[register.Id] = register;
@@ -107,7 +114,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			//bytes[0] = (byte)id;
 			//Array.Copy(msg, 0, bytes, 1, msg.Length); //TODO ugh, memcopy
 			UdpPacket packet = new UdpPacket((byte)id, msg);
-			int len = packet.AllBytes.Length; //TODO make a simple length function
+			int len = packet.Length;
 			//while (true) {
 			lock (this) {
 				if ((BufferSize - BytesSent) >= len) {
@@ -115,7 +122,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 					updateSize[id] = len;
 					//break;
 				} else {
-					return false; //TODO will this cause any problems?
+					return false;
 				}
 			}
 				//Thread.Sleep(1); //TODO this doesn't work. Need a better solution to waiting. 
@@ -133,92 +140,50 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		private void CheckForTimeout(int id) {
 			lock (registers[id]) {
 				if (messageReceived[id]) {
-					updateTimers[id].Reset();
+					timeoutTimers[id].Reset();
 					return;
 				}
 			}
 
-			if (updateTimers[id].ElapsedMilliseconds >= MessageTimemout) {
-				/*if (updateAttempts[id] == TimeoutAttempts) {
-					Console.Error.WriteLine("Timeout!!!");
-					//throw new NotImplementedException(); //TODO timeout occured, disconnect.
-					updateAttempts[id] = 0;
-				} else {*/
-				//lock (this) {
-				//	BytesSent -= updateSize[id]; //Just in case the update packets are different sizes.
-				//if (updateBytes[id] == null) return;
-				//BytesSent -= updateBytes[id].Length + 1;
-				//}
-				//SendUpdateRequest(id, updateBytes[id]);
-				//updateAttempts[id] = 0;//++;
-				//updateTimers[id].Restart();
-				//}
+			if (timeoutTimers[id].ElapsedMilliseconds >= MessageTimemout) {
 				int n;
 				lock (this) {
 					//BytesSent -= updateSize[id];
 					n = ++numTimeouts;
 					if(numTimeouts >= TimeoutAttempts) {
-						//TODO maybe trigger an event
 						StopAsync();
 						Console.Error.WriteLine("Robot Timeout!!");
 					}
 					BytesSent -= updateSize[id];
 				}
 				if (SendMessage(id, registers[id].ResendUpdate)) {
-					updateTimers[id].Restart();
+					timeoutTimers[id].Restart();
 				}
+				RobotTimeout?.Invoke();
 				Console.Error.WriteLine("Message timeout! #{0}", n);
 			}
 		}
-		/*
-		private bool SendUpdateRequest(int id, byte[] updateBytes) {
-			//Get the required bytes to send an update
-			//byte[] updateBytes = devices[id].SendUpdate;
-			byte[] bytes = new byte[updateBytes.Length + 1];
-			bytes[0] = (byte)id;
-			updateBytes.CopyTo(bytes, 1);
-			updateSize[id] = bytes.Length;
-
-			//Wait until there is enough space in the receive buffer to send the packet
-			while (true) {
-				lock (this) {
-					if ((BufferSize - BytesSent) >= bytes.Length) {
-						BytesSent += bytes.Length;
-						break;
-					}
-				}
-				Thread.Sleep(1);
-			}
-
-			if(!ether.Send(Command.UpdateDevice, bytes)) {
-				lock (this) {
-					BytesSent -= bytes.Length;
-				}
-				return false;
-			} else {
-				return true;
-			}
-		}//TODO check refresh rate is > 0
-		*/
+		
 		private void UpdateDevice(int id) {
 			refreshTimers[id].Restart(); //Absolute timing. Keeps refresh rate as close to the requested rate as possible.
-			byte[] update = registers[id].SendUpdate; //TODO check if messageReceived is true. if so, we have a problem
+			byte[] update = registers[id].SendUpdate; 
 			if (update != null) {
 				//UdpPacket packet = new UdpPacket(Command.UpdateDevice, update);
 				//if (SendUpdateRequest(id, update)) {
-				if (SendMessage(id, update)) { //TODO better way to pass the size around
-					//updateSize[id] = update.Length + 4; //TODO make a simple length function
-					updateTimers[id].Restart();
+				if (SendMessage(id, update)) {
+					//updateSize[id] = update.Length + 4; 
+					timeoutTimers[id].Restart();
 				}
 			}
 		}
 
 		private void RobotLoop() {
+			RobotStarted?.Invoke();
 			if(ether != null) ether.OnPacketReceived += Ether_OnPacketReceived;
 			while (running) {
 				for(int i = 0; i < MaxNumDevices; i++) {
 					if(registers[i] != null) {
-						if(updateTimers[i].IsRunning) {
+						if(timeoutTimers[i].IsRunning) {
 							//Message was sent, check for a timeout
 							CheckForTimeout(i);
 						}else if(/*updateAttempts[i] == 0 &&*/refreshTimers[i].ElapsedMilliseconds > (1000 / registers[i].RefreshRate)) {
@@ -230,27 +195,30 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 			}
 			if (ether != null) ether.OnPacketReceived -= Ether_OnPacketReceived;
 			ether?.Disconnect();
+			RobotStopped?.Invoke();
 		}
-		
-		//TODO add warning if a message was received over 50% of the timeout time.
 
 		//NOTE: OnReceived may be invoked on a secondary thread.
 		private void Ether_OnPacketReceived(UdpPacket packet) {
-			//if (packet.Data.Length >= 1) {
-				int id = packet.Id;//packet[0];
-				if (registers[id] != null) {
-					lock (registers[id]) {
-						if (registers[id].Update(packet.Data/* + 1*/)) {
-							//updateTimers[id].Reset();
-							messageReceived[id] = true;
+			int id = packet.Id;//packet[0];
+			if (registers[id] != null) {
+				bool timeoutWarning = false;
+				lock (registers[id]) {
+					if (registers[id].Update(packet.Data/* + 1*/)) {
+						//updateTimers[id].Reset();
+						messageReceived[id] = true;
 
-							lock (this) {
-								BytesSent -= updateSize[id];
-							}
+						lock (this) {
+							BytesSent -= updateSize[id];
+						}
+
+						if (timeoutTimers[id].ElapsedMilliseconds > (MessageTimemout / 2)) {
+							timeoutWarning = true;
 						}
 					}
 				}
-			//}
+				if(timeoutWarning) TimeoutWarning?.Invoke();
+			}
 		}
 
 		public long? Ping(int timeoutMS = 3000) {

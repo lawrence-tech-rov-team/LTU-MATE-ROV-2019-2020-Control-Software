@@ -62,20 +62,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			if (joystick != null) joystick.Update();
 		}
 
-		private void OnJoystickUpdate(Joystick sender, SharpDX.DirectInput.JoystickOffset type, int value) {
+		private void OnJoystickUpdate(Joystick sender, JoystickControl type, int value) {
 			//Console.WriteLine(type.ToString() + " = " + value);
-			if (type == SharpDX.DirectInput.JoystickOffset.Sliders0) {
+			if (type == JoystickControl.Sliders0) {
 				//Little power/thrust thingy
-			} else if (type == SharpDX.DirectInput.JoystickOffset.Y) {
+			} else if (type == JoystickControl.Y) {
 				ForwardPower = (1f - value / 65535f) * 2f - 1f;
-			} else if (type == SharpDX.DirectInput.JoystickOffset.X) {
+			} else if (type == JoystickControl.X) {
 				SidePower = value / 65535f * 2f - 1f;
-			} else if (type == SharpDX.DirectInput.JoystickOffset.RotationZ) {
+			} else if (type == JoystickControl.RotationZ) {
 				//The twisty bit
-			} else if ((type >= SharpDX.DirectInput.JoystickOffset.Buttons0) && (type <= SharpDX.DirectInput.JoystickOffset.Buttons11)) {
+			} else if ((type >= JoystickControl.Buttons0) && (type <= JoystickControl.Buttons11)) {
 				//int index = type - SharpDX.DirectInput.JoystickOffset.Buttons0;
 				//buttons[index].Value = (value > 0);
-			} else if (type == SharpDX.DirectInput.JoystickOffset.PointOfViewControllers0) {
+			} else if (type == JoystickControl.PointOfViewControllers0) {
 				//if (value == -1) HatMeter.Value = POVDirection.Center;
 				//else {
 				//	int angle = value / 4500;

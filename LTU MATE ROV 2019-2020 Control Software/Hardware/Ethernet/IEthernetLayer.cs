@@ -16,6 +16,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		public delegate void NewPacketHandler(UdpPacket packet);
 		public event NewPacketHandler OnPacketReceived;
 
+		#region Events
+		public delegate void GenericEvent();
+		public event GenericEvent OnIdCollision;
+
+		protected void InvokeIdCollision() { OnIdCollision?.Invoke(); }
+		#endregion
+
 		~IEthernetLayer() {
 			Disconnect();
 		}

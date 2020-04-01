@@ -16,8 +16,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators {
 		private WritableRegister<UInt16Data> PositionRegister;
 		private WritableRegister<BoolData> EnableRegister;
 
-		public ushort Pulse { set => PositionRegister.Value = new UInt16Data(value); }
-		public bool Enable { set => EnableRegister.Value = new BoolData(value); }
+		public ushort Pulse { set => PositionRegister.Data = new UInt16Data(value); }
+		public bool Enable { set => EnableRegister.Data = new BoolData(value); }
 		/*
 		public void SetPosition(float pos) {
 			if (pos < -1f) pos = -1f;

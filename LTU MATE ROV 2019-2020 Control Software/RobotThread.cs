@@ -12,7 +12,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private static Thread thread;
 
 		private static IController controller = null;
-		//TODO public static volatile ControllerType ControllerType { get; private set; }
 		private static volatile bool runThread = false;
 
 		private static volatile bool ShouldSwitchControls = false;

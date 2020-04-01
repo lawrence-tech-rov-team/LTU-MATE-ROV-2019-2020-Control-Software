@@ -36,9 +36,6 @@
 			this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.disconnectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.hardwarePingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.pingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.speedTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toggleLedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.simulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.KeyboardBtn = new System.Windows.Forms.RadioButton();
@@ -109,14 +106,14 @@
 			// KeyboardMenu
 			// 
 			this.KeyboardMenu.Name = "KeyboardMenu";
-			this.KeyboardMenu.Size = new System.Drawing.Size(148, 26);
+			this.KeyboardMenu.Size = new System.Drawing.Size(216, 26);
 			this.KeyboardMenu.Text = "Keyboard";
 			this.KeyboardMenu.Click += new System.EventHandler(this.KeyboardMenu_Click);
 			// 
 			// JoystickMenu
 			// 
 			this.JoystickMenu.Name = "JoystickMenu";
-			this.JoystickMenu.Size = new System.Drawing.Size(148, 26);
+			this.JoystickMenu.Size = new System.Drawing.Size(216, 26);
 			this.JoystickMenu.Text = "Joystick";
 			this.JoystickMenu.Click += new System.EventHandler(this.JoystickMenu_Click);
 			// 
@@ -150,10 +147,7 @@
 			this.ethernetToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectToolStripMenuItem,
             this.disconnectToolStripMenuItem,
-            this.hardwarePingToolStripMenuItem,
-            this.pingToolStripMenuItem,
-            this.speedTestToolStripMenuItem,
-            this.toggleLedToolStripMenuItem});
+            this.hardwarePingToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
 			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
@@ -178,27 +172,6 @@
 			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
 			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
-			// 
-			// pingToolStripMenuItem
-			// 
-			this.pingToolStripMenuItem.Name = "pingToolStripMenuItem";
-			this.pingToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.pingToolStripMenuItem.Text = "Ping";
-			this.pingToolStripMenuItem.Click += new System.EventHandler(this.pingToolStripMenuItem_Click);
-			// 
-			// speedTestToolStripMenuItem
-			// 
-			this.speedTestToolStripMenuItem.Name = "speedTestToolStripMenuItem";
-			this.speedTestToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.speedTestToolStripMenuItem.Text = "Speed Test";
-			this.speedTestToolStripMenuItem.Click += new System.EventHandler(this.speedTestToolStripMenuItem_Click);
-			// 
-			// toggleLedToolStripMenuItem
-			// 
-			this.toggleLedToolStripMenuItem.Name = "toggleLedToolStripMenuItem";
-			this.toggleLedToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.toggleLedToolStripMenuItem.Text = "Toggle Led";
-			this.toggleLedToolStripMenuItem.Click += new System.EventHandler(this.toggleLedToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
@@ -582,9 +555,6 @@
 		private System.Windows.Forms.ToolStripMenuItem ethernetToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem pingToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem speedTestToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem toggleLedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;

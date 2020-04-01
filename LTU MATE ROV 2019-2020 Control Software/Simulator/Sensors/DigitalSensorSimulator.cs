@@ -17,17 +17,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 
 		public DigitalSensorSimulator(byte id, Button button) {
 			ioRegister = new WritableRegister<BoolData>(id, 0f);
-			ioRegister.Value = new BoolData(false);
 			button.MouseDown += Button_MouseDown;
 			button.MouseUp += Button_MouseUp;
+			Button_MouseUp(null, null);
 		}
 
 		private void Button_MouseUp(object sender, MouseEventArgs e) {
-			ioRegister.Value = new BoolData(false);
+			ioRegister.Data = new BoolData(false);
 		}
 
 		private void Button_MouseDown(object sender, MouseEventArgs e) {
-			ioRegister.Value = new BoolData(true);
+			ioRegister.Data = new BoolData(true);
 		}
 
 		public override void Update() {

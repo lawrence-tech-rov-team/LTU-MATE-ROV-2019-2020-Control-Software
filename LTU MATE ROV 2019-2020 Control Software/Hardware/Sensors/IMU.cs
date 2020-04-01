@@ -15,12 +15,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
 		};
 
 		private ReadableRegister<Int8Data> TemperatureRegister;
-		public sbyte Temperature => TemperatureRegister.Value?.Value ?? default(sbyte); //TODO rename register ".Value" to ".Data"
+		public sbyte Temperature => TemperatureRegister.Data?.Value ?? default(sbyte);
 
 		private ReadableRegister<Vector3Data> AccelerometerRegister;
-		public Vector3Data Accelerometer => AccelerometerRegister.Value;
+		public Vector3Data Accelerometer => AccelerometerRegister.Data;
 
-		//public Vector3Data Magnetometer { get => Data2; } //TODO return vector3 data
+		//public Vector3Data Magnetometer { get => Data2; } 
 		//public Vector3Data Gyroscope { get => Data3; }
 		//public Vector3Data Euler { get => Data4; }
 		//public Vector3Data Accelerometer { get => Data5; }

@@ -16,7 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators {
 
 		public bool Enabled {
 			set {
-				ioRegister.Value = new BoolData(value);
+				ioRegister.Data = new BoolData(value);
 			}
 		}
 

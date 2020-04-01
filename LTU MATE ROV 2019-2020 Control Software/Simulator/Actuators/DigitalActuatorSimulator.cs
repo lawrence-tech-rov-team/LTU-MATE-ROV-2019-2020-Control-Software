@@ -16,7 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Actuators {
 
 		private ReadableRegister<BoolData> ioRegister;
 		private bool Enabled {
-			get => ioRegister.Value?.Value ?? default(bool);
+			get => ioRegister.Data?.Value ?? default(bool);
 		}
 
 		private IOMeter Indicator;

@@ -225,34 +225,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			rov.Disconnect();
 		}
 
-		private void pingToolStripMenuItem_Click(object sender, EventArgs e) {
-			/*byte num = (byte)(rnd.Next(0, 255) & 0xFF);
-			timer.Restart();
-			if (!ethernet.Send(Command.Ping, num)) {
-				MessageBox.Show("Error sending ping.");
-			}*/
-			//TODO finish button code
-		}
-
-		private void speedTestToolStripMenuItem_Click(object sender, EventArgs e) {
-			/*timer.Stop();
-			speedCounter = 0;
-			byte[] data = new byte[255];
-			rnd.NextBytes(data);
-
-			timer.Restart();
-			for (int i = 0; i < 8; i++) {
-				ethernet.Send(Command.Echo, data);
-			}*/
-			//TODO finish button code
-		}
-
-		private void toggleLedToolStripMenuItem_Click(object sender, EventArgs e) {
-			//ledState = !ledState;
-			//ethernet.Send(Command.Led, ledState ? (byte)1 : (byte)0);
-			//TODO led toggle
-		}
-
 		private void logToolStripMenuItem_Click(object sender, EventArgs e) {
 			LogWindow.Show();
 		}

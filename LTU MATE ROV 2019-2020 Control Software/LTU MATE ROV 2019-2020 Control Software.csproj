@@ -33,17 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JoystickInput, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JoystickInput.1.0.0\lib\net461\JoystickInput.dll</HintPath>
+    <Reference Include="JoystickInput, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JoystickInput.1.0.1\lib\net461\JoystickInput.dll</HintPath>
     </Reference>
-    <Reference Include="Meters">
-      <HintPath>G:\My Drive\Senior Project\Software\Libraries\Meters.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DirectInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.DirectInput.4.2.0\lib\net45\SharpDX.DirectInput.dll</HintPath>
+    <Reference Include="Meters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Meters.1.0.0\lib\net461\Meters.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -77,6 +72,7 @@
     <Compile Include="Hardware\IRegister.cs" />
     <Compile Include="Hardware\Sensors\PressureSensor.cs" />
     <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
+    <Compile Include="Simulator\Actuators\ServoSimulator.cs" />
     <Compile Include="Simulator\ISimulatorDevice.cs" />
     <Compile Include="Hardware\WritableRegister.cs" />
     <Compile Include="Simulator\Sensors\DigitalSensorSimulator.cs" />
@@ -128,6 +124,7 @@
     <Compile Include="RobotThread.cs" />
     <Compile Include="ROV.cs" />
     <Compile Include="Simulator\Sensors\ImuSimulator.cs" />
+    <Compile Include="Simulator\Sensors\PressureSensorSimulator.cs" />
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />

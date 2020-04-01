@@ -16,7 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
 		private ReadableRegister<BoolData> ioRegister;
 		public bool State {
 			get {
-				bool state = ioRegister.Value?.Value ?? default(bool);
+				bool state = ioRegister.Data?.Value ?? default(bool);
 				return state ^ Inversed;
 			}
 		}
