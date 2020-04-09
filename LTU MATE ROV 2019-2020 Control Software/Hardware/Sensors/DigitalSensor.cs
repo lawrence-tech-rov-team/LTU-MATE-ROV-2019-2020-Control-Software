@@ -7,17 +7,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
-	public class DigitalSensor : ISensor<BoolData> {
+	public class DigitalSensor : IDevice {
 
+		public override IRegister[] Registers => new IRegister[] {
+			ioRegister
+		};
+
+		private ReadableRegister<BoolData> ioRegister;
 		public bool State {
 			get {
-				bool state = Data1?.Value ?? default(bool);
+				bool state = ioRegister.Data?.Value ?? default(bool);
 				return state ^ Inversed;
 			}
 		}
 		public bool Inversed { get; private set; }
 
-		public DigitalSensor(byte id, float RefreshRate = 50f, bool inversed = false) : base(id, RefreshRate) {
+		public DigitalSensor(byte id, float RefreshRate = 50f, bool inversed = false) {
+			ioRegister = new ReadableRegister<BoolData>(id, RefreshRate);
 			Inversed = inversed;
 		}
 	}

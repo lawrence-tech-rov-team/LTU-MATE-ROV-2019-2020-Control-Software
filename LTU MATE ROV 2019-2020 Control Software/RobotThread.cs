@@ -12,11 +12,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private static Thread thread;
 
 		private static IController controller = null;
-		//TODO public static volatile ControllerType ControllerType { get; private set; }
 		private static volatile bool runThread = false;
 
 		private static volatile bool ShouldSwitchControls = false;
-		private static volatile ControllerType SwitchControlType;
 		private static readonly object ControlLock = new object();
 
 		private static volatile bool RequestInputData = false;
@@ -45,7 +43,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			runThread = false;
 			thread.Join();
 		}
-
+/*
 		public static void SetControllerType(ControllerType type, IKeyboardListener keyboard = null) {
 			lock (ControlLock) {
 				SwitchControlType = type;
@@ -53,7 +51,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				ShouldSwitchControls = true;
 			}
 		}
-
+		*/
 		public static InputControlData GetInputData() {
 			lock (InputDataLock) {
 				RequestInputData = true;
@@ -76,7 +74,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 					}
 					RequestInputData = false;
 				}
-
+/*
 				ControllerType? swap = null;
 				IKeyboardListener keyboard = null;
 				lock (ControlLock) {
@@ -96,7 +94,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 					}else if(controller is KeyboardController) {
 						((KeyboardController)controller).KeyListener = keyboard;
 					}
-				}
+				}*/
 
 				Thread.Sleep(34); //TODO temporary for proof of concept
 			}

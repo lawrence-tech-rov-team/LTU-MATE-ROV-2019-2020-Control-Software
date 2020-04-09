@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
-	public class Int8Data : IDataType {
+	public class UInt8Data : IDataType {
 		public override int NumberOfBytes => 1;
 
-		public override byte[] Bytes => new byte[] { (byte)Value };
+		public override byte[] Bytes => new byte[] { Value };
 
-		public sbyte Value { get; private set; }
+		public byte Value { get; private set; }
 
-		public Int8Data() {
+		public UInt8Data() {
 
 		}
 
-		public Int8Data(sbyte value) {
+		public UInt8Data(byte value) {
 			Value = value;
 		}
 
 		public override bool IsSameValue(IDataType obj) {
-			if(obj is Int8Data) {
-				return ((Int8Data)obj).Value == Value;
+			if(obj is UInt8Data) {
+				return ((UInt8Data)obj).Value == Value;
 			} else {
 				return false;
 			}
@@ -31,7 +31,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
 
 		public override bool Parse(ByteArray bytes) {
 			if(bytes.Length == NumberOfBytes) {
-				Value = (sbyte)bytes[0];
+				Value = bytes[0];
 				return true;
 			} else {
 				return false;

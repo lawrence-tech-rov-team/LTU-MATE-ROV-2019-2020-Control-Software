@@ -31,7 +31,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				LogTextBox.AppendText(Environment.NewLine);
 			}));
 		}
-		//TODO logging should NOT save calling class name, but just the thread name
+
 		private void LogWindow_Load(object sender, EventArgs e) {
 			int y = 21;
 			foreach(LogLevel level in EnumUtil.GetValues<LogLevel>()) {

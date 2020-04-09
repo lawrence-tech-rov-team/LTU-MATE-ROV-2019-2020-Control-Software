@@ -33,17 +33,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JoystickInput, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JoystickInput.1.0.0\lib\net461\JoystickInput.dll</HintPath>
+    <Reference Include="Controller Wrapper, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControllerWrapper.1.0.3\lib\net461\Controller Wrapper.dll</HintPath>
     </Reference>
-    <Reference Include="Meters">
-      <HintPath>G:\My Drive\Senior Project\Software\Libraries\Meters.dll</HintPath>
+    <Reference Include="JoystickInput, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JoystickInput.1.0.2\lib\net461\JoystickInput.dll</HintPath>
+    </Reference>
+    <Reference Include="JsonSerializable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JsonSerializable.1.0.1\lib\net461\JsonSerializable.dll</HintPath>
+    </Reference>
+    <Reference Include="Meters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Meters.1.0.0\lib\net461\Meters.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.DirectInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.DirectInput.4.2.0\lib\net45\SharpDX.DirectInput.dll</HintPath>
+    <Reference Include="SharpDX.XInput, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.XInput.4.2.0\lib\net45\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,37 +70,50 @@
   <ItemGroup>
     <Compile Include="ControlSystem.cs" />
     <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
+    <Compile Include="Hardware\Actuators\Servo.cs" />
     <Compile Include="Hardware\DataTypes\Int8Data.cs" />
+    <Compile Include="Hardware\DataTypes\UInt16Data.cs" />
+    <Compile Include="Hardware\DataTypes\UInt8Data.cs" />
     <Compile Include="Hardware\DataTypes\Vector3Data.cs" />
     <Compile Include="Hardware\DataTypes\Vector4Data.cs" />
-    <Compile Include="Hardware\Ethernet\Command.cs" />
     <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Hardware\Ethernet\IEthernetLayer.cs" />
     <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
-    <Compile Include="Hardware\IActuator.cs" />
     <Compile Include="Hardware\IDevice.cs" />
-    <Compile Include="Hardware\IReadableDevice.cs" />
+    <Compile Include="Hardware\ReadableRegister.cs" />
     <Compile Include="Hardware\IRegister.cs" />
-    <Compile Include="Hardware\Simulator\DigitalSensorSimulator.cs" />
-    <Compile Include="Hardware\Simulator\RobotSimulator.cs" />
-    <Compile Include="Hardware\IWritableDevice.cs" />
+    <Compile Include="Hardware\Sensors\PressureSensor.cs" />
+    <Compile Include="InputControls\ControllerInput.cs" />
+    <Compile Include="InputControls\InputDevice.cs" />
+    <Compile Include="InputControls\InputThread.cs" />
+    <Compile Include="InputControls\Joysticks\JoystickInput.cs" />
+    <Compile Include="InputControls\Joysticks\Logitech3dPro.cs" />
+    <Compile Include="InputVisualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputVisualizer.Designer.cs">
+      <DependentUpon>InputVisualizer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
+    <Compile Include="Simulator\Actuators\ServoSimulator.cs" />
+    <Compile Include="Simulator\ISimulatorDevice.cs" />
+    <Compile Include="Hardware\WritableRegister.cs" />
+    <Compile Include="Simulator\Sensors\DigitalSensorSimulator.cs" />
+    <Compile Include="Simulator\RobotSimulator.cs" />
     <Compile Include="Hardware\DataTypes\BoolData.cs" />
     <Compile Include="Hardware\DataTypes\FloatData.cs" />
     <Compile Include="Hardware\DataTypes\IDataType.cs" />
-    <Compile Include="Hardware\Simulator\RobotSimulatorUI.cs">
+    <Compile Include="Simulator\RobotSimulatorUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Hardware\Simulator\RobotSimulatorUI.Designer.cs">
+    <Compile Include="Simulator\RobotSimulatorUI.Designer.cs">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
     </Compile>
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
     <Compile Include="Hardware\Sensors\IMU.cs" />
-    <Compile Include="Hardware\ISensor.cs" />
     <Compile Include="ILogging.cs" />
-    <Compile Include="InputControls\ControllerType.cs" />
     <Compile Include="InputControls\IController.cs" />
     <Compile Include="InputControls\IKeyboardListener.cs" />
-    <Compile Include="InputControls\JoystickController.cs" />
     <Compile Include="InputControls\KeyboardController.cs" />
     <Compile Include="JoystickConfigForm.cs">
       <SubType>Form</SubType>
@@ -124,10 +144,17 @@
     <Compile Include="Hardware\Robot.cs" />
     <Compile Include="RobotThread.cs" />
     <Compile Include="ROV.cs" />
+    <Compile Include="Simulator\Sensors\ImuSimulator.cs" />
+    <Compile Include="Simulator\Sensors\PressureSensorSimulator.cs" />
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
-    <EmbeddedResource Include="Hardware\Simulator\RobotSimulatorUI.resx">
+    <Compile Include="Utils\Twist.cs" />
+    <Compile Include="Utils\Vector3.cs" />
+    <EmbeddedResource Include="InputVisualizer.resx">
+      <DependentUpon>InputVisualizer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simulator\RobotSimulatorUI.resx">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JoystickConfigForm.resx">
@@ -176,7 +203,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <Folder Include="Hardware\Registers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Meters.dll">

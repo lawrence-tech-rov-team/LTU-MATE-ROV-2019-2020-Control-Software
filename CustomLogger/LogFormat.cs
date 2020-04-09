@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace CustomLogger {
 	public class LogFormat {
-		//TODO allow changing the log format.
 
 		internal string GetHeader(LogLevel level, string ThreadName, int threadId, ThreadPriority threadPriority) {
 			MethodBase method = new StackTrace().GetFrame(2).GetMethod();

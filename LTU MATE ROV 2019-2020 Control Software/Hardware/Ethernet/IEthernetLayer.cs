@@ -11,8 +11,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		private volatile bool connected = false;
 		public bool Connected { get => connected; protected set => connected = value; }
 
+		public abstract bool IsSimulator { get; }
+
 		public delegate void NewPacketHandler(UdpPacket packet);
 		public event NewPacketHandler OnPacketReceived;
+
+		#region Events
+		public delegate void GenericEvent();
+		public event GenericEvent OnIdCollision;
+
+		protected void InvokeIdCollision() { OnIdCollision?.Invoke(); }
+		#endregion
 
 		~IEthernetLayer() {
 			Disconnect();
@@ -51,21 +60,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 			return false;
 		}
 
-		public bool Send(Command command, ByteArray data) {
-			return Send(new UdpPacket(command, data));
+		public bool Send(byte id, ByteArray data) {
+			return Send(new UdpPacket(id, data));
 		}
 
-		public bool Send(Command command, params byte[] data) {
-			return Send(new UdpPacket(command, data));
+		public bool Send(byte id, params byte[] data) {
+			return Send(new UdpPacket(id, data));
 		}
 
-		public bool Send(Command command, string message, bool clip = true) {
+		public bool Send(byte id, string message, bool clip = true) {
 			if (clip || (message.Length <= UdpPacket.MAX_LENGTH))
-				return Send(new UdpPacket(command, Encoding.UTF8.GetBytes(message)));
+				return Send(new UdpPacket(id, Encoding.UTF8.GetBytes(message)));
 			else {
-				bool result = Send(new UdpPacket(command, Encoding.UTF8.GetBytes(message.Substring(0, UdpPacket.MAX_LENGTH))));
+				bool result = Send(new UdpPacket(id, Encoding.UTF8.GetBytes(message.Substring(0, UdpPacket.MAX_LENGTH))));
 				if (!result) return false;
-				return Send(command, message.Substring(UdpPacket.MAX_LENGTH), clip);
+				return Send(id, message.Substring(UdpPacket.MAX_LENGTH), clip);
 			}
 		}
 

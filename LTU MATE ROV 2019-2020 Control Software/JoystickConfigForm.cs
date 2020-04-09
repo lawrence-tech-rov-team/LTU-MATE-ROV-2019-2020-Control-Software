@@ -51,20 +51,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			joystick = null;
 		}
 
-		private void OnJoystickUpdate(Joystick sender, SharpDX.DirectInput.JoystickOffset type, int value) {
+		private void OnJoystickUpdate(Joystick sender, JoystickControl type, int value) {
 			//Console.WriteLine(type.ToString() + " = " + value);
-			if (type == SharpDX.DirectInput.JoystickOffset.Sliders0) {
+			if (type == JoystickControl.Sliders0) {
 				PowerMeter.Value = (UInt16)value;
-			} else if (type == SharpDX.DirectInput.JoystickOffset.Y) {
+			} else if (type == JoystickControl.Y) {
 				AxisPointer.YValue = PitchMeter.Value = (UInt16)value;
-			} else if (type == SharpDX.DirectInput.JoystickOffset.X) {
+			} else if (type == JoystickControl.X) {
 				AxisPointer.XValue = RollMeter.Value = (UInt16)value;
-			} else if (type == SharpDX.DirectInput.JoystickOffset.RotationZ) {
+			} else if (type == JoystickControl.RotationZ) {
 				YawMeter.Value = (UInt16)value;
-			} else if ((type >= SharpDX.DirectInput.JoystickOffset.Buttons0) && (type <= SharpDX.DirectInput.JoystickOffset.Buttons11)) {
-				int index = type - SharpDX.DirectInput.JoystickOffset.Buttons0;
+			} else if ((type >= JoystickControl.Buttons0) && (type <= JoystickControl.Buttons11)) {
+				int index = type - JoystickControl.Buttons0;
 				buttons[index].Value = (value > 0);
-			} else if (type == SharpDX.DirectInput.JoystickOffset.PointOfViewControllers0) {
+			} else if (type == JoystickControl.PointOfViewControllers0) {
 				if (value == -1) HatMeter.Value = POVDirection.Center;
 				else {
 					int angle = value / 4500;

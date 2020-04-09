@@ -6,15 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators {
-	public class DigitalActuator : IActuator<BoolData> {
+	public class DigitalActuator : IDevice {
+
+		public override IRegister[] Registers => new IRegister[] {
+			ioRegister
+		};
+
+		private WritableRegister<BoolData> ioRegister;
 
 		public bool Enabled {
 			set {
-				Data1 = new BoolData(value);
+				ioRegister.Data = new BoolData(value);
 			}
 		}
 
-		public DigitalActuator(byte id, float refreshRate = 1) : base(id, refreshRate) {
+		public DigitalActuator(byte id, float refreshRate = 50f) {
+			ioRegister = new WritableRegister<BoolData>(id, refreshRate);
 		}
 	}
 }

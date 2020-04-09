@@ -14,6 +14,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		public int DestinationPort { get; } = 6001;
 		public int ReceivePort { get; } = 6002;
 		public string TargetIp { get; set; } = "169.254.240.157"; //255.255.255.255
+
+		public override bool IsSimulator => false;
+
 		//private volatile bool connected = false;
 		//public bool Connected { get => connected; private set => connected = value; }
 
@@ -50,12 +53,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 			for (int i = 0; i < 10; i++) {
 				try {
 					Console.Out.WriteLine("Attempt #{0}...", i);
-					UdpPacket packet = new UdpPacket(Command.Ping, pings[i]);
+
+					/*UdpPacket packet = new UdpPacket(Command.Ping, pings[i]);
 					byte[] data = packet.AllBytes;
 					client.Send(data, data.Length, TargetIp, DestinationPort);
 					data = client.Receive(ref ip);
 					packet = UdpPacket.ParseData(data);
 					if ((packet != null) && (packet.Command == Command.Ping) && (packet.Data.Length == 1) && (packet.Data[0] == pings[i])) {
+					*/
+					if (Ping(200) != null) { 
 						counts++;
 					}
 				} catch (Exception ex) {
@@ -97,7 +103,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 				try {
 					if (client != null) client.Close();
 				} catch (SocketException) {
-					//TODO exception thrown
+					
 				}
 			}
 		}
@@ -116,16 +122,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 		private void OnDataReceived(IAsyncResult res) {
 			try {
 				byte[] data = null;
-				lock (this) { //TODO only lock what is necessary. Don't lock the callback function
+				lock (this) { 
 					IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
 					data = client.EndReceive(res, ref ip);
 					client.BeginReceive(new AsyncCallback(OnDataReceived), null);
 				}
 
 				UdpPacket packet = UdpPacket.ParseData(data);
-				if (packet != null) InvokePacketReceived(packet); //TODO don't catch exception for called function.
-				else Console.Out.WriteLine("Bad packet received."); //TODO logger
-			} catch (Exception e) {
+				if (packet != null) {
+					try {
+						InvokePacketReceived(packet); 
+					} catch (Exception ex) {
+						throw ex;
+					}
+				} else Console.Out.WriteLine("Bad packet received.");
+			} catch (Exception) {
 				Disconnect();
 			}
 		}

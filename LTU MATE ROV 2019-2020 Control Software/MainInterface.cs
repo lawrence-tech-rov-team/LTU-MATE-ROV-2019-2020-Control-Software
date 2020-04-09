@@ -1,10 +1,12 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
+using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks;
+using LTU_MATE_ROV_2019_2020_Control_Software.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,13 +17,15 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form, IKeyboardListener, ILogging {
 
-		private ControllerType currentController = ControllerType.None;
+		private const ThreadPriority RovThreadPriority = ThreadPriority.Normal;
+
 		private Random rnd = new Random();
 		//private EthernetInterface ethernet;// = new EthernetInterface();
 		private Stopwatch timer = new Stopwatch();
@@ -31,9 +35,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private LogWindow LogWindow = new LogWindow();
 
 		private ROV rov;
+		private InputThread inputThread;
+		private Servo selectedServo;
 
 		public MainInterface() {
 			InitializeComponent();
+
 			//ethernet.OnPacketReceived += RunCommand;
 		}
 
@@ -42,8 +49,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			this.KeyPreview = true;
-			rov = new ROV(System.Threading.ThreadPriority.Normal, new EthernetInterface());
+			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
+			foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
+			inputThread = new InputThread(ThreadPriority.Normal);
 			InputDataTimer.Start();
 		}
 
@@ -51,19 +60,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.RequestStop();
 			//Stop other threads
 			//RobotThread.Stop();
-			rov.Stop();
-		}
-
-		private void RunCommand(UdpPacket packet) {
-			switch (packet.Command) {
-				case Command.Ping:
-					CmdPing(packet);
-					return;
-				case Command.Echo:
-					CmdEcho(packet);
-					return;
-				default: return;
-			}
+			rov.Stop(); //TODO before disconnecting, release all servos
 		}
 
 		private void CmdPing(UdpPacket packet) {
@@ -99,50 +96,38 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			
 		}
 
-		private void KeyboardMenu_Click(object sender, EventArgs e) {
-			new KeyboardConfigForm().ShowDialog();
-			RobotThread.SetControllerType(currentController, this);
-		}
-
-		private void JoystickMenu_Click(object sender, EventArgs e) {
-			new JoystickConfigForm().ShowDialog();
-			RobotThread.SetControllerType(currentController, this);
-		}
-
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
-			bool dataa = rov.TestButton.State;
-			if (dataa == null) TestBtnMeter.Value = false; //TODO wtf why is this line here
-			else TestBtnMeter.Value = dataa;
+			lock (this) {
+				TestBtnMeter.Value = rov.Button0.State;
+				TestBtn2.Value = rov.Button1.State;
 
-			TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
-			Vector3Data euler = rov.IMU.Euler;
-			Vector3Data accel = rov.IMU.Accelerometer;
+				TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
+				//Vector3Data euler = rov.IMU.Euler;
+				Vector3Data accel = rov.IMU.Accelerometer;
 
-			if (euler != null) {
-				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
-				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
-				EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
-			}
+				/*if (euler != null) {
+					EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
+					EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
+					EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
+				}*/
 
-			if (accel != null) {
-				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
-				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
-				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
-			}
+				if (accel != null) {
+					AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
+					AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
+					AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
+				}
 
-			//InputControlData data = RobotThread.GetInputData();
-			//if (data == null) data = new InputControlData(); 
-			//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
-		}
+				WaterTempLabel.Text = "Water Temp: " + rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10) + "°C";
+				PressureLabel.Text = "Pressure: " + rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10) + " mBar";
+				AltitudeLabel.Text = "Altitude: " + rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10) + " m above mean sea";
+				DepthLabel.Text = "Depth: " + rov.PressureSensor.Depth.ToString("0.00").PadLeft(10) + " m";
 
-		private void ControllerTypeButton_CheckedChanged(object sender, EventArgs e) {
-			if (!(sender is RadioButton)) return;
-			if (((RadioButton)sender).Checked) {
-				currentController = ControllerType.None;
-				if (sender == KeyboardBtn) currentController = ControllerType.Keyboard;
-				else if (sender == JoystickBtn) currentController = ControllerType.Joystick;
-
-				RobotThread.SetControllerType(currentController, this);
+				//PowerMeter.Value = Math.Min(PowerMeter.Maximum, Math.Max(PowerMeter.Minimum,
+				//	(decimal)inputThread.Input.Linear.X * (PowerMeter.Maximum - PowerMeter.Minimum) + PowerMeter.Minimum
+				//));
+				//InputControlData data = RobotThread.GetInputData();
+				//if (data == null) data = new InputControlData(); 
+				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
 			}
 		}
 
@@ -208,6 +193,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {
+			if((rov == null) || (rov.IsSimulator)) {
+				rov?.Disconnect();
+				rov = new ROV(RovThreadPriority, new EthernetInterface());
+			}
+
 			if (rov.Connect()) {
 				MessageBox.Show("Connected!");
 			} else {
@@ -217,34 +207,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void disconnectToolStripMenuItem_Click(object sender, EventArgs e) {
 			rov.Disconnect();
-		}
-
-		private void pingToolStripMenuItem_Click(object sender, EventArgs e) {
-			/*byte num = (byte)(rnd.Next(0, 255) & 0xFF);
-			timer.Restart();
-			if (!ethernet.Send(Command.Ping, num)) {
-				MessageBox.Show("Error sending ping.");
-			}*/
-			//TODO finish button code
-		}
-
-		private void speedTestToolStripMenuItem_Click(object sender, EventArgs e) {
-			/*timer.Stop();
-			speedCounter = 0;
-			byte[] data = new byte[255];
-			rnd.NextBytes(data);
-
-			timer.Restart();
-			for (int i = 0; i < 8; i++) {
-				ethernet.Send(Command.Echo, data);
-			}*/
-			//TODO finish button code
-		}
-
-		private void toggleLedToolStripMenuItem_Click(object sender, EventArgs e) {
-			//ledState = !ledState;
-			//ethernet.Send(Command.Led, ledState ? (byte)1 : (byte)0);
-			//TODO led toggle
 		}
 
 		private void logToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -270,6 +232,104 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			} else {
 				MessageBox.Show("Ping: " + (long)timeMs + " ms");
 			}
+		}
+
+		private void simulatorToolStripMenuItem_Click(object sender, EventArgs e) {
+			lock (this) {
+				rov?.Disconnect();
+
+				RobotSimulator sim = new RobotSimulator();
+				rov = new ROV(RovThreadPriority, sim);
+				rov.Connect();
+			}
+		}
+
+		private void PosTrackBar_Scroll(object sender, EventArgs e) {
+			//byte val = (byte)PosTrackBar.Value;
+			//PosLabel.Text = val.ToString();
+			//rov.ServoA1.SetPosition(val);
+			PosNum.Value = PosTrackBar.Value;
+		}
+
+		private void EnableServo_CheckedChanged(object sender, EventArgs e) {
+			updateServo();
+		}
+
+		private void PosNum_ValueChanged(object sender, EventArgs e) {
+			updateServo();
+		}
+
+		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
+			rov.Led.Enabled = true;
+		}
+
+		private void LedBtn_MouseUp(object sender, MouseEventArgs e) {
+			rov.Led.Enabled = false;
+		}
+
+		private void LetterBox_SelectedIndexChanged(object sender, EventArgs e) {
+			selectedServo = null;
+			int n = -1;
+			if (NumberBox.SelectedItem != null) n = (int)NumberBox.SelectedItem;
+			if(LetterBox.SelectedItem != null) {
+				char c = (char)LetterBox.SelectedItem;
+				NumberBox.Items.Clear();
+				for (int i = 0; i < rov.Servos[c].Length; i++)
+					NumberBox.Items.Add(i + 1);
+				if (n != -1) NumberBox.SelectedIndex = n - 1;
+			}
+			changeSelection();
+			updateServo();
+		}
+
+		private void NumberBox_SelectedIndexChanged(object sender, EventArgs e) {
+			selectedServo = null;
+			changeSelection();
+			updateServo();
+		}
+
+		void changeSelection() {
+			if ((LetterBox.SelectedItem != null) && (NumberBox.SelectedItem != null)) {
+				char c = (char)LetterBox.SelectedItem;
+				int i = (int)NumberBox.SelectedItem - 1;
+				selectedServo = rov.Servos[c][i];
+			}
+		}
+
+		void updateServo() {
+			if (selectedServo == null) return;
+
+			selectedServo.Enable = EnableServo.Checked;
+
+			ushort us = 0;
+			try {
+				us = decimal.ToUInt16(PosNum.Value);
+
+			} catch (Exception) {
+				return;
+			}
+
+			if (us < 0) us = 0;
+			else if (us > 3000) us = 3000;
+			selectedServo.Pulse = us;
+		}
+
+		private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+			object obj = InputComboBox.SelectedItem;
+			if ((obj != null) && (obj is InputDevice)) {
+				inputThread.InputDevice = (InputDevice)obj;
+			} else {
+				inputThread.InputDevice = null;
+			}
+		}
+
+		private void InputComboBox_DropDown(object sender, EventArgs e) {
+			InputComboBox.Items.Clear();
+			InputComboBox.Items.AddRange(InputDevice.GetAvailableDevices());
+		}
+
+		private void inputToolStripMenuItem_Click(object sender, EventArgs e) {
+			new InputVisualizer(inputThread).Show();
 		}
 	}
 }
