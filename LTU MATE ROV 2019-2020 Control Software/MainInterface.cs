@@ -5,6 +5,7 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks;
 using LTU_MATE_ROV_2019_2020_Control_Software.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
@@ -25,7 +26,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private const ThreadPriority RovThreadPriority = ThreadPriority.Normal;
 
-		private ControllerType currentController = ControllerType.None;
 		private Random rnd = new Random();
 		//private EthernetInterface ethernet;// = new EthernetInterface();
 		private Stopwatch timer = new Stopwatch();
@@ -35,6 +35,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private LogWindow LogWindow = new LogWindow();
 
 		private ROV rov;
+		private InputThread inputThread;
 		private Servo selectedServo;
 
 		public MainInterface() {
@@ -51,6 +52,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
 			foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
+			inputThread = new InputThread(ThreadPriority.Normal);
 			InputDataTimer.Start();
 		}
 
@@ -94,16 +96,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			
 		}
 
-		private void KeyboardMenu_Click(object sender, EventArgs e) {
-			new KeyboardConfigForm().ShowDialog();
-			RobotThread.SetControllerType(currentController, this);
-		}
-
-		private void JoystickMenu_Click(object sender, EventArgs e) {
-			new JoystickConfigForm().ShowDialog();
-			RobotThread.SetControllerType(currentController, this);
-		}
-
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
 			lock (this) {
 				TestBtnMeter.Value = rov.Button0.State;
@@ -130,20 +122,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				AltitudeLabel.Text = "Altitude: " + rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10) + " m above mean sea";
 				DepthLabel.Text = "Depth: " + rov.PressureSensor.Depth.ToString("0.00").PadLeft(10) + " m";
 
+				//PowerMeter.Value = Math.Min(PowerMeter.Maximum, Math.Max(PowerMeter.Minimum,
+				//	(decimal)inputThread.Input.Linear.X * (PowerMeter.Maximum - PowerMeter.Minimum) + PowerMeter.Minimum
+				//));
 				//InputControlData data = RobotThread.GetInputData();
 				//if (data == null) data = new InputControlData(); 
 				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
-			}
-		}
-
-		private void ControllerTypeButton_CheckedChanged(object sender, EventArgs e) {
-			if (!(sender is RadioButton)) return;
-			if (((RadioButton)sender).Checked) {
-				currentController = ControllerType.None;
-				if (sender == KeyboardBtn) currentController = ControllerType.Keyboard;
-				else if (sender == JoystickBtn) currentController = ControllerType.Joystick;
-
-				RobotThread.SetControllerType(currentController, this);
 			}
 		}
 
@@ -328,6 +312,24 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			if (us < 0) us = 0;
 			else if (us > 3000) us = 3000;
 			selectedServo.Pulse = us;
+		}
+
+		private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+			object obj = InputComboBox.SelectedItem;
+			if ((obj != null) && (obj is InputDevice)) {
+				inputThread.InputDevice = (InputDevice)obj;
+			} else {
+				inputThread.InputDevice = null;
+			}
+		}
+
+		private void InputComboBox_DropDown(object sender, EventArgs e) {
+			InputComboBox.Items.Clear();
+			InputComboBox.Items.AddRange(InputDevice.GetAvailableDevices());
+		}
+
+		private void inputToolStripMenuItem_Click(object sender, EventArgs e) {
+			new InputVisualizer(inputThread).Show();
 		}
 	}
 }

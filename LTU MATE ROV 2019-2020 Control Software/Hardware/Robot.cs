@@ -47,24 +47,24 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
 		/// <summary>
 		/// Devices
 		/// </summary>
-		private IRegister[] registers = new IRegister[MaxNumDevices];
+		private readonly IRegister[] registers = new IRegister[MaxNumDevices];
 
 		/// <summary>
 		/// Timer that activates at the refresh rate of the sensor
 		/// </summary>
-		private Stopwatch[] refreshTimers = new Stopwatch[MaxNumDevices];
+		private readonly Stopwatch[] refreshTimers = new Stopwatch[MaxNumDevices];
 
 		/// <summary>
 		/// Timer that checks for timeouts
 		/// </summary>
-		private Stopwatch[] timeoutTimers = new Stopwatch[MaxNumDevices];
+		private readonly Stopwatch[] timeoutTimers = new Stopwatch[MaxNumDevices];
 
-		private bool[] messageReceived = new bool[MaxNumDevices];
+		private readonly bool[] messageReceived = new bool[MaxNumDevices];
 
 		/// <summary>
 		/// The size of the message that was sent
 		/// </summary>
-		private int[] updateSize = new int[MaxNumDevices];
+		private readonly int[] updateSize = new int[MaxNumDevices];
 
 		/// <summary>
 		/// Number of timeouts that have occured in a row.
