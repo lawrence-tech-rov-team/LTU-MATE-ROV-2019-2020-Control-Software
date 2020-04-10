@@ -86,8 +86,9 @@
     <Compile Include="InputControls\Controller\ControllerInput.cs" />
     <Compile Include="InputControls\InputDevice.cs" />
     <Compile Include="InputControls\InputThread.cs" />
+    <Compile Include="InputControls\Joysticks\JoystickConfig.cs" />
     <Compile Include="InputControls\Joysticks\JoystickInput.cs" />
-    <Compile Include="InputControls\Joysticks\Logitech3dPro.cs" />
+    <Compile Include="InputControls\Joysticks\Logitech3dProConfig.cs" />
     <Compile Include="InputVisualizer.cs">
       <SubType>Form</SubType>
     </Compile>
