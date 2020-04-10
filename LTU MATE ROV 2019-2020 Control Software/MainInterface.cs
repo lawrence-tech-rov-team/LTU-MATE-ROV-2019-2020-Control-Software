@@ -6,6 +6,7 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard;
 using LTU_MATE_ROV_2019_2020_Control_Software.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
@@ -22,7 +23,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
-	public partial class MainInterface : Form, IKeyboardListener, ILogging {
+	public partial class MainInterface : Form, ILogging {
 
 		private const ThreadPriority RovThreadPriority = ThreadPriority.Normal;
 
@@ -40,7 +41,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		public MainInterface() {
 			InitializeComponent();
-
 			//ethernet.OnPacketReceived += RunCommand;
 		}
 
@@ -329,7 +329,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void inputToolStripMenuItem_Click(object sender, EventArgs e) {
-			new InputVisualizer(inputThread).Show();
+			InputVisualizer visualizer = new InputVisualizer(inputThread);
+			KeyboardInput.KeyListener = visualizer;
+			visualizer.Show();
 		}
 	}
 }

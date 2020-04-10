@@ -1,4 +1,5 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
-	public partial class InputVisualizer : Form {
+	public partial class InputVisualizer : Form, IKeyboardListener {
+
 		private InputThread input;
 
 		public InputVisualizer(InputThread input) {

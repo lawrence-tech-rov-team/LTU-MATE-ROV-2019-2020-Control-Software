@@ -172,6 +172,7 @@
 			this.Controls.Add(this.LinearZ);
 			this.Controls.Add(this.LinearX);
 			this.Controls.Add(this.LinearY);
+			this.KeyPreview = true;
 			this.Name = "InputVisualizer";
 			this.Text = "InputVisualizer";
 			this.Load += new System.EventHandler(this.InputVisualizer_Load);

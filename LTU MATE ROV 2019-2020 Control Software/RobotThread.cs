@@ -11,7 +11,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private static Thread thread;
 
-		private static IController controller = null;
+		//private static IController controller = null;
 		private static volatile bool runThread = false;
 
 		private static volatile bool ShouldSwitchControls = false;
@@ -19,7 +19,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private static volatile bool RequestInputData = false;
 		private static volatile InputControlData RequestedInputData = null;
-		private static volatile IKeyboardListener keyboardListener = null;
+		//private static volatile IKeyboardListener keyboardListener = null;
 		private static readonly object InputDataLock = new object();
 		
 
@@ -62,7 +62,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private static void Loop() {
 			while (runThread) {
-				if (controller != null) {
+				/*if (controller != null) {
 					controller.Update();
 				}
 
@@ -73,7 +73,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 						RequestedInputData = new InputControlData(controller.ForwardPower, controller.SidePower);
 					}
 					RequestInputData = false;
-				}
+				}*/
 /*
 				ControllerType? swap = null;
 				IKeyboardListener keyboard = null;

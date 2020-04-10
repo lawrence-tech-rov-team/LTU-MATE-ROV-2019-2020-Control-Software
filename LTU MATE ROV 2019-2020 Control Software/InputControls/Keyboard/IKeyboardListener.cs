@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 	public interface IKeyboardListener {
 
 		event KeyEventHandler KeyDown;

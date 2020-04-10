@@ -83,7 +83,7 @@
     <Compile Include="Hardware\ReadableRegister.cs" />
     <Compile Include="Hardware\IRegister.cs" />
     <Compile Include="Hardware\Sensors\PressureSensor.cs" />
-    <Compile Include="InputControls\ControllerInput.cs" />
+    <Compile Include="InputControls\Controller\ControllerInput.cs" />
     <Compile Include="InputControls\InputDevice.cs" />
     <Compile Include="InputControls\InputThread.cs" />
     <Compile Include="InputControls\Joysticks\JoystickInput.cs" />
@@ -112,9 +112,8 @@
     <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
     <Compile Include="Hardware\Sensors\IMU.cs" />
     <Compile Include="ILogging.cs" />
-    <Compile Include="InputControls\IController.cs" />
-    <Compile Include="InputControls\IKeyboardListener.cs" />
-    <Compile Include="InputControls\KeyboardController.cs" />
+    <Compile Include="InputControls\Keyboard\IKeyboardListener.cs" />
+    <Compile Include="InputControls\Keyboard\KeyboardInput.cs" />
     <Compile Include="JoystickConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>

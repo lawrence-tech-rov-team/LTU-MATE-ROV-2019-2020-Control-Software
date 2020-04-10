@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Controller_Wrapper;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 	public class ControllerInput : InputDevice {
 
-		private Controller controller;
+		private Controller_Wrapper.Controller controller;
 		public override string Name => (controller == null) ? "null (Controller)" : "Controller " + controller.PlayerNumber.ToNumber();
 
-		private ControllerInput(Controller controller) {
+		private ControllerInput(Controller_Wrapper.Controller controller) {
 			this.controller = controller;
 		}
 
@@ -40,7 +40,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		}
 
 		public static InputDevice[] GetDevices() {
-			return Controller.GetConnectedControllers().Select(x => new ControllerInput(x)).ToArray();
+			return Controller_Wrapper.Controller.GetConnectedControllers().Select(x => new ControllerInput(x)).ToArray();
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using JoystickInput;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 	public abstract class InputDevice {
 
-		public Twist Value { get; set; }
+		public Twist Value { get; protected set; }
 		public abstract string Name { get; }
 
 		public abstract void Connect();
@@ -24,9 +26,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		public static InputDevice[] GetAvailableDevices() {
 			List<InputDevice> devices = new List<InputDevice>();
 
+			devices.Add(KeyboardInput.InputDevice);
 			devices.AddRange(Joysticks.JoystickInput.GetDevices());
 			devices.AddRange(ControllerInput.GetDevices());
 
+			devices.Sort((x, y) => x.Name.CompareTo(y.Name));
 			return devices.ToArray();
 		}
 
