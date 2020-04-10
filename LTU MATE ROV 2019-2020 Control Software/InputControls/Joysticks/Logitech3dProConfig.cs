@@ -20,8 +20,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks {
 			twist.Linear.Z = ((states[JoystickControl.Buttons3] > 0) ? 1f : 0f) + ((states[JoystickControl.Buttons2] > 0) ? -1f : 0f);
 
 			twist.Angular.X = (float)states[JoystickControl.X] / ushort.MaxValue * 2f - 1f;
-			twist.Angular.Y = (float)states[JoystickControl.Y] / ushort.MaxValue * 2f - 1f;
-			twist.Angular.Z = (float)states[JoystickControl.Z] / ushort.MaxValue * 2f - 1f;
+			twist.Angular.Y = -((float)states[JoystickControl.Y] / ushort.MaxValue * 2f - 1f);
+			twist.Angular.Z = -((float)states[JoystickControl.RotationZ] / ushort.MaxValue * 2f - 1f);
 
 			return twist;
 		}

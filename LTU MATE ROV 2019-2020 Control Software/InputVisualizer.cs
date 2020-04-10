@@ -30,6 +30,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			LinearX.Value = (decimal)twist.Linear.X;
 			LinearY.Value = (decimal)twist.Linear.Y;
 			LinearZ.Value = (decimal)twist.Linear.Z;
+
+			AngularX.Value = (decimal)twist.Angular.X;
+			AngularY.Value = (decimal)twist.Angular.Y;
+			AngularZ.Value = (decimal)twist.Angular.Z;
 		}
 	}
 }
