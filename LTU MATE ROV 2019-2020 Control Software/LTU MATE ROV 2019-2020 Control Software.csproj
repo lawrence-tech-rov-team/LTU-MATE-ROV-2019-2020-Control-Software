@@ -83,17 +83,26 @@
     <Compile Include="Hardware\ReadableRegister.cs" />
     <Compile Include="Hardware\IRegister.cs" />
     <Compile Include="Hardware\Sensors\PressureSensor.cs" />
-    <Compile Include="InputControls\Controller\ControllerInput.cs" />
-    <Compile Include="InputControls\InputDevice.cs" />
+    <Compile Include="InputControls\Controller\ControllerProgram.cs" />
+    <Compile Include="InputControls\InputProgram.cs" />
     <Compile Include="InputControls\InputThread.cs" />
     <Compile Include="InputControls\Joysticks\JoystickConfig.cs" />
-    <Compile Include="InputControls\Joysticks\JoystickInput.cs" />
+    <Compile Include="InputControls\Joysticks\JoystickProgram.cs" />
     <Compile Include="InputControls\Joysticks\Logitech3dProConfig.cs" />
+    <Compile Include="InputControls\TwistWrapper.cs" />
     <Compile Include="InputVisualizer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="InputVisualizer.Designer.cs">
       <DependentUpon>InputVisualizer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Programs\RovProgram.cs" />
+    <Compile Include="Programs\StartStopProgram.cs" />
+    <Compile Include="SensorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SensorsForm.Designer.cs">
+      <DependentUpon>SensorsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
     <Compile Include="Simulator\Actuators\ServoSimulator.cs" />
@@ -114,7 +123,7 @@
     <Compile Include="Hardware\Sensors\IMU.cs" />
     <Compile Include="ILogging.cs" />
     <Compile Include="InputControls\Keyboard\IKeyboardListener.cs" />
-    <Compile Include="InputControls\Keyboard\KeyboardInput.cs" />
+    <Compile Include="InputControls\Keyboard\KeyboardProgram.cs" />
     <Compile Include="JoystickConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +162,9 @@
     <Compile Include="Utils\Vector3.cs" />
     <EmbeddedResource Include="InputVisualizer.resx">
       <DependentUpon>InputVisualizer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SensorsForm.resx">
+      <DependentUpon>SensorsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Simulator\RobotSimulatorUI.resx">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>

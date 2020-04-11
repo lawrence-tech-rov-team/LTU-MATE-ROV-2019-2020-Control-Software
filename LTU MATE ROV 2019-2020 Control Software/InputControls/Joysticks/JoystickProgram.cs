@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks {
-	public class JoystickInput : InputDevice {
+	public class JoystickProgram : InputProgram {
 
 		private Joystick joystick;
 		private JoystickDevice device;
@@ -15,7 +15,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks {
 		private Dictionary<JoystickControl, int> states = new Dictionary<JoystickControl, int>();
 		public override string Name => device?.Name ?? "null (Joystick)";
 
-		private JoystickInput(JoystickDevice device) {
+		private JoystickProgram(JoystickDevice device) {
 			this.device = device;
 			config = JoystickConfig.GetConfig(device.Name);
 		}
@@ -24,36 +24,36 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks {
 			states[Type] = Value;
 		}
 
-		public override void Connect() {
-			Disconnect();
+		public override void Initialize() {
+			Cleanup();
 			joystick = Joystick.Connect(device);
 			states[JoystickControl.PointOfViewControllers0] = -1;
 			if (joystick != null) joystick.OnInputChanged += Joystick_OnInputChanged;
 		}
 
-		public override void Disconnect() {
-			if(joystick != null) {
+		public override bool Loop() {
+			if (!(joystick?.Update() ?? false)) {
+				return false;
+			} else {
+				Input = config.Translate(states);
+				return Sleep(33);
+			}
+		}
+
+		public override void Cleanup() {
+			if (joystick != null) {
 				joystick.OnInputChanged -= Joystick_OnInputChanged;
 				joystick.Disconnect();
 			}
 			joystick = null;
-			foreach(JoystickControl control in EnumUtil.GetValues<JoystickControl>()) {
+			foreach (JoystickControl control in EnumUtil.GetValues<JoystickControl>()) {
 				states[control] = default(int);
 			}
+			Input = new Twist();
 		}
 
-		public override bool Update() {
-			if (!(joystick?.Update() ?? false)) {
-				Disconnect();
-				return false;
-			} else {
-				Value = config.Translate(states);
-				return true;
-			}
-		}
-
-		public static InputDevice[] GetDevices() {
-			return Joystick.GetAvailableJoysticks().Select(x => new JoystickInput(x)).ToArray();
+		public static InputProgram[] GetPrograms() {
+			return Joystick.GetAvailableJoysticks().Select(x => new JoystickProgram(x)).ToArray();
 		}
 
 	}

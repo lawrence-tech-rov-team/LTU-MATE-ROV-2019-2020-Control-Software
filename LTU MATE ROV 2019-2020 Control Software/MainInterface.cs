@@ -37,7 +37,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private ROV rov;
 		private InputThread inputThread;
-		private Servo selectedServo;
 
 		public MainInterface() {
 			InitializeComponent();
@@ -48,9 +47,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.Start();
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
-			this.KeyPreview = true;
 			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
-			foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
+			//foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
 			inputThread = new InputThread(ThreadPriority.Normal);
 			InputDataTimer.Start();
@@ -61,35 +59,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//Stop other threads
 			//RobotThread.Stop();
 			rov.Stop(); //TODO before disconnecting, release all servos
-		}
-
-		private void CmdPing(UdpPacket packet) {
-			/*
-			if(recvData.Count >= 3) {
-				byte[] buffer = fillFromBuffer(3);
-				if ((buffer == null) || (buffer.Length != 3)) return;
-				if (buffer[0] != 0x00) return;
-				else foundStart = false;
-				byte checksum = (byte)((0xFF + buffer[0] + buffer[1]) & 0x7F);
-				if(checksum == buffer[2]) {
-					Console.WriteLine("Ping! {0}", buffer[1]);
-				}
-			}*/
-			if (packet.Data.Length == 1) {
-				Console.WriteLine("Ping! {0} Latency: {1} ms", packet.Data[0], timer.Elapsed.TotalMilliseconds);
-			}
-		}
-
-		private void CmdEcho(UdpPacket packet) {
-			if (timer.IsRunning && (packet.Data.Length == 255)) {
-				speedCounter++;
-				if (speedCounter >= 8) {
-					timer.Stop();
-					Console.WriteLine("Average Time: {0} ms or {1} bit/s", timer.Elapsed.TotalMilliseconds, (255 * 8 * 8) / timer.Elapsed.TotalSeconds);
-				}
-			} else {
-				Console.WriteLine("Ehco! {0}", Encoding.UTF8.GetString(packet.Data.ToArray()));
-			}
 		}
 
 		private void ControlsMenu_Click(object sender, EventArgs e) {
@@ -244,21 +213,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 		}
 
-		private void PosTrackBar_Scroll(object sender, EventArgs e) {
-			//byte val = (byte)PosTrackBar.Value;
-			//PosLabel.Text = val.ToString();
-			//rov.ServoA1.SetPosition(val);
-			PosNum.Value = PosTrackBar.Value;
-		}
-
-		private void EnableServo_CheckedChanged(object sender, EventArgs e) {
-			updateServo();
-		}
-
-		private void PosNum_ValueChanged(object sender, EventArgs e) {
-			updateServo();
-		}
-
 		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
 			rov.Led.Enabled = true;
 		}
@@ -267,57 +221,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			rov.Led.Enabled = false;
 		}
 
-		private void LetterBox_SelectedIndexChanged(object sender, EventArgs e) {
-			selectedServo = null;
-			int n = -1;
-			if (NumberBox.SelectedItem != null) n = (int)NumberBox.SelectedItem;
-			if(LetterBox.SelectedItem != null) {
-				char c = (char)LetterBox.SelectedItem;
-				NumberBox.Items.Clear();
-				for (int i = 0; i < rov.Servos[c].Length; i++)
-					NumberBox.Items.Add(i + 1);
-				if (n != -1) NumberBox.SelectedIndex = n - 1;
-			}
-			changeSelection();
-			updateServo();
-		}
-
-		private void NumberBox_SelectedIndexChanged(object sender, EventArgs e) {
-			selectedServo = null;
-			changeSelection();
-			updateServo();
-		}
-
-		void changeSelection() {
-			if ((LetterBox.SelectedItem != null) && (NumberBox.SelectedItem != null)) {
-				char c = (char)LetterBox.SelectedItem;
-				int i = (int)NumberBox.SelectedItem - 1;
-				selectedServo = rov.Servos[c][i];
-			}
-		}
-
-		void updateServo() {
-			if (selectedServo == null) return;
-
-			selectedServo.Enable = EnableServo.Checked;
-
-			ushort us = 0;
-			try {
-				us = decimal.ToUInt16(PosNum.Value);
-
-			} catch (Exception) {
-				return;
-			}
-
-			if (us < 0) us = 0;
-			else if (us > 3000) us = 3000;
-			selectedServo.Pulse = us;
-		}
-
 		private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
 			object obj = InputComboBox.SelectedItem;
-			if ((obj != null) && (obj is InputDevice)) {
-				inputThread.InputDevice = (InputDevice)obj;
+			if ((obj != null) && (obj is InputProgram)) {
+				inputThread.InputDevice = (InputProgram)obj;
 			} else {
 				inputThread.InputDevice = null;
 			}
@@ -325,13 +232,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputComboBox_DropDown(object sender, EventArgs e) {
 			InputComboBox.Items.Clear();
-			InputComboBox.Items.AddRange(InputDevice.GetAvailableDevices());
+			InputComboBox.Items.AddRange(InputProgram.GetAvailablePrograms(rov));
 		}
 
 		private void inputToolStripMenuItem_Click(object sender, EventArgs e) {
 			InputVisualizer visualizer = new InputVisualizer(inputThread);
-			KeyboardInput.KeyListener = visualizer;
+			KeyboardProgram.KeyListener = visualizer;
 			visualizer.Show();
+		}
+
+		private void sensorsToolStripMenuItem_Click(object sender, EventArgs e) {
+			new SensorsForm(rov).Show();
 		}
 	}
 }

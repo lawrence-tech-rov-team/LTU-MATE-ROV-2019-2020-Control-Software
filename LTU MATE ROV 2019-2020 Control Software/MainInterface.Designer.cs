@@ -27,6 +27,7 @@
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.MenuStrip = new System.Windows.Forms.MenuStrip();
 			this.ControlsMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.inputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.developerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveExcelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.saveCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,19 +55,13 @@
 			this.PressureLabel = new System.Windows.Forms.Label();
 			this.AltitudeLabel = new System.Windows.Forms.Label();
 			this.DepthLabel = new System.Windows.Forms.Label();
-			this.PosTrackBar = new System.Windows.Forms.TrackBar();
-			this.PosNum = new System.Windows.Forms.NumericUpDown();
-			this.EnableServo = new System.Windows.Forms.CheckBox();
 			this.TestBtn2 = new Meters.IOMeter();
 			this.LedBtn = new System.Windows.Forms.Button();
-			this.LetterBox = new System.Windows.Forms.ComboBox();
-			this.NumberBox = new System.Windows.Forms.ComboBox();
 			this.InputComboBox = new System.Windows.Forms.ComboBox();
-			this.inputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sensorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.PosNum)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
@@ -93,11 +88,19 @@
 			// ControlsMenu
 			// 
 			this.ControlsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.inputToolStripMenuItem});
+            this.inputToolStripMenuItem,
+            this.sensorsToolStripMenuItem});
 			this.ControlsMenu.Name = "ControlsMenu";
-			this.ControlsMenu.Size = new System.Drawing.Size(76, 24);
-			this.ControlsMenu.Text = "Controls";
+			this.ControlsMenu.Size = new System.Drawing.Size(66, 24);
+			this.ControlsMenu.Text = "Debug";
 			this.ControlsMenu.Click += new System.EventHandler(this.ControlsMenu_Click);
+			// 
+			// inputToolStripMenuItem
+			// 
+			this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
+			this.inputToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.inputToolStripMenuItem.Text = "Input";
+			this.inputToolStripMenuItem.Click += new System.EventHandler(this.inputToolStripMenuItem_Click);
 			// 
 			// developerToolStripMenuItem
 			// 
@@ -335,45 +338,6 @@
 			this.DepthLabel.TabIndex = 22;
 			this.DepthLabel.Text = "Depth: ";
 			// 
-			// PosTrackBar
-			// 
-			this.PosTrackBar.Location = new System.Drawing.Point(461, 347);
-			this.PosTrackBar.Maximum = 3000;
-			this.PosTrackBar.Name = "PosTrackBar";
-			this.PosTrackBar.Size = new System.Drawing.Size(442, 56);
-			this.PosTrackBar.TabIndex = 23;
-			this.PosTrackBar.Value = 1500;
-			this.PosTrackBar.Scroll += new System.EventHandler(this.PosTrackBar_Scroll);
-			// 
-			// PosNum
-			// 
-			this.PosNum.Location = new System.Drawing.Point(375, 364);
-			this.PosNum.Maximum = new decimal(new int[] {
-            3000,
-            0,
-            0,
-            0});
-			this.PosNum.Name = "PosNum";
-			this.PosNum.Size = new System.Drawing.Size(80, 22);
-			this.PosNum.TabIndex = 27;
-			this.PosNum.Value = new decimal(new int[] {
-            1500,
-            0,
-            0,
-            0});
-			this.PosNum.ValueChanged += new System.EventHandler(this.PosNum_ValueChanged);
-			// 
-			// EnableServo
-			// 
-			this.EnableServo.AutoSize = true;
-			this.EnableServo.Location = new System.Drawing.Point(748, 325);
-			this.EnableServo.Name = "EnableServo";
-			this.EnableServo.Size = new System.Drawing.Size(74, 21);
-			this.EnableServo.TabIndex = 29;
-			this.EnableServo.Text = "Enable";
-			this.EnableServo.UseVisualStyleBackColor = true;
-			this.EnableServo.CheckedChanged += new System.EventHandler(this.EnableServo_CheckedChanged);
-			// 
 			// TestBtn2
 			// 
 			this.TestBtn2.BorderColor = System.Drawing.Color.Black;
@@ -399,24 +363,6 @@
 			this.LedBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseDown);
 			this.LedBtn.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LedBtn_MouseUp);
 			// 
-			// LetterBox
-			// 
-			this.LetterBox.FormattingEnabled = true;
-			this.LetterBox.Location = new System.Drawing.Point(469, 420);
-			this.LetterBox.Name = "LetterBox";
-			this.LetterBox.Size = new System.Drawing.Size(121, 24);
-			this.LetterBox.TabIndex = 35;
-			this.LetterBox.SelectedIndexChanged += new System.EventHandler(this.LetterBox_SelectedIndexChanged);
-			// 
-			// NumberBox
-			// 
-			this.NumberBox.FormattingEnabled = true;
-			this.NumberBox.Location = new System.Drawing.Point(596, 420);
-			this.NumberBox.Name = "NumberBox";
-			this.NumberBox.Size = new System.Drawing.Size(121, 24);
-			this.NumberBox.TabIndex = 36;
-			this.NumberBox.SelectedIndexChanged += new System.EventHandler(this.NumberBox_SelectedIndexChanged);
-			// 
 			// InputComboBox
 			// 
 			this.InputComboBox.FormattingEnabled = true;
@@ -427,12 +373,12 @@
 			this.InputComboBox.DropDown += new System.EventHandler(this.InputComboBox_DropDown);
 			this.InputComboBox.SelectedIndexChanged += new System.EventHandler(this.InputComboBox_SelectedIndexChanged);
 			// 
-			// inputToolStripMenuItem
+			// sensorsToolStripMenuItem
 			// 
-			this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
-			this.inputToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.inputToolStripMenuItem.Text = "Input";
-			this.inputToolStripMenuItem.Click += new System.EventHandler(this.inputToolStripMenuItem_Click);
+			this.sensorsToolStripMenuItem.Name = "sensorsToolStripMenuItem";
+			this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+			this.sensorsToolStripMenuItem.Text = "Sensors";
+			this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.sensorsToolStripMenuItem_Click);
 			// 
 			// MainInterface
 			// 
@@ -440,13 +386,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(938, 532);
 			this.Controls.Add(this.InputComboBox);
-			this.Controls.Add(this.NumberBox);
-			this.Controls.Add(this.LetterBox);
 			this.Controls.Add(this.LedBtn);
 			this.Controls.Add(this.TestBtn2);
-			this.Controls.Add(this.EnableServo);
-			this.Controls.Add(this.PosNum);
-			this.Controls.Add(this.PosTrackBar);
 			this.Controls.Add(this.DepthLabel);
 			this.Controls.Add(this.AltitudeLabel);
 			this.Controls.Add(this.PressureLabel);
@@ -474,8 +415,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.PosTrackBar)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.PosNum)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -513,15 +452,12 @@
 		private System.Windows.Forms.Label PressureLabel;
 		private System.Windows.Forms.Label AltitudeLabel;
 		private System.Windows.Forms.Label DepthLabel;
-		private System.Windows.Forms.TrackBar PosTrackBar;
-		private System.Windows.Forms.NumericUpDown PosNum;
-		private System.Windows.Forms.CheckBox EnableServo;
 		private Meters.IOMeter TestBtn2;
 		private System.Windows.Forms.Button LedBtn;
-		private System.Windows.Forms.ComboBox LetterBox;
-		private System.Windows.Forms.ComboBox NumberBox;
 		private System.Windows.Forms.ComboBox InputComboBox;
 		private System.Windows.Forms.ToolStripMenuItem inputToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sensorsToolStripMenuItem;
+		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 	}
 }
 

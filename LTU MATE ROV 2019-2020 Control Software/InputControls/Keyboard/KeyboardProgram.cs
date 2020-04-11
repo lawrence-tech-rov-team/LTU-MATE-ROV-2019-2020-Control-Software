@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
-	public class KeyboardInput : InputDevice {
+	public class KeyboardProgram : InputProgram {
 
 		private const float ThrustMod = 0.33f;
 		private const float ThrustDecay = 0.75f;
@@ -16,7 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 
 		private Stopwatch timer = new Stopwatch();
 
-		public static readonly KeyboardInput InputDevice = new KeyboardInput();
+		public static readonly KeyboardProgram InputDevice = new KeyboardProgram();
 		private static volatile IKeyboardListener listener;
 		public static IKeyboardListener KeyListener {
 			get => listener;
@@ -56,7 +56,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 			}
 		}
 
-		private KeyboardInput() {
+		private KeyboardProgram() {
 		}
 
 		private void reset() {
@@ -65,15 +65,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 
 		public override string Name => "Keyboard";
 
-		public override void Connect() {
+		public override void Initialize() {
 			
 		}
 
-		public override void Disconnect() {
-			KeyListener = null;
-		}
-
-		public override bool Update() {
+		public override bool Loop() {
 			int thrust = 0;
 			if (W) thrust++;
 			if (S) thrust--;
@@ -88,10 +84,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 				twist.Linear.X = Math.Max(-1, Math.Min(1, twist.Linear.X));
 			}
 
-			Value = twist;
+			Input = twist;
 			timer.Restart();
-			
-			return true;
+
+			return Sleep(33);
+		}
+
+		public override void Cleanup() {
+			//	KeyListener = null;
+			Input = new Twist();
 		}
 	}
 }

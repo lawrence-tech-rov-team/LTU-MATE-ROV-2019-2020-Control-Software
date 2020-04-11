@@ -11,80 +11,81 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 
 		//public delegate void GenericEvent();
 
-		private volatile InputDevice inputDevice;
-		public InputDevice InputDevice {
+		private volatile InputProgram inputDevice;
+		public InputProgram InputDevice {
 			get => inputDevice;
 			set {
 				lock (this) {
-					if (inputDevice != null) inputDevice.Disconnect();
+					if (inputDevice != null) Stop();
 					inputDevice = value;
-					if (inputDevice != null) inputDevice.Connect();
+					if (inputDevice != null) Start();
 				}
 			}
 		}
 
-		private volatile TwistWrapper input = new TwistWrapper();
-		public Twist Input { get => input.Value; }
-
-		private Thread thread;
-
-		private volatile bool running = true;
-
-		public InputThread(ThreadPriority priority) {
-			thread = ThreadHelper.StartNewThread("Input Reader", true, InputLoop, priority);
-			//Volatile.Write<IEthernetLayer>(ref ether, commInterface);
-		}
-
-		public void StopAsync() {
-			running = false;
-		}
-
-		public void Stop() {
-			StopAsync();
-			thread.Join();
-		}
-
-		private void InputLoop() {
-			//Init here, invoke events
-			while (running) {
-				lock (this) {
-					if ((inputDevice != null) && (inputDevice.Update())) {
-						input = new TwistWrapper(inputDevice.Value);
-					} else {
-						input = new TwistWrapper();
+		public Twist Input {
+			get {
+				InputProgram device = inputDevice;
+				if(device != null) {
+					TwistWrapper wrapper = device.Value;
+					if(wrapper != null) {
+						return wrapper.Value;
 					}
 				}
 
-				Thread.Sleep(33);
-			}
-			//clean up, invoke events
-			lock (this) {
-				if (inputDevice != null) inputDevice.Disconnect();
+				return new Twist();
 			}
 		}
 
-		private class TwistWrapper {
+		private Thread thread;
+		private ThreadPriority priority;
 
-			public Twist Value { get; }
+		public InputThread(ThreadPriority priority) {
+			this.priority = priority;
+		}
 
-			public TwistWrapper() {
-				Value = new Twist();
+		private void Start() {
+			inputDevice.ShouldExit = false;
+			thread = ThreadHelper.StartNewThread("Input Reader", true, InputLoop, priority);
+		}
+
+		public void StopAsync() {
+			lock (this) {
+				InputProgram device = inputDevice;
+				if(device != null) device.ShouldExit = true;
 			}
+		}
 
-			public TwistWrapper(Twist twist) {
-				twist.Linear.X = Constrain(twist.Linear.X);
-				twist.Linear.Y = Constrain(twist.Linear.Y);
-				twist.Linear.Z = Constrain(twist.Linear.Z);
-				twist.Angular.X = Constrain(twist.Angular.X);
-				twist.Angular.Y = Constrain(twist.Angular.Y);
-				twist.Angular.Z = Constrain(twist.Angular.Z);
-				Value = twist;
+		public void Stop() {
+			lock (this) {
+				StopAsync();
+				thread.Join();
 			}
+		}
 
-			private float Constrain(float value) {
-				return Math.Max(-1f, Math.Min(1f, value));
+		private void InputLoop() {
+			InputProgram program = inputDevice;
+			if (program == null) return;
+			try {
+				program.Initialize();
+				while (!program.ShouldExit) {
+					if (!program.Loop()) break;
+					/*lock (this) {
+						if ((inputDevice != null) && (inputDevice.Update())) {
+							input = new TwistWrapper(inputDevice.Value);
+						} else {
+							input = new TwistWrapper();
+						}
+					}*/
+
+					//Thread.Sleep(33);
+				}
+				program.Cleanup();
+			}catch(Exception ex) {
+				Console.WriteLine("Input thread threw an exception:");
+				Console.WriteLine(ex.Message);
+				Console.WriteLine(ex.StackTrace);
 			}
-
 		}
 
 	}
