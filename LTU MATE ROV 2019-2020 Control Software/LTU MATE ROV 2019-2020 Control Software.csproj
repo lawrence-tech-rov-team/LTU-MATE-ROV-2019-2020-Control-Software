@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlSystem.cs" />
+    <Compile Include="Controls\ControlsThread.cs" />
     <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Hardware\Actuators\Servo.cs" />
     <Compile Include="Hardware\DataTypes\Int8Data.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="InputControls\Joysticks\JoystickConfig.cs" />
     <Compile Include="InputControls\Joysticks\JoystickProgram.cs" />
     <Compile Include="InputControls\Joysticks\Logitech3dProConfig.cs" />
+    <Compile Include="InputControls\Joysticks\PrintStatesConfig.cs" />
     <Compile Include="InputControls\TwistWrapper.cs" />
     <Compile Include="InputVisualizer.cs">
       <SubType>Form</SubType>
@@ -124,18 +126,6 @@
     <Compile Include="ILogging.cs" />
     <Compile Include="InputControls\Keyboard\IKeyboardListener.cs" />
     <Compile Include="InputControls\Keyboard\KeyboardProgram.cs" />
-    <Compile Include="JoystickConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="JoystickConfigForm.Designer.cs">
-      <DependentUpon>JoystickConfigForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="KeyboardConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KeyboardConfigForm.Designer.cs">
-      <DependentUpon>KeyboardConfigForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="LogWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -168,12 +158,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Simulator\RobotSimulatorUI.resx">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="JoystickConfigForm.resx">
-      <DependentUpon>JoystickConfigForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KeyboardConfigForm.resx">
-      <DependentUpon>KeyboardConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LogWindow.resx">
       <DependentUpon>LogWindow.cs</DependentUpon>
