@@ -28,11 +28,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private const ThreadPriority RovThreadPriority = ThreadPriority.Normal;
 
 		private Random rnd = new Random();
-		//private EthernetInterface ethernet;// = new EthernetInterface();
-		private Stopwatch timer = new Stopwatch();
-		private int speedCounter = 0;
-		private bool ledState = false;
-		//TODO ethernet interface usage should be moved to Robot thingy (on its own thread)
 		private LogWindow LogWindow = new LogWindow();
 
 		private ROV rov;
@@ -40,7 +35,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		public MainInterface() {
 			InitializeComponent();
-			//ethernet.OnPacketReceived += RunCommand;
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
@@ -100,7 +94,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 		}
 
-		private void saveExcelToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void SaveExcelToolStripMenuItem_Click(object sender, EventArgs e) {
 			try {
 				using(ExcelFileWriter file = ExcelFileWriter.OpenExcelApplication()) {
 					if (file == null) throw new NullReferenceException("Failed to open the Excel application.");
@@ -138,7 +132,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 		}
 
-		private void saveCSVToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void SaveCSVToolStripMenuItem_Click(object sender, EventArgs e) {
 			List<string> lines = new List<string>();
 			List<string> line = new List<string>();
 
@@ -161,7 +155,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 		}
 
-		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void ConnectToolStripMenuItem_Click(object sender, EventArgs e) {
 			if((rov == null) || (rov.IsSimulator)) {
 				rov?.Disconnect();
 				rov = new ROV(RovThreadPriority, new EthernetInterface());
@@ -174,27 +168,27 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 		}
 
-		private void disconnectToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e) {
 			rov.Disconnect();
 		}
 
-		private void logToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void LogToolStripMenuItem_Click(object sender, EventArgs e) {
 			LogWindow.Show();
 		}
 
-		private void button1_Click(object sender, EventArgs e) {
+		private void Button1_Click(object sender, EventArgs e) {
 			this.Log(CustomLogger.LogLevel.Warn, "I\'m warning you!");
 		}
 
-		private void button2_Click(object sender, EventArgs e) {
+		private void Button2_Click(object sender, EventArgs e) {
 			this.Log(CustomLogger.LogLevel.Info, "I am not the info desk.");
 		}
 
-		private void button3_Click(object sender, EventArgs e) {
+		private void Button3_Click(object sender, EventArgs e) {
 			this.Log(CustomLogger.LogLevel.Debug, "Bugs everywhere!");
 		}
 
-		private void hardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void HardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
 			long? timeMs = rov.Ping(1000);
 			if(timeMs == null) {
 				MessageBox.Show("Ping failed.");
@@ -203,7 +197,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 		}
 
-		private void simulatorToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void SimulatorToolStripMenuItem_Click(object sender, EventArgs e) {
 			lock (this) {
 				rov?.Disconnect();
 
@@ -232,16 +226,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputComboBox_DropDown(object sender, EventArgs e) {
 			InputComboBox.Items.Clear();
-			InputComboBox.Items.AddRange(InputProgram.GetAvailablePrograms(rov));
+			InputComboBox.Items.AddRange(InputProgram.GetAvailablePrograms());
 		}
 
-		private void inputToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void InputToolStripMenuItem_Click(object sender, EventArgs e) {
 			InputVisualizer visualizer = new InputVisualizer(inputThread);
 			KeyboardProgram.KeyListener = visualizer;
 			visualizer.Show();
 		}
 
-		private void sensorsToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void SensorsToolStripMenuItem_Click(object sender, EventArgs e) {
 			new SensorsForm(rov).Show();
 		}
 	}

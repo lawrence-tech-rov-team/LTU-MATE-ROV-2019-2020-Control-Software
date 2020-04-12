@@ -43,13 +43,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			return Name;
 		}
 
-		public static InputProgram[] GetAvailablePrograms(ROV rov) {
-			List<InputProgram> devices = new List<InputProgram>();
+		public static InputProgram[] GetAvailablePrograms(/*ROV rov*/) {
+			List<InputProgram> devices = new List<InputProgram> {
+				KeyboardProgram.InputDevice
+			};
 
-			devices.Add(KeyboardProgram.InputDevice);
 			devices.AddRange(Joysticks.JoystickProgram.GetPrograms());
 			devices.AddRange(ControllerProgram.GetPrograms());
-			devices.AddRange(RovProgram.GetPrograms(rov));
+			devices.AddRange(RovProgram.GetPrograms(/*rov*/));
 
 			devices.Sort((x, y) => x.Name.CompareTo(y.Name));
 			return devices.ToArray();

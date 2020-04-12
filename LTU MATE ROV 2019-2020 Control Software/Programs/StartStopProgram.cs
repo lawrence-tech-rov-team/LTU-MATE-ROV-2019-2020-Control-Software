@@ -11,7 +11,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs {
 
 		public override string Name => "Start Stop";
 
-		public StartStopProgram(ROV rov) : base(rov) {
+		public StartStopProgram() : base() {
 		}
 
 		public override void Initialize() {

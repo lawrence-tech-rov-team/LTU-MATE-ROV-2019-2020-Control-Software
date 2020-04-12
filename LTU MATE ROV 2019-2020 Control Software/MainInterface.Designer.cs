@@ -100,7 +100,7 @@
 			this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
 			this.inputToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.inputToolStripMenuItem.Text = "Input";
-			this.inputToolStripMenuItem.Click += new System.EventHandler(this.inputToolStripMenuItem_Click);
+			this.inputToolStripMenuItem.Click += new System.EventHandler(this.InputToolStripMenuItem_Click);
 			// 
 			// developerToolStripMenuItem
 			// 
@@ -118,14 +118,14 @@
 			this.saveExcelToolStripMenuItem.Name = "saveExcelToolStripMenuItem";
 			this.saveExcelToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveExcelToolStripMenuItem.Text = "Save Excel";
-			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.saveExcelToolStripMenuItem_Click);
+			this.saveExcelToolStripMenuItem.Click += new System.EventHandler(this.SaveExcelToolStripMenuItem_Click);
 			// 
 			// saveCSVToolStripMenuItem
 			// 
 			this.saveCSVToolStripMenuItem.Name = "saveCSVToolStripMenuItem";
 			this.saveCSVToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.saveCSVToolStripMenuItem.Text = "Save CSV";
-			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.saveCSVToolStripMenuItem_Click);
+			this.saveCSVToolStripMenuItem.Click += new System.EventHandler(this.SaveCSVToolStripMenuItem_Click);
 			// 
 			// ethernetToolStripMenuItem
 			// 
@@ -142,35 +142,35 @@
 			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
 			this.connectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.connectToolStripMenuItem.Text = "Connect";
-			this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+			this.connectToolStripMenuItem.Click += new System.EventHandler(this.ConnectToolStripMenuItem_Click);
 			// 
 			// disconnectToolStripMenuItem
 			// 
 			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
 			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.disconnectToolStripMenuItem.Text = "Disconnect";
-			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
+			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.DisconnectToolStripMenuItem_Click);
 			// 
 			// hardwarePingToolStripMenuItem
 			// 
 			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
 			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
 			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
-			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.hardwarePingToolStripMenuItem_Click);
+			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.HardwarePingToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
 			this.logToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
 			this.logToolStripMenuItem.Text = "Log";
-			this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
+			this.logToolStripMenuItem.Click += new System.EventHandler(this.LogToolStripMenuItem_Click);
 			// 
 			// simulatorToolStripMenuItem
 			// 
 			this.simulatorToolStripMenuItem.Name = "simulatorToolStripMenuItem";
 			this.simulatorToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
 			this.simulatorToolStripMenuItem.Text = "Simulator";
-			this.simulatorToolStripMenuItem.Click += new System.EventHandler(this.simulatorToolStripMenuItem_Click);
+			this.simulatorToolStripMenuItem.Click += new System.EventHandler(this.SimulatorToolStripMenuItem_Click);
 			// 
 			// InputDataTimer
 			// 
@@ -185,7 +185,7 @@
 			this.button1.TabIndex = 6;
 			this.button1.Text = "Warn";
 			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.button1.Click += new System.EventHandler(this.Button1_Click);
 			// 
 			// button2
 			// 
@@ -195,7 +195,7 @@
 			this.button2.TabIndex = 7;
 			this.button2.Text = "Info";
 			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.button2.Click += new System.EventHandler(this.Button2_Click);
 			// 
 			// button3
 			// 
@@ -205,7 +205,7 @@
 			this.button3.TabIndex = 8;
 			this.button3.Text = "Debug";
 			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
+			this.button3.Click += new System.EventHandler(this.Button3_Click);
 			// 
 			// TestBtnMeter
 			// 
@@ -378,7 +378,7 @@
 			this.sensorsToolStripMenuItem.Name = "sensorsToolStripMenuItem";
 			this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
 			this.sensorsToolStripMenuItem.Text = "Sensors";
-			this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.sensorsToolStripMenuItem_Click);
+			this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.SensorsToolStripMenuItem_Click);
 			// 
 			// MainInterface
 			// 

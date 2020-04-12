@@ -44,7 +44,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 
 				client.Client.SendTimeout = 100;
 				client.Client.ReceiveTimeout = 100;
-			} catch (Exception ex) { }
+			} catch (Exception) { }
 
 			IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
 			byte[] pings = new byte[10];
@@ -73,7 +73,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
 			try {
 				client.Client.SendTimeout = origSendTimeout;
 				client.Client.ReceiveTimeout = origRecvTimeout;
-			} catch (Exception ex) { }
+			} catch (Exception) { }
 
 			Console.WriteLine("Counts: {0}", counts);
 
