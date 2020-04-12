@@ -38,7 +38,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		}
 
 		private Thread thread;
-		private ThreadPriority priority;
+		private readonly ThreadPriority priority;
 
 		public InputThread(ThreadPriority priority) {
 			this.priority = priority;
