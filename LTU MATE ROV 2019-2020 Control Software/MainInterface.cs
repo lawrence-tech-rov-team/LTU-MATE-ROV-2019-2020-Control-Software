@@ -1,5 +1,6 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
+using LTU_MATE_ROV_2019_2020_Control_Software.Cameras;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators;
 using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
@@ -32,6 +33,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private ROV rov;
 		private InputThread inputThread;
+		private CameraThread cameras;
 
 		public MainInterface() {
 			InitializeComponent();
@@ -45,14 +47,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
 			inputThread = new InputThread(ThreadPriority.Normal);
+			cameras = new CameraThread(ThreadPriority.Normal);
 			InputDataTimer.Start();
 		}
 
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
-			//RobotThread.RequestStop();
-			//Stop other threads
-			//RobotThread.Stop();
-			rov.Stop(); //TODO before disconnecting, release all servos
+			rov.StopAsync(); //TODO before disconnecting, release all servos
+			cameras.StopAsync();
+			inputThread.StopAsync();
+
+			rov.Stop();
+			cameras.Stop();
+			inputThread.Stop();
 		}
 
 		private void ControlsMenu_Click(object sender, EventArgs e) {
@@ -91,7 +97,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				//InputControlData data = RobotThread.GetInputData();
 				//if (data == null) data = new InputControlData(); 
 				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
+				CameraView1.Image = cameras.Image;
 			}
+			
 		}
 
 		private void SaveExcelToolStripMenuItem_Click(object sender, EventArgs e) {

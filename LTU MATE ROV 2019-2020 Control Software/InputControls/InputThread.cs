@@ -58,8 +58,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 
 		public void Stop() {
 			lock (this) {
-				StopAsync();
-				thread.Join();
+				try {
+					StopAsync();
+					thread?.Join();
+				} catch (Exception) { }
 			}
 		}
 

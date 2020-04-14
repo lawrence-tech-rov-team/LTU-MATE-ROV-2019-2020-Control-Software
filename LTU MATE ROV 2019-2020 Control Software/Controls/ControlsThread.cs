@@ -23,8 +23,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 		}
 
 		public void Stop() {
-			StopAsync();
-			thread.Join();
+			try {
+				StopAsync();
+				thread?.Join();
+			} catch (Exception) { }
 		}
 
 		private void ThreadLoop() {

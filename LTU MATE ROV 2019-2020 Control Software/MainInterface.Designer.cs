@@ -60,14 +60,16 @@
 			this.LedBtn = new System.Windows.Forms.Button();
 			this.InputComboBox = new System.Windows.Forms.ComboBox();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+			this.CameraView1 = new Emgu.CV.UI.ImageBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pictureBox1
 			// 
 			this.pictureBox1.Location = new System.Drawing.Point(9, 25);
-			this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.pictureBox1.Name = "pictureBox1";
 			this.pictureBox1.Size = new System.Drawing.Size(351, 185);
 			this.pictureBox1.TabIndex = 0;
@@ -189,7 +191,7 @@
 			// button1
 			// 
 			this.button1.Location = new System.Drawing.Point(638, 68);
-			this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button1.Margin = new System.Windows.Forms.Padding(2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(56, 19);
 			this.button1.TabIndex = 6;
@@ -200,7 +202,7 @@
 			// button2
 			// 
 			this.button2.Location = new System.Drawing.Point(638, 92);
-			this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button2.Margin = new System.Windows.Forms.Padding(2);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(56, 19);
 			this.button2.TabIndex = 7;
@@ -211,7 +213,7 @@
 			// button3
 			// 
 			this.button3.Location = new System.Drawing.Point(638, 115);
-			this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button3.Margin = new System.Windows.Forms.Padding(2);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(56, 19);
 			this.button3.TabIndex = 8;
@@ -223,7 +225,7 @@
 			// 
 			this.TestBtnMeter.BorderColor = System.Drawing.Color.Black;
 			this.TestBtnMeter.Location = new System.Drawing.Point(9, 215);
-			this.TestBtnMeter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.TestBtnMeter.Margin = new System.Windows.Forms.Padding(2);
 			this.TestBtnMeter.Name = "TestBtnMeter";
 			this.TestBtnMeter.OffColor = System.Drawing.Color.Firebrick;
 			this.TestBtnMeter.OnColor = System.Drawing.Color.Red;
@@ -368,7 +370,7 @@
 			// 
 			this.TestBtn2.BorderColor = System.Drawing.Color.Black;
 			this.TestBtn2.Location = new System.Drawing.Point(40, 215);
-			this.TestBtn2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.TestBtn2.Margin = new System.Windows.Forms.Padding(2);
 			this.TestBtn2.Name = "TestBtn2";
 			this.TestBtn2.OffColor = System.Drawing.Color.Firebrick;
 			this.TestBtn2.OnColor = System.Drawing.Color.Red;
@@ -382,7 +384,7 @@
 			// LedBtn
 			// 
 			this.LedBtn.Location = new System.Drawing.Point(11, 381);
-			this.LedBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.LedBtn.Margin = new System.Windows.Forms.Padding(2);
 			this.LedBtn.Name = "LedBtn";
 			this.LedBtn.Size = new System.Drawing.Size(62, 26);
 			this.LedBtn.TabIndex = 33;
@@ -395,18 +397,27 @@
 			// 
 			this.InputComboBox.FormattingEnabled = true;
 			this.InputComboBox.Location = new System.Drawing.Point(364, 25);
-			this.InputComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.InputComboBox.Margin = new System.Windows.Forms.Padding(2);
 			this.InputComboBox.Name = "InputComboBox";
 			this.InputComboBox.Size = new System.Drawing.Size(106, 21);
 			this.InputComboBox.TabIndex = 37;
 			this.InputComboBox.DropDown += new System.EventHandler(this.InputComboBox_DropDown);
 			this.InputComboBox.SelectedIndexChanged += new System.EventHandler(this.InputComboBox_SelectedIndexChanged);
 			// 
+			// CameraView1
+			// 
+			this.CameraView1.Location = new System.Drawing.Point(462, 168);
+			this.CameraView1.Name = "CameraView1";
+			this.CameraView1.Size = new System.Drawing.Size(208, 184);
+			this.CameraView1.TabIndex = 2;
+			this.CameraView1.TabStop = false;
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(704, 432);
+			this.Controls.Add(this.CameraView1);
 			this.Controls.Add(this.InputComboBox);
 			this.Controls.Add(this.LedBtn);
 			this.Controls.Add(this.TestBtn2);
@@ -430,7 +441,7 @@
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
-			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "MainInterface";
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainInterface_FormClosing);
@@ -438,6 +449,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -481,6 +493,7 @@
 		private System.Windows.Forms.ToolStripMenuItem inputToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem sensorsToolStripMenuItem;
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
+		private Emgu.CV.UI.ImageBox CameraView1;
 	}
 }
 

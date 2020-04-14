@@ -82,6 +82,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cameras\CameraThread.cs" />
     <Compile Include="ControlSystem.cs" />
     <Compile Include="Controls\ControlsThread.cs" />
     <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
