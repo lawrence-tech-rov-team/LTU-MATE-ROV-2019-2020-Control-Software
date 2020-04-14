@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
-	public static class ThreadHelper {
+	public static class ThreadHelper {//TODO remove class
 
 		public static Thread StartNewThread(string ThreadName, bool IsBackground, ParameterizedThreadStart start, ThreadPriority priority = ThreadPriority.Normal) {
 			Thread th = new Thread(start);

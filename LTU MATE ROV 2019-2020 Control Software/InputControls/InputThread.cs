@@ -26,9 +26,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		public Twist Input {
 			get {
 				InputProgram device = inputDevice;
-				if(device != null) {
+				if (device != null) {
 					TwistWrapper wrapper = device.Value;
-					if(wrapper != null) {
+					if (wrapper != null) {
 						return wrapper.Value;
 					}
 				}
@@ -52,16 +52,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		public void StopAsync() {
 			lock (this) {
 				InputProgram device = inputDevice;
-				if(device != null) device.ShouldExit = true;
+				if (device != null) device.ShouldExit = true;
 			}
 		}
 
 		public void Stop() {
 			lock (this) {
-				try {
-					StopAsync();
-					thread?.Join();
-				} catch (Exception) { }
+				StopAsync();
+				thread.Join();
 			}
 		}
 
@@ -83,7 +81,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 					//Thread.Sleep(33);
 				}
 				program.Cleanup();
-			}catch(Exception ex) {
+			} catch (Exception ex) {
 				Console.WriteLine("Input thread threw an exception:");
 				Console.WriteLine(ex.Message);
 				Console.WriteLine(ex.StackTrace);

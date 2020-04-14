@@ -10,7 +10,7 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System.Threading;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
-	public class CameraThread {
+	public class CameraThread : ThreadedProcess {
 
 		//private ImageViewer viewer;
 		private VideoCapture capture;
@@ -21,35 +21,26 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 
 		private volatile bool running = true;
 
-		public CameraThread(ThreadPriority priority) {
-			thread = ThreadHelper.StartNewThread("Camera Input Thread", true, ThreadLoop, priority);
+		public CameraThread(ThreadPriority Priority = ThreadPriority.Normal) : base("Camera Input Thread", Priority) {
 		}
 
-		private void ThreadLoop() {
-			//viewer = new ImageViewer();
+		protected override void Initialize() {
 			capture = new VideoCapture();
-			//viewer.Show();
-			while (running) {
-				if (capture.IsOpened) {
-					//viewer.Image = capture.QueryFrame();
-					image = capture.QueryFrame();
-				} else {
-					image = null;
-				}
-				Thread.Sleep(1);
-			}
-		}
-		
-		public void StopAsync() {
-			running = false;
 		}
 
-		public void Stop() {
-			try {
-				StopAsync();
-				thread.Join();
-			} catch (Exception) { }
+		protected override bool Loop() {
+			if (capture.IsOpened) {
+				image = capture.QueryFrame();
+			} else {
+				image = null;
+			}
+			return Sleep(1);
 		}
+
+		protected override void Cleanup() {
+			
+		}
+
 
 	}
 }
