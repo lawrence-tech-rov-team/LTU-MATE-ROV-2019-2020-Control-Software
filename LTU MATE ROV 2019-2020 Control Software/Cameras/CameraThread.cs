@@ -12,7 +12,6 @@ using System.Threading;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 	public class CameraThread : ThreadedProcess {
 
-		//private ImageViewer viewer;
 		private VideoCapture capture;
 
 		private volatile Mat image;

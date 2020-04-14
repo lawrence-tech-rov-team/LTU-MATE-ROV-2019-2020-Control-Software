@@ -33,12 +33,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private ROV rov;
 		private InputThread inputThread;
-		private CameraThread cameras;
+		private CameraThread cameraThread;
 
 		public MainInterface() {
 			InitializeComponent();
 			inputThread = new InputThread(ThreadPriority.Normal);
-			cameras = new CameraThread(ThreadPriority.Normal);
+			cameraThread = new CameraThread(ThreadPriority.Normal);
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
@@ -46,19 +46,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
-																	   //foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
-			cameras.Start();
+			cameraThread.Start();
 			InputDataTimer.Start();
 		}
 
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
 			rov.StopAsync(); //TODO before disconnecting, release all servos
-			cameras.StopAsync();
+			cameraThread.StopAsync();
 			inputThread.StopAsync();
 
 			rov.Stop();
-			cameras.Stop();
+			cameraThread.Stop();
 			inputThread.Stop();
 		}
 
@@ -98,7 +97,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				//InputControlData data = RobotThread.GetInputData();
 				//if (data == null) data = new InputControlData(); 
 				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
-				CameraView1.Image = cameras.Image;
+				CameraView1.Image = cameraThread.Image;
 			}
 			
 		}
