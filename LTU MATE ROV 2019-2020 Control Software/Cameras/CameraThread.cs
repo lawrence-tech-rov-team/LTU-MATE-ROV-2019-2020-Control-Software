@@ -21,7 +21,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 		}
 
 		protected override void Initialize() {
-			capture = new VideoCapture();
+			capture = new VideoCapture(1);
 		}
 
 		protected override bool Loop() {
