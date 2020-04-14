@@ -256,7 +256,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void ImageUpdateTimer_Tick(object sender, EventArgs e) {
-			CameraView1.Image = cameraThread.Image;
+			CameraView1.Image = cameraThread.Image1;
+			CameraView2.Image = cameraThread.Image2;
 		}
 	}
 }
