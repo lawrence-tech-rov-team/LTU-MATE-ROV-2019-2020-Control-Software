@@ -30,7 +30,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 			} else {
 				image = null;
 			}
-			return Sleep(1);
+			return true;
 		}
 
 		protected override void Cleanup() {

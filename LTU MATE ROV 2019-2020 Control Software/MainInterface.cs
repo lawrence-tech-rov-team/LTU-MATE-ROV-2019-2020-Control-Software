@@ -49,9 +49,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 			cameraThread.Start();
 			InputDataTimer.Start();
+			ImageUpdateTimer.Start();
 		}
 
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
+			InputDataTimer.Stop();
+			ImageUpdateTimer.Stop();
+
 			rov.StopAsync(); //TODO before disconnecting, release all servos
 			cameraThread.StopAsync();
 			inputThread.StopAsync();
@@ -97,7 +101,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				//InputControlData data = RobotThread.GetInputData();
 				//if (data == null) data = new InputControlData(); 
 				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
-				CameraView1.Image = cameraThread.Image;
+				
 			}
 			
 		}
@@ -245,6 +249,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void SensorsToolStripMenuItem_Click(object sender, EventArgs e) {
 			new SensorsForm(rov).Show();
+		}
+
+		private void MainInterface_Paint(object sender, PaintEventArgs e) {
+			
+		}
+
+		private void ImageUpdateTimer_Tick(object sender, EventArgs e) {
+			CameraView1.Image = cameraThread.Image;
 		}
 	}
 }

@@ -61,6 +61,7 @@
 			this.InputComboBox = new System.Windows.Forms.ComboBox();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.CameraView1 = new Emgu.CV.UI.ImageBox();
+			this.ImageUpdateTimer = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
@@ -412,6 +413,11 @@
 			this.CameraView1.TabIndex = 2;
 			this.CameraView1.TabStop = false;
 			// 
+			// ImageUpdateTimer
+			// 
+			this.ImageUpdateTimer.Interval = 67;
+			this.ImageUpdateTimer.Tick += new System.EventHandler(this.ImageUpdateTimer_Tick);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -446,6 +452,7 @@
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainInterface_FormClosing);
 			this.Load += new System.EventHandler(this.MainInterface_Load);
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainInterface_Paint);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
@@ -494,6 +501,7 @@
 		private System.Windows.Forms.ToolStripMenuItem sensorsToolStripMenuItem;
 		private System.ComponentModel.BackgroundWorker backgroundWorker1;
 		private Emgu.CV.UI.ImageBox CameraView1;
+		private System.Windows.Forms.Timer ImageUpdateTimer;
 	}
 }
 
