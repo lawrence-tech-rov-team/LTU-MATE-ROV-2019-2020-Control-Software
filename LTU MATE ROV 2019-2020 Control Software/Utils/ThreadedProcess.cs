@@ -45,9 +45,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 					while (running) {
 						if (!Loop()) running = false;
 					}
-				} catch (Exception) { }
+				} catch (Exception ex) {
+					PrintError(ex);
+				}
 				Cleanup();
-			} catch (Exception) { }
+			} catch (Exception ex) {
+				PrintError(ex);
+			}
 		}
 
 		protected abstract void Initialize();
@@ -80,7 +84,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			try {
 				StopAsync();
 				thread.Join();
-			} catch (Exception) { }
+			} catch (Exception ex) {
+				PrintError(ex);
+			}
+		}
+
+		private void PrintError(Exception e) {
+			Console.WriteLine("Error occured in thread \'" + thread?.Name ?? null + "\': ");
+			Console.WriteLine(e.Message);
+			Console.Write(e.StackTrace);
 		}
 
 	}
