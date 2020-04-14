@@ -24,7 +24,6 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
-			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.MenuStrip = new System.Windows.Forms.MenuStrip();
 			this.ControlsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,19 +61,9 @@
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.CameraView1 = new Emgu.CV.UI.ImageBox();
 			this.ImageUpdateTimer = new System.Windows.Forms.Timer(this.components);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.Location = new System.Drawing.Point(9, 25);
-			this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(351, 185);
-			this.pictureBox1.TabIndex = 0;
-			this.pictureBox1.TabStop = false;
 			// 
 			// MenuStrip
 			// 
@@ -407,9 +396,10 @@
 			// 
 			// CameraView1
 			// 
-			this.CameraView1.Location = new System.Drawing.Point(462, 168);
+			this.CameraView1.Location = new System.Drawing.Point(12, 27);
 			this.CameraView1.Name = "CameraView1";
-			this.CameraView1.Size = new System.Drawing.Size(208, 184);
+			this.CameraView1.Size = new System.Drawing.Size(347, 183);
+			this.CameraView1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.CameraView1.TabIndex = 2;
 			this.CameraView1.TabStop = false;
 			// 
@@ -444,7 +434,6 @@
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
-			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
 			this.Margin = new System.Windows.Forms.Padding(2);
@@ -453,7 +442,6 @@
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainInterface_FormClosing);
 			this.Load += new System.EventHandler(this.MainInterface_Load);
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainInterface_Paint);
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.MenuStrip.ResumeLayout(false);
 			this.MenuStrip.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).EndInit();
@@ -463,8 +451,6 @@
 		}
 
 		#endregion
-
-		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.MenuStrip MenuStrip;
 		private System.Windows.Forms.ToolStripMenuItem ControlsMenu;
 		private System.Windows.Forms.Timer InputDataTimer;
