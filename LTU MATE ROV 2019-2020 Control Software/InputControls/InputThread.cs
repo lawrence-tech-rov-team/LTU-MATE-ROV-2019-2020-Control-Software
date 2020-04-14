@@ -16,9 +16,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			get => inputDevice;
 			set {
 				lock (this) {
-					if (inputDevice != null) Stop();
+					if (inputDevice != null) inputDevice.Stop();
 					inputDevice = value;
-					if (inputDevice != null) Start();
+					if (inputDevice != null) inputDevice.Start(priority);
 				}
 			}
 		}
@@ -37,32 +37,34 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			}
 		}
 
-		private Thread thread;
+		//private Thread thread;
 		private readonly ThreadPriority priority;
 
-		public InputThread(ThreadPriority priority) {
+		public InputThread(ThreadPriority priority = ThreadPriority.Normal) {
 			this.priority = priority;
 		}
-
+		/*
 		private void Start() {
 			inputDevice.ShouldExit = false;
 			thread = ThreadHelper.StartNewThread("Input Reader", true, InputLoop, priority);
 		}
-
+		*/
 		public void StopAsync() {
 			lock (this) {
-				InputProgram device = inputDevice;
-				if (device != null) device.ShouldExit = true;
+				//InputProgram device = inputDevice;
+				//if (device != null) device.ShouldExit = true;
+				inputDevice?.StopAsync();
 			}
 		}
 
 		public void Stop() {
 			lock (this) {
-				StopAsync();
-				thread.Join();
+				//StopAsync();
+				//thread.Join();
+				inputDevice?.Stop();
 			}
 		}
-
+		/*
 		private void InputLoop() {
 			InputProgram program = inputDevice;
 			if (program == null) return;
@@ -79,7 +81,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 					}*/
 
 					//Thread.Sleep(33);
-				}
+/*				}
 				program.Cleanup();
 			} catch (Exception ex) {
 				Console.WriteLine("Input thread threw an exception:");
@@ -87,6 +89,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 				Console.WriteLine(ex.StackTrace);
 			}
 		}
-
+		*/
 	}
 }

@@ -37,6 +37,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		public MainInterface() {
 			InitializeComponent();
+			inputThread = new InputThread(ThreadPriority.Normal);
+			cameras = new CameraThread(ThreadPriority.Normal);
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
@@ -44,10 +46,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
-			//foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
+																	   //foreach (char c in rov.Servos.Keys) LetterBox.Items.Add(c);
 
-			inputThread = new InputThread(ThreadPriority.Normal);
-			cameras = new CameraThread(ThreadPriority.Normal);
+			cameras.Start();
 			InputDataTimer.Start();
 		}
 

@@ -26,7 +26,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			set {
 				try {
 					thread.Priority = value;
-				} catch (Exception) {}
+				} catch (Exception) { }
 			}
 		}
 
@@ -35,7 +35,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			thread.IsBackground = true;
 			thread.Name = Name;
 			this.Priority = Priority;
-			thread.Start();
+		}
+
+		public void Start() {
+			try {
+				running = true;
+				thread.Start();
+			} catch (Exception ex) {
+				PrintError(ex);
+			}
+		}
+
+		public void Start(ThreadPriority Priority) {
+			this.Priority = Priority;
+			Start();
 		}
 
 		private void ThreadLoop() {

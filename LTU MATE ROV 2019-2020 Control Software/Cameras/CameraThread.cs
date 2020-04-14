@@ -14,12 +14,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 
 		//private ImageViewer viewer;
 		private VideoCapture capture;
-		private Thread thread;
 
 		private volatile Mat image;
 		public Mat Image { get => image; }
-
-		private volatile bool running = true;
 
 		public CameraThread(ThreadPriority Priority = ThreadPriority.Normal) : base("Camera Input Thread", Priority) {
 		}

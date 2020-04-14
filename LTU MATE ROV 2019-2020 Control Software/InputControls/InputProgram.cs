@@ -13,20 +13,26 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
-	public abstract class InputProgram {
+	public abstract class InputProgram : ThreadedProcess {
 
 		public TwistWrapper Value { get; private set; } = new TwistWrapper();
 		protected Twist Input { get => Value.Value; set => Value = new TwistWrapper(value); }
 		public abstract string Name { get; }
-		public volatile bool ShouldExit = false;
-		private Stopwatch timer = new Stopwatch();
+		//public volatile bool ShouldExit = false;
+		//private Stopwatch timer = new Stopwatch();
 
-		public abstract void Initialize();
+
+		public InputProgram(ThreadPriority Priority = ThreadPriority.Normal) : base("Input Reader", Priority) {
+
+		}
+
+
+		//public abstract void Initialize();
 
 		/// <summary> Returns true if the program should continue looping. </summary>
-		public abstract bool Loop();
-		public abstract void Cleanup();
-
+		//public abstract bool Loop();
+		//public abstract void Cleanup();
+/*
 		/// <summary>
 		/// Returns true if successful, false if was interrupted by an exit request.
 		/// </summary>
@@ -38,7 +44,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			}
 			return true;
 		}
-
+		*/
 		public override string ToString() {
 			return Name;
 		}

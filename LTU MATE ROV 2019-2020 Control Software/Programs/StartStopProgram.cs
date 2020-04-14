@@ -14,11 +14,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs {
 		public StartStopProgram() : base() {
 		}
 
-		public override void Initialize() {
+		protected override void Initialize() {
 
 		}
 
-		public override bool Loop() {
+		protected override bool Loop() {
 			Twist twist = new Twist();
 			twist.Linear.X = 1f;
 			Input = twist;
@@ -28,7 +28,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs {
 			return Sleep(1000);
 		}
 
-		public override void Cleanup() {
+		protected override void Cleanup() {
 			Input = new Twist();
 		}
 	}

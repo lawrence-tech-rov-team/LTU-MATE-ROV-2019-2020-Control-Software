@@ -16,11 +16,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 			this.controller = controller;
 		}
 
-		public override void Initialize() {
+		protected override void Initialize() {
 			
 		}
 
-		public override bool Loop() {
+		protected override bool Loop() {
 			if(controller.Connected && controller.Update()) {
 				Input = Translate();
 				return Sleep(33);
@@ -29,7 +29,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 			}
 		}
 
-		public override void Cleanup() {
+		protected override void Cleanup() {
 			Input = new Twist();
 		}
 
