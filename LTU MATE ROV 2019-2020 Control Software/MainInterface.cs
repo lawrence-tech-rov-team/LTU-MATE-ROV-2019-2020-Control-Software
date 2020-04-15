@@ -1,13 +1,12 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
 using LTU_MATE_ROV_2019_2020_Control_Software.Cameras;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;

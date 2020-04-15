@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 	public abstract class IDataType {
 
 		public abstract int NumberOfBytes { get; }

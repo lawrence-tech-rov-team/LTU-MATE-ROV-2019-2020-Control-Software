@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 	public class ControlSystem {
 
 		private Timer timer;

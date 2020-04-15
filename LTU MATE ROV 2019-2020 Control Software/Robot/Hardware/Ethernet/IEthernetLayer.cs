@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 	public abstract class IEthernetLayer {
 
 		private volatile bool connected = false;

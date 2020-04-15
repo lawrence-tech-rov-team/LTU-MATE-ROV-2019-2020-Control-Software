@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 	public class UdpPacket {
 		//public static readonly byte START_BYTE = 0xFF;
 		public static readonly byte CHECKSUM_MASK = 0xFF;

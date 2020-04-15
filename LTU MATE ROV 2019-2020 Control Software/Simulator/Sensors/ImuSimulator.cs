@@ -1,11 +1,11 @@
-﻿using System;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 	public class ImuSimulator : ISimulatorDevice {

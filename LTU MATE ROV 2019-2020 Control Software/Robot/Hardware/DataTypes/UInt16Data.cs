@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 	public class UInt16Data : IDataType {
 		public override int NumberOfBytes => 2;
 

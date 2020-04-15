@@ -1,16 +1,16 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Actuators;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Actuators;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software {
-	public class ROV : Robot {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
+	public class ROV : Hardware.Robot {
 
 		private const float ServoRefreshRate = 20f;
 

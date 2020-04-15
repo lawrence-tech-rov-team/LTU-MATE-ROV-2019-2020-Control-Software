@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 
 	public abstract class IDevice : IEnumerable<IRegister>{
 

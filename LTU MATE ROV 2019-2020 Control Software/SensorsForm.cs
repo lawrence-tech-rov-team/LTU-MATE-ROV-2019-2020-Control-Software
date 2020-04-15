@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

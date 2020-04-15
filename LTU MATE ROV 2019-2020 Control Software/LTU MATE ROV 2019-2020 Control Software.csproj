@@ -83,22 +83,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cameras\CameraThread.cs" />
-    <Compile Include="ControlSystem.cs" />
+    <Compile Include="Controls\ControlSystem.cs" />
     <Compile Include="Controls\ControlsThread.cs" />
-    <Compile Include="Hardware\Actuators\DigitalActuator.cs" />
-    <Compile Include="Hardware\Actuators\Servo.cs" />
-    <Compile Include="Hardware\DataTypes\Int8Data.cs" />
-    <Compile Include="Hardware\DataTypes\UInt16Data.cs" />
-    <Compile Include="Hardware\DataTypes\UInt8Data.cs" />
-    <Compile Include="Hardware\DataTypes\Vector3Data.cs" />
-    <Compile Include="Hardware\DataTypes\Vector4Data.cs" />
-    <Compile Include="Hardware\Ethernet\EthernetInterface.cs" />
-    <Compile Include="Hardware\Ethernet\IEthernetLayer.cs" />
-    <Compile Include="Hardware\Ethernet\UdpPacket.cs" />
-    <Compile Include="Hardware\IDevice.cs" />
-    <Compile Include="Hardware\ReadableRegister.cs" />
-    <Compile Include="Hardware\IRegister.cs" />
-    <Compile Include="Hardware\Sensors\PressureSensor.cs" />
+    <Compile Include="Robot\Hardware\Actuators\DigitalActuator.cs" />
+    <Compile Include="Robot\Hardware\Actuators\Servo.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\Int8Data.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\UInt16Data.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\UInt8Data.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\Vector3Data.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\Vector4Data.cs" />
+    <Compile Include="Robot\Hardware\Ethernet\EthernetInterface.cs" />
+    <Compile Include="Robot\Hardware\Ethernet\IEthernetLayer.cs" />
+    <Compile Include="Robot\Hardware\Ethernet\UdpPacket.cs" />
+    <Compile Include="Robot\Hardware\IDevice.cs" />
+    <Compile Include="Robot\Hardware\ReadableRegister.cs" />
+    <Compile Include="Robot\Hardware\IRegister.cs" />
+    <Compile Include="Robot\Hardware\Sensors\PressureSensor.cs" />
     <Compile Include="InputControls\Controller\ControllerProgram.cs" />
     <Compile Include="InputControls\InputProgram.cs" />
     <Compile Include="InputControls\InputThread.cs" />
@@ -124,20 +124,20 @@
     <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
     <Compile Include="Simulator\Actuators\ServoSimulator.cs" />
     <Compile Include="Simulator\ISimulatorDevice.cs" />
-    <Compile Include="Hardware\WritableRegister.cs" />
+    <Compile Include="Robot\Hardware\WritableRegister.cs" />
     <Compile Include="Simulator\Sensors\DigitalSensorSimulator.cs" />
     <Compile Include="Simulator\RobotSimulator.cs" />
-    <Compile Include="Hardware\DataTypes\BoolData.cs" />
-    <Compile Include="Hardware\DataTypes\FloatData.cs" />
-    <Compile Include="Hardware\DataTypes\IDataType.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\BoolData.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\FloatData.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\IDataType.cs" />
     <Compile Include="Simulator\RobotSimulatorUI.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Simulator\RobotSimulatorUI.Designer.cs">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Hardware\Sensors\DigitalSensor.cs" />
-    <Compile Include="Hardware\Sensors\IMU.cs" />
+    <Compile Include="Robot\Hardware\Sensors\DigitalSensor.cs" />
+    <Compile Include="Robot\Hardware\Sensors\IMU.cs" />
     <Compile Include="ILogging.cs" />
     <Compile Include="InputControls\Keyboard\IKeyboardListener.cs" />
     <Compile Include="InputControls\Keyboard\KeyboardProgram.cs" />
@@ -155,9 +155,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Hardware\Robot.cs" />
-    <Compile Include="RobotThread.cs" />
-    <Compile Include="ROV.cs" />
+    <Compile Include="Robot\Hardware\Robot.cs" />
+    <Compile Include="Robot\RobotThread.cs" />
+    <Compile Include="Robot\ROV.cs" />
     <Compile Include="Simulator\Sensors\ImuSimulator.cs" />
     <Compile Include="Simulator\Sensors\PressureSensorSimulator.cs" />
     <Compile Include="Utils\ByteArray.cs" />
@@ -215,7 +215,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Hardware\Registers\" />
+    <Folder Include="Robot\Hardware\Registers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="License-LGPL.txt" />

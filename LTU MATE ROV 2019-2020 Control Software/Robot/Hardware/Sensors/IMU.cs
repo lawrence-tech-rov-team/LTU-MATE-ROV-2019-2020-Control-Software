@@ -1,12 +1,11 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes;
-using LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Ethernet;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.Sensors {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 	public class IMU : IDevice {
 
 		public override IRegister[] Registers => new IRegister[]{

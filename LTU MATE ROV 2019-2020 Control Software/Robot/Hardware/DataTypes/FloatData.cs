@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 
-namespace LTU_MATE_ROV_2019_2020_Control_Software.Hardware.DataTypes {
+namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 	public class FloatData : IDataType {
 
 		private volatile float value;
