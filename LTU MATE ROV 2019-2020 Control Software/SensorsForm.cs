@@ -24,7 +24,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			timer1.Enabled = true;
 		}
 
-		private void timer1_Tick(object sender, EventArgs e) {
+		private void Timer1_Tick(object sender, EventArgs e) {
 			ROV rov = robotThread.Robot;
 
 			TestBtnMeter.Value = rov?.Button0?.State ?? false;
