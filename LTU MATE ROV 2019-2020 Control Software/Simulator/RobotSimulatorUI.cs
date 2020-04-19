@@ -16,12 +16,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 
 		private RobotThread robotThread;
 		private RobotSimulator simulator;
-		//private bool invokedClose = false;
+		private volatile bool invokeClose = false;
 
 		public RobotSimulatorUI(RobotThread RobotThread) {
 			InitializeComponent();
 			robotThread = RobotThread;
 			simulator = new RobotSimulator();
+			invokeClose = false;
+			simulator.OnDisconnect += () => {
+				invokeClose = true;
+			};
 		}
 
 		private void RobotSimulatorUI_Load(object sender, EventArgs e) {
@@ -82,7 +86,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 		}
 
 		private void UpdateTimer_Tick(object sender, EventArgs e) {
-			simulator.Update();
+			if (invokeClose) Close();
+			else simulator.Update();
 		}
 	}
 }

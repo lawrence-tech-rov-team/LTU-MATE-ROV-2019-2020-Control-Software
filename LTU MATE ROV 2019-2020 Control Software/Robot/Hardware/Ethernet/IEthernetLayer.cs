@@ -19,6 +19,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 		#region Events
 		public delegate void GenericEvent();
 		public event GenericEvent OnIdCollision;
+		public event GenericEvent OnDisconnect;
 
 		protected void InvokeIdCollision() { OnIdCollision?.Invoke(); }
 		#endregion
@@ -28,10 +29,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 		}
 
 		public void Disconnect() {
+			bool connected = Connected;
 			lock (this) {
 				Connected = false;
 				Close();
 			}
+			if(connected) OnDisconnect?.Invoke();
 		}
 
 		protected abstract void Close();
