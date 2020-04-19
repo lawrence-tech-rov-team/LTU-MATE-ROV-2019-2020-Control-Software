@@ -79,6 +79,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 			//invokedClose = true;
 			UpdateTimer.Stop();
 			simulator.Disconnect();
+			simulator.Disconnect();
 		}
 
 		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {

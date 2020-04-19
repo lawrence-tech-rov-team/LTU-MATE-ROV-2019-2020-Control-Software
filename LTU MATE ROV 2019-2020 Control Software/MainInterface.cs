@@ -51,7 +51,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
 			//rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
-			robotThread.Robot = new ROV(new EthernetInterface());
+			//robotThread.Robot = new ROV(new EthernetInterface());
 
 			cameraThread.Start();
 			InputDataTimer.Start();
