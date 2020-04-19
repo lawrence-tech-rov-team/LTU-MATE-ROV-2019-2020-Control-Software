@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Cameras;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,13 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs {
 	public abstract class RovProgram : InputProgram {
 
-		//public abstract string Name { get; }
-		//protected ROV rov;
-
-		protected RovProgram(/*ROV robot*/) {
-		//	rov = robot;
+		protected RovProgram() {
+		
 		}
 
-		public static InputProgram[] GetPrograms(/*ROV rov*/) {
+		public static InputProgram[] GetPrograms(CameraThread Cameras) {
 			return new InputProgram[] {
-				new StartStopProgram()
+				new StartStopProgram(Cameras)
 			};
 		}
 

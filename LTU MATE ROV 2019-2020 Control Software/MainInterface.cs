@@ -273,7 +273,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputComboBox_DropDown(object sender, EventArgs e) {
 			InputComboBox.Items.Clear();
-			InputComboBox.Items.AddRange(InputProgram.GetAvailablePrograms());
+			InputComboBox.Items.AddRange(InputProgram.GetAvailablePrograms(cameraThread));
 		}
 
 		private void InputToolStripMenuItem_Click(object sender, EventArgs e) {
