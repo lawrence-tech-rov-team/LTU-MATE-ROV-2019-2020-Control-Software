@@ -24,8 +24,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			get => process;
 			set {
 				lock (this) {
-					process?.Stop();
-					ProcessStopped(process);
+					if(process != null) {
+						process.Stop();
+						ProcessStopped(process);
+					}
 					process = value;
 					if(process != null) {
 						ProcessStarting(process);
