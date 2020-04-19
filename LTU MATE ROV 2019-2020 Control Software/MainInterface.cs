@@ -30,7 +30,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private Random rnd = new Random();
 		private LogWindow LogWindow = new LogWindow();
 
-		private ROV rov;
+		//private ROV rov;
+		private RobotThread robotThread;
 		private InputThread inputThread;
 		private CameraThread cameraThread;
 
@@ -38,13 +39,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			InitializeComponent();
 			inputThread = new InputThread(ThreadPriority.Normal);
 			cameraThread = new CameraThread(ThreadPriority.Normal);
+			robotThread = new RobotThread(ThreadPriority.Normal);
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
 			//RobotThread.Start();
 			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
-			rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
+			//rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
+			robotThread.Robot = new ROV(new EthernetInterface());
 
 			cameraThread.Start();
 			InputDataTimer.Start();
@@ -55,11 +58,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			InputDataTimer.Stop();
 			ImageUpdateTimer.Stop();
 
-			rov.StopAsync(); //TODO before disconnecting, release all servos
+			//rov.StopAsync(); //TODO before disconnecting, release all servos
+			robotThread.StopAsync();
 			cameraThread.StopAsync();
 			inputThread.StopAsync();
 
-			rov.Stop();
+			robotThread.Stop();
 			cameraThread.Stop();
 			inputThread.Stop();
 		}
@@ -69,39 +73,41 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
-			lock (this) {
-				TestBtnMeter.Value = rov.Button0.State;
-				TestBtn2.Value = rov.Button1.State;
+			//lock (this) {
+			ROV rov = robotThread.Robot;
 
-				TempLabel.Text = "Temperature: " + rov.IMU.Temperature.ToString().PadLeft(4) + "°C";
-				//Vector3Data euler = rov.IMU.Euler;
-				Vector3Data accel = rov.IMU.Accelerometer;
+			TestBtnMeter.Value = rov?.Button0?.State ?? false;
+			TestBtn2.Value = rov?.Button1?.State ?? false;
 
-				/*if (euler != null) {
-					EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
-					EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
-					EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
-				}*/
+			TempLabel.Text = "Temperature: " + ((rov == null) ? "----" : rov.IMU.Temperature.ToString().PadLeft(4)) + "°C";
+			//Vector3Data euler = rov.IMU.Euler;
+			Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
 
-				if (accel != null) {
-					AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
-					AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
-					AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
-				}
+			/*if (euler != null) {
+				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
+				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
+				EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
+			}*/
 
-				WaterTempLabel.Text = "Water Temp: " + rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10) + "°C";
-				PressureLabel.Text = "Pressure: " + rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10) + " mBar";
-				AltitudeLabel.Text = "Altitude: " + rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10) + " m above mean sea";
-				DepthLabel.Text = "Depth: " + rov.PressureSensor.Depth.ToString("0.00").PadLeft(10) + " m";
+			//if (accel != null) {
+				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
+				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
+				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
+			//}
 
-				//PowerMeter.Value = Math.Min(PowerMeter.Maximum, Math.Max(PowerMeter.Minimum,
-				//	(decimal)inputThread.Input.Linear.X * (PowerMeter.Maximum - PowerMeter.Minimum) + PowerMeter.Minimum
-				//));
-				//InputControlData data = RobotThread.GetInputData();
-				//if (data == null) data = new InputControlData(); 
-				//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
+			WaterTempLabel.Text = "Water Temp: " + ((rov == null) ? "----------" : rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10)) + "°C";
+			PressureLabel.Text = "Pressure: " + ((rov == null) ? "----------" : rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10)) + " mBar";
+			AltitudeLabel.Text = "Altitude: " + ((rov == null) ? "----------" : rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10)) + " m above mean sea";
+			DepthLabel.Text = "Depth: " + ((rov == null) ? "----------" : rov.PressureSensor.Depth.ToString("0.00").PadLeft(10)) + " m";
+
+			//PowerMeter.Value = Math.Min(PowerMeter.Maximum, Math.Max(PowerMeter.Minimum,
+			//	(decimal)inputThread.Input.Linear.X * (PowerMeter.Maximum - PowerMeter.Minimum) + PowerMeter.Minimum
+			//));
+			//InputControlData data = RobotThread.GetInputData();
+			//if (data == null) data = new InputControlData(); 
+			//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
 				
-			}
+			//}
 			
 		}
 
@@ -167,7 +173,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void ConnectToolStripMenuItem_Click(object sender, EventArgs e) {
-			if((rov == null) || (rov.IsSimulator)) {
+			/*if((rov == null) || (rov.IsSimulator)) {
 				rov?.Disconnect();
 				rov = new ROV(RovThreadPriority, new EthernetInterface());
 			}
@@ -176,11 +182,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				MessageBox.Show("Connected!");
 			} else {
 				MessageBox.Show("Could not connect to device.");
-			}
+			}*/
+			//TODO connect message
+			robotThread.Robot = new ROV(new EthernetInterface());
 		}
 
 		private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e) {
-			rov.Disconnect();
+			//rov.Disconnect();
+			robotThread.Robot = null;
 		}
 
 		private void LogToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -200,30 +209,39 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void HardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
-			long? timeMs = rov.Ping(1000);
-			if(timeMs == null) {
-				MessageBox.Show("Ping failed.");
+			ROV robot = robotThread.Robot;
+			if(robot == null) {
+				MessageBox.Show("No robot connected!");
 			} else {
-				MessageBox.Show("Ping: " + (long)timeMs + " ms");
+				long? timeMs = robot.Ping(1000);
+				if(timeMs == null) {
+					MessageBox.Show("Ping failed.");
+				} else {
+					MessageBox.Show("Ping: " + (long)timeMs + " ms");
+				}
 			}
+			
 		}
 
 		private void SimulatorToolStripMenuItem_Click(object sender, EventArgs e) {
-			lock (this) {
-				rov?.Disconnect();
+			//lock (this) {
+			//rov?.Disconnect();
 
-				RobotSimulator sim = new RobotSimulator();
-				rov = new ROV(RovThreadPriority, sim);
-				rov.Connect();
-			}
+			//RobotSimulator sim = new RobotSimulator();
+			//rov = new ROV(RovThreadPriority, sim);
+			//rov.Connect();
+			robotThread.Robot = new ROV(new RobotSimulator());
+			//}
 		}
 
 		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
-			rov.Led.Enabled = true;
+			ROV rov = robotThread.Robot;
+			if (rov != null) rov.Led.Enabled = true;
 		}
 
 		private void LedBtn_MouseUp(object sender, MouseEventArgs e) {
-			rov.Led.Enabled = false;
+			ROV rov = robotThread.Robot;
+			if (rov != null) rov.Led.Enabled = false;
 		}
 
 		private void InputComboBox_SelectedIndexChanged(object sender, EventArgs e) {
@@ -247,7 +265,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void SensorsToolStripMenuItem_Click(object sender, EventArgs e) {
-			new SensorsForm(rov).Show();
+			new SensorsForm(robotThread).Show();
 		}
 
 		private void MainInterface_Paint(object sender, PaintEventArgs e) {

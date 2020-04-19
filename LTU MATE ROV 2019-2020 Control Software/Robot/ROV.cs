@@ -61,7 +61,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 
 		public Dictionary<char, Servo[]> Servos;
 
-		public ROV(ThreadPriority priority, IEthernetLayer ether) : base(priority, ether) {
+		public ROV(IEthernetLayer ether) : base(ether) {
 			Servos = new Dictionary<char, Servo[]> () {
 				{ 'A', new Servo[] { ServoA1, ServoA2, ServoA3, ServoA4, ServoA5 } },
 				{ 'B', new Servo[] { ServoB1, ServoB2, ServoB3, ServoB4, ServoB5, ServoB6 } },

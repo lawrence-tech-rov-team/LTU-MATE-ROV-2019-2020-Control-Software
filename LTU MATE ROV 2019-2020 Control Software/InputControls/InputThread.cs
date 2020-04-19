@@ -7,11 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
-	public class InputThread {
+	public class InputThread : ThreadSwitcher<InputProgram> {
 
-		private volatile InputProgram inputDevice;
-		public InputProgram InputDevice {
-			get => inputDevice;
+		//private volatile InputProgram inputDevice;
+		/*public InputProgram InputDevice {
+			get => process;//inputDevice;
 			set {
 				lock (this) {
 					if (inputDevice != null) inputDevice.Stop();
@@ -19,11 +19,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 					if (inputDevice != null) inputDevice.Start(priority);
 				}
 			}
+		}*/
+		public InputProgram InputDevice {
+			get => Process;
+			set => Process = value;
 		}
 
 		public Twist Input {
 			get {
-				InputProgram device = inputDevice;
+				InputProgram device = Process; //inputDevice;
 				if (device != null) {
 					TwistWrapper wrapper = device.Value;
 					if (wrapper != null) {
@@ -35,23 +39,31 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			}
 		}
 
-		private readonly ThreadPriority priority;
+		//private readonly ThreadPriority priority;
 
-		public InputThread(ThreadPriority priority = ThreadPriority.Normal) {
-			this.priority = priority;
+		public InputThread(ThreadPriority Priority = ThreadPriority.Normal) : base(Priority) {
+			//this.priority = priority;
 		}
 
-		public void StopAsync() {
-			lock (this) {
-				inputDevice?.StopAsync();
-			}
+		protected override void ProcessStopped(InputProgram Process) {
+			
 		}
 
-		public void Stop() {
-			lock (this) {
-				inputDevice?.Stop();
-			}
+		protected override void ProcessStarting(InputProgram Process) {
+			
 		}
-	
+		/*
+public void StopAsync() {
+	lock (this) {
+		inputDevice?.StopAsync();
+	}
+}
+
+public void Stop() {
+	lock (this) {
+		inputDevice?.Stop();
+	}
+}
+*/
 	}
 }

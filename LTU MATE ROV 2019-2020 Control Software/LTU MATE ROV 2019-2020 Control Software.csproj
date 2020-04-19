@@ -164,6 +164,7 @@
     <Compile Include="Utils\ThreadedProcess.cs" />
     <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
+    <Compile Include="Utils\ThreadSwitcher.cs" />
     <Compile Include="Utils\Twist.cs" />
     <Compile Include="Utils\Vector3.cs" />
     <EmbeddedResource Include="InputVisualizer.resx">

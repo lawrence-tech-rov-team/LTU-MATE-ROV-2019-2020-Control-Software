@@ -9,14 +9,15 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
-	public abstract class Robot {
+	public abstract class Robot : ThreadedProcess {
 
 		public delegate void GenericEvent();
-		public event GenericEvent IdCollisionDetected; //TODO make use of event
-		public event GenericEvent RobotStarted;
-		public event GenericEvent RobotStopped;
-		public event GenericEvent TimeoutWarning; //Called when a message is received at greater than 50% of the timeout time.
-		public event GenericEvent RobotTimeout;
+		public event GenericEvent OnIdCollisionDetected; //TODO make use of event
+		public event GenericEvent OnConnected;
+		public event GenericEvent OnConnectFailed;
+		public event GenericEvent OnDisconnected;
+		public event GenericEvent OnTimeoutWarning; //Called when a message is received at greater than 50% of the timeout time.
+		public event GenericEvent OnTimeout;
 
 		/// <summary>
 		/// The maximum number of devices that can be attached.
@@ -41,7 +42,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public bool IsSimulator => ether.IsSimulator;
 
 		private IEthernetLayer ether;
-		private Thread thread;
+		//private Thread thread;
 		private volatile int BytesSent = 0;
 
 		/// <summary>
@@ -71,12 +72,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		/// </summary>
 		private volatile int numTimeouts = 0;
 
-		private volatile bool running = true;
+		//private volatile bool running = true;
 
 		protected void RegisterDevice(IDevice device) {
 			foreach(IRegister register in device) {
 				if (registers[register.Id] != null) {
-					IdCollisionDetected?.Invoke();
+					OnIdCollisionDetected?.Invoke();
 				} else {
 					//updateAttempts[device.Id] = 0;
 					timeoutTimers[register.Id] = new Stopwatch();
@@ -87,11 +88,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 			}
 		}
 
-		protected Robot(ThreadPriority priority, IEthernetLayer commInterface) {
-			thread = ThreadHelper.StartNewThread("Robot Sender", true, RobotLoop, priority);
+		protected Robot(IEthernetLayer commInterface) : base("Robot Thread") {
+			//thread = ThreadHelper.StartNewThread("Robot Sender", true, RobotLoop, priority);
 			Volatile.Write<IEthernetLayer>(ref ether, commInterface);
 		}
-
+		/*
 		public bool Connect() {
 			return ether?.Connect() ?? false;
 		}
@@ -99,7 +100,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public void Disconnect() {
 			ether?.Disconnect();
 		}
-
+		
 		public void StopAsync() {
 			running = false;
 		}
@@ -107,7 +108,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public void Stop() {
 			StopAsync();
 			thread.Join();
-		}
+		}*/
 
 		private bool SendMessage(int id, byte[] msg) {
 			//byte[] bytes = new byte[msg.Length + 1];
@@ -159,7 +160,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 				if (SendMessage(id, registers[id].ResendUpdate)) {
 					timeoutTimers[id].Restart();
 				}
-				RobotTimeout?.Invoke();
+				OnTimeout?.Invoke();
 				Console.Error.WriteLine("Message timeout! #{0}", n);
 			}
 		}
@@ -177,25 +178,35 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 			}
 		}
 
-		private void RobotLoop() {
-			RobotStarted?.Invoke();
-			if(ether != null) ether.OnPacketReceived += Ether_OnPacketReceived;
-			while (running) {
-				for(int i = 0; i < MaxNumDevices; i++) {
-					if(registers[i] != null) {
-						if(timeoutTimers[i].IsRunning) {
-							//Message was sent, check for a timeout
-							CheckForTimeout(i);
-						}else if(/*updateAttempts[i] == 0 &&*/refreshTimers[i].ElapsedMilliseconds > (1000 / registers[i].RefreshRate)) {
-							//Sensor is due for an update, send the message
-							UpdateDevice(i);
-						}
+		protected override void Initialize() {
+			if (ether?.Connect() ?? false) {
+				OnConnected?.Invoke();
+				ether.OnPacketReceived += Ether_OnPacketReceived;
+			} else OnConnectFailed?.Invoke();
+		}
+
+		protected override bool Loop() {
+			if (!(ether?.Connected ?? false)) return false;
+			for (int i = 0; i < MaxNumDevices; i++) {
+				if (registers[i] != null) {
+					if (timeoutTimers[i].IsRunning) {
+						//Message was sent, check for a timeout
+						CheckForTimeout(i);
+					} else if (/*updateAttempts[i] == 0 &&*/refreshTimers[i].ElapsedMilliseconds > (1000 / registers[i].RefreshRate)) {
+						//Sensor is due for an update, send the message
+						UpdateDevice(i);
 					}
 				}
 			}
-			if (ether != null) ether.OnPacketReceived -= Ether_OnPacketReceived;
-			ether?.Disconnect();
-			RobotStopped?.Invoke();
+			return Sleep(1);
+		}
+
+		protected override void Cleanup() {
+			if(ether != null) {
+				ether.Disconnect();
+				ether.OnPacketReceived -= Ether_OnPacketReceived;
+			}
+			OnDisconnected?.Invoke();
 		}
 
 		//NOTE: OnReceived may be invoked on a secondary thread.
@@ -217,7 +228,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 						}
 					}
 				}
-				if(timeoutWarning) TimeoutWarning?.Invoke();
+				if(timeoutWarning) OnTimeoutWarning?.Invoke();
 			}
 		}
 
