@@ -34,12 +34,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private RobotThread robotThread;
 		private InputThread inputThread;
 		private CameraThread cameraThread;
+		private RobotSimulatorUI simulator;
 
 		public MainInterface() {
 			InitializeComponent();
+
 			inputThread = new InputThread(ThreadPriority.Normal);
 			cameraThread = new CameraThread(ThreadPriority.Normal);
 			robotThread = new RobotThread(ThreadPriority.Normal);
+
+			simulator = new RobotSimulatorUI(robotThread);
 		}
 
 		private void MainInterface_Load(object sender, EventArgs e) {
@@ -230,7 +234,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//RobotSimulator sim = new RobotSimulator();
 			//rov = new ROV(RovThreadPriority, sim);
 			//rov.Connect();
-			robotThread.Robot = new ROV(new RobotSimulator());
+			//robotThread.Robot = new ROV(new RobotSimulator());
+			simulator.Show();
 			//}
 		}
 

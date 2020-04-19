@@ -9,7 +9,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 	public abstract class IEthernetLayer {
 
 		private volatile bool connected = false;
-		public bool Connected { get => connected; protected set => connected = value; }
+		public bool Connected { get => connected; private set => connected = value; }
 
 		public abstract bool IsSimulator { get; }
 

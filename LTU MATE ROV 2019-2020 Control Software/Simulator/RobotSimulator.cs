@@ -12,27 +12,35 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 	public class RobotSimulator : IEthernetLayer {
 
 		private int Latency;
-		private RobotSimulatorUI UI;
+		//private RobotSimulatorUI UI;
 		private List<ISimulatorDevice> devices = new List<ISimulatorDevice>();
 		private IRegister[] registers = new IRegister[256];
-		private System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
+		//private System.Windows.Forms.Timer updateTimer = new System.Windows.Forms.Timer();
 
 		public override bool IsSimulator => true;
 
-		public RobotSimulator(int latency = 5) {
+		public RobotSimulator(/*RobotSimulatorUI UI, */int latency = 5) {
+			//this.UI = UI;
 			Latency = latency;
-			updateTimer.Interval = 10;
+		/*	updateTimer.Interval = 10;
 			updateTimer.Tick += UpdateTimer_Tick;
-			updateTimer.Start();
+			updateTimer.Start();*/
 		}
 
+		//Only to be called from the RobotSimulatorUI
+		public void Update() {
+			foreach (ISimulatorDevice device in devices) {
+				device.Update();
+			}
+		}
+		/*
 		private void UpdateTimer_Tick(object sender, EventArgs e) {
 			lock (devices) {
 				foreach (ISimulatorDevice device in devices) {
 					device.Update();
 				}
 			}
-		}
+		}*/
 
 		public void RegisterDevice(ISimulatorDevice simDevice) {
 			foreach(IRegister register in simDevice) {
@@ -49,7 +57,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 
 		public override long? Ping(int timeoutMs = 3000) {
 			lock (this) {
-				if (UI != null) {
+				//if (UI != null) {
+				if (Connected) { 
 					Thread.Sleep(Latency);
 					return 5;
 				} else {
@@ -60,26 +69,29 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 
 		protected override bool TryConnect() {
 			lock (this) {
-				if (UI == null) {
-					UI = new RobotSimulatorUI(this);
-					UI.Show();
-					return true;
-				} else {
-					return false;
-				}
+				//if (UI == null) {
+				//	UI = new RobotSimulatorUI(this);
+				//	UI.Show();
+				//updateTimer.Start();
+				return true;
+				//} else {
+				//	return false;
+				//}
 			}
 		}
 
 		protected override void Close() {
 			lock (this) {
-				if (UI != null) UI?.Invoke(new Action(() => { UI.Close(); }));
-				UI = null;
+				//updateTimer.Stop();
+				//if (UI != null) UI?.Invoke(new Action(() => { UI.Close(); }));
+				//UI = null;
+				//Connected = false;
 			}
 		}
 
 		protected override bool SendBytes(byte[] bytes) {
 			lock (this) {
-				if (UI != null) {
+				if (Connected) {
 					UdpPacket response = GetResponse(bytes);
 					if (response != null) {
 						ThreadPool.QueueUserWorkItem((state) => {

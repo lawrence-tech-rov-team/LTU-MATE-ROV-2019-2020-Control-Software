@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Actuators;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
+using LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Actuators;
 using LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,14 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 	public partial class RobotSimulatorUI : Form {
 
+		private RobotThread robotThread;
 		private RobotSimulator simulator;
-		private bool invokedClose = false;
+		//private bool invokedClose = false;
 
-		public RobotSimulatorUI(RobotSimulator simulator) {
+		public RobotSimulatorUI(RobotThread RobotThread) {
 			InitializeComponent();
-			this.simulator = simulator;
+			robotThread = RobotThread;
+			simulator = new RobotSimulator();
 		}
 
 		private void RobotSimulatorUI_Load(object sender, EventArgs e) {
@@ -62,12 +65,24 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator {
 			simulator.RegisterDevice(new ServoSimulator(54, 55, PositionD6));
 			simulator.RegisterDevice(new ServoSimulator(56, 57, PositionD7));
 			simulator.RegisterDevice(new ServoSimulator(58, 59, PositionD8));
+
+			robotThread.Robot = new ROV(simulator);
+			UpdateTimer.Start();
 		}
 
 		private void RobotSimulatorUI_FormClosing(object sender, FormClosingEventArgs e) {
-			if (invokedClose) return;
-			invokedClose = true;
+			//if (invokedClose) return;
+			//invokedClose = true;
+			UpdateTimer.Stop();
 			simulator.Disconnect();
+		}
+
+		private void connectToolStripMenuItem_Click(object sender, EventArgs e) {
+			robotThread.Robot = new ROV(simulator);
+		}
+
+		private void UpdateTimer_Tick(object sender, EventArgs e) {
+			simulator.Update();
 		}
 	}
 }
