@@ -1,4 +1,6 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +9,40 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
-	public class ControlsThread {
+	public class ControlsThread : ThreadedProcess {
 
-		private Thread thread;
-		private ThreadPriority priority;
-		private volatile bool running = true;
+		private InputThread inputThread;
+		private RobotThread robotThread;
 
-		public ControlsThread(ThreadPriority priority) {
-			this.priority = priority;
-			thread = ThreadHelper.StartNewThread("Controls Thread", true, ThreadLoop, priority);
+		public ControlsThread(InputThread Input, RobotThread Robot, ThreadPriority Priority = ThreadPriority.Normal) : base("Controls Thread", Priority) {
+			inputThread = Input;
+			robotThread = Robot;
+			robotThread.OnConnected += RobotThread_OnConnected;
 		}
 
-		public void StopAsync() {
-			running = false;
+		protected override void Initialize() {
+			
 		}
 
-		public void Stop() {
-			try {
-				StopAsync();
-				thread?.Join();
-			} catch (Exception) { }
+		protected override bool Loop() {
+			ROV robot = robotThread.Robot;
+			if (robot != null) {
+				Twist input = inputThread.Input;
+				//robot.ServoA1.Enable = true;
+				robot.ServoA1.Pulse = (ushort)(1500 + (short)(500 * input.Linear.X));
+			}
+
+			return Sleep(10);
 		}
 
-		private void ThreadLoop() {
-			while (running) {
+		protected override void Cleanup() {
+			
+		}
 
+		private void RobotThread_OnConnected() {
+			ROV robot = robotThread.Robot;
+			if (robot != null) {
+				robot.ServoA1.Enable = true;
 			}
 		}
 

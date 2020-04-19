@@ -11,11 +11,12 @@ using static LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Robot;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 	public class RobotThread : ThreadSwitcher<ROV> {
 
-		public event GenericEvent IdCollisionDetected;
-		public event GenericEvent RobotStarted;
-		public event GenericEvent RobotStopped;
-		public event GenericEvent TimeoutWarning;
-		public event GenericEvent RobotTimeout;
+		public event GenericEvent OnIdCollisionDetected;
+		public event GenericEvent OnConnected;
+		public event GenericEvent OnConnectFailed;
+		public event GenericEvent OnDisconnected;
+		public event GenericEvent OnTimeoutWarning;
+		public event GenericEvent OnTimeout;
 		
 		public ROV Robot {
 			get => Process;
@@ -26,19 +27,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		}
 
 		protected override void ProcessStopped(ROV Process) {
-			Process.OnIdCollisionDetected -= IdCollisionDetected;
-			Process.OnConnected -= RobotStarted;
-			Process.OnDisconnected -= RobotStopped;
-			Process.OnTimeoutWarning -= TimeoutWarning;
-			Process.OnTimeout -= RobotTimeout;
+			Process.OnIdCollisionDetected -= OnIdCollisionDetected;
+			Process.OnConnected -= OnConnected;
+			Process.OnConnectFailed -= OnConnectFailed;
+			Process.OnDisconnected -= OnDisconnected;
+			Process.OnTimeoutWarning -= OnTimeoutWarning;
+			Process.OnTimeout -= OnTimeout;
 		}
 
 		protected override void ProcessStarting(ROV Process) {
-			Process.OnIdCollisionDetected += IdCollisionDetected;
-			Process.OnConnected += RobotStarted;
-			Process.OnDisconnected += RobotStopped;
-			Process.OnTimeoutWarning += TimeoutWarning;
-			Process.OnTimeout += RobotTimeout;
+			Process.OnIdCollisionDetected += OnIdCollisionDetected;
+			Process.OnConnected += OnConnected;
+			Process.OnConnectFailed += OnConnectFailed;
+			Process.OnDisconnected += OnDisconnected;
+			Process.OnTimeoutWarning += OnTimeoutWarning;
+			Process.OnTimeout += OnTimeout;
 		}
 
 	}

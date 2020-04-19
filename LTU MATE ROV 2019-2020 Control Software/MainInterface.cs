@@ -1,6 +1,7 @@
 ﻿using ExcelInterface.Writer;
 using JoystickInput;
 using LTU_MATE_ROV_2019_2020_Control_Software.Cameras;
+using LTU_MATE_ROV_2019_2020_Control_Software.Controls;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard;
@@ -34,6 +35,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private RobotThread robotThread;
 		private InputThread inputThread;
 		private CameraThread cameraThread;
+		private ControlsThread controlsThread;
+
 		private RobotSimulatorUI simulator;
 
 		public MainInterface() {
@@ -42,6 +45,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			inputThread = new InputThread(ThreadPriority.Normal);
 			cameraThread = new CameraThread(ThreadPriority.Normal);
 			robotThread = new RobotThread(ThreadPriority.Normal);
+			controlsThread = new ControlsThread(inputThread, robotThread, ThreadPriority.Normal);
 
 			//simulator = new RobotSimulatorUI(robotThread);
 		}
@@ -54,6 +58,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			//robotThread.Robot = new ROV(new EthernetInterface());
 
 			cameraThread.Start();
+			controlsThread.Start();
+
 			InputDataTimer.Start();
 			ImageUpdateTimer.Start();
 		}
