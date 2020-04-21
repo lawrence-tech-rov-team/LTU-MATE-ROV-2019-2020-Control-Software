@@ -26,19 +26,18 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form, ILogging {
 
-		private const ThreadPriority RovThreadPriority = ThreadPriority.Normal;
+		private LogWindow LogWindow = new LogWindow(); //TODO static logging class.
 
-		private Random rnd = new Random();
-		private LogWindow LogWindow = new LogWindow();
-
-		//private ROV rov;
+		//Threads
 		private RobotThread robotThread;
 		private InputThread inputThread;
 		private CameraThread cameraThread;
 		private ControlsThread controlsThread;
 
+		//Simulator window
 		private RobotSimulatorUI simulator;
 
+		//Initialize window and create threads / thread switchers
 		public MainInterface() {
 			InitializeComponent();
 
@@ -46,16 +45,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			cameraThread = new CameraThread(ThreadPriority.Normal);
 			robotThread = new RobotThread(ThreadPriority.Normal);
 			controlsThread = new ControlsThread(inputThread, robotThread, ThreadPriority.Normal);
-
-			//simulator = new RobotSimulatorUI(robotThread);
 		}
 
+		//Once window loads, initialize logging window and start threads
 		private void MainInterface_Load(object sender, EventArgs e) {
-			//RobotThread.Start();
-			//RobotThread.SetControllerType(currentController, this);
 			this.GetLogger().AddOutput(LogWindow);
-			//rov = new ROV(RovThreadPriority, new EthernetInterface()); //TODO make this null by default, let Connect() create it. Need null handling tho
-			//robotThread.Robot = new ROV(new EthernetInterface());
 
 			cameraThread.Start();
 			controlsThread.Start();
@@ -64,22 +58,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			ImageUpdateTimer.Start();
 		}
 
+		//Stop all running threads and switchers
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
 			InputDataTimer.Stop();
 			ImageUpdateTimer.Stop();
-
-			//rov.StopAsync(); //TODO before disconnecting, release all servos
+			//TODO before disconnecting, release all servos
 			robotThread.StopAsync();
 			cameraThread.StopAsync();
 			inputThread.StopAsync();
+			controlsThread.StopAsync();
 
 			robotThread.Stop();
 			cameraThread.Stop();
 			inputThread.Stop();
-		}
-
-		private void ControlsMenu_Click(object sender, EventArgs e) {
-			
+			controlsThread.Stop();
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
@@ -121,87 +113,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			
 		}
 
-		private void SaveExcelToolStripMenuItem_Click(object sender, EventArgs e) {
-			try {
-				using(ExcelFileWriter file = ExcelFileWriter.OpenExcelApplication()) {
-					if (file == null) throw new NullReferenceException("Failed to open the Excel application.");
-					using (WorkbookWriter book = file.CreateNewWorkbook()) {
-						if (book == null) throw new NullReferenceException("Failed to create a new Excel workbook.");
-						WorksheetWriter sheet = book.GetActiveWorksheet();
-						if (sheet == null) throw new NullReferenceException("Failed to find the active worksheet.");
-						sheet.Name = "TestSheet1";
-
-						int col;
-						int row = WorksheetWriter.MinRow;
-						for(; row <= 2; row++) { //2 rows
-							for(col = WorksheetWriter.MinColumn; col <= 5; col++) { //5 cols
-								sheet[row, col] = "R" + row + "C" + col;
-								if (row == WorksheetWriter.MinRow) sheet.Bold(row, col);
-							}
-						}
-
-						row += 2;
-						col = WorksheetWriter.MinColumn;
-						sheet[row, col] = "This is an extra long cell to fit.";
-
-						sheet.AutoFitAllColumns();
-
-
-						WorksheetWriter sheet2 = book.CreateNewWorksheet();
-						sheet2.Name = "TestSheet2";
-						sheet[WorksheetWriter.MinRow, WorksheetWriter.MinColumn] = "This is really long but isn't fitted.";
-
-						book.Save("TestExcel" + WorkbookWriter.DEFAULT_FILE_EXTENSION);
-					}
-				}
-			}catch(Exception) {
-				MessageBox.Show("Error");
-			}
-		}
-
-		private void SaveCSVToolStripMenuItem_Click(object sender, EventArgs e) {
-			List<string> lines = new List<string>();
-			List<string> line = new List<string>();
-
-			for(int row = 0; row < 2; row++) { //two rows
-				line.Clear();
-				for (int col = 0; col < 5; col++) { //5 cols
-					line.Add("R" + row + "C" + col);
-				}
-
-				lines.Add(string.Join(",", line.Select(cell => "\"" + cell + "\"").ToArray()));
-			}
-
-			try {
-				string path = "TestCsv.csv";
-				if (File.Exists(path)) File.Delete(path);
-				File.WriteAllLines(path, lines);
-				return; //Return true
-			} catch (Exception) {
-				MessageBox.Show("Error");
-			}
-		}
-
-		private void ConnectToolStripMenuItem_Click(object sender, EventArgs e) {
-			/*if((rov == null) || (rov.IsSimulator)) {
-				rov?.Disconnect();
-				rov = new ROV(RovThreadPriority, new EthernetInterface());
-			}
-
-			if (rov.Connect()) {
-				MessageBox.Show("Connected!");
-			} else {
-				MessageBox.Show("Could not connect to device.");
-			}*/
-			//TODO connect message
-			robotThread.Robot = new ROV(new EthernetInterface());
-		}
-
-		private void DisconnectToolStripMenuItem_Click(object sender, EventArgs e) {
-			//rov.Disconnect();
-			robotThread.Robot = null;
-		}
-
 		private void LogToolStripMenuItem_Click(object sender, EventArgs e) {
 			LogWindow.Show();
 		}
@@ -234,14 +145,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void SimulatorToolStripMenuItem_Click(object sender, EventArgs e) {
-			//lock (this) {
-			//rov?.Disconnect();
-
-			//RobotSimulator sim = new RobotSimulator();
-			//rov = new ROV(RovThreadPriority, sim);
-			//rov.Connect();
-			//robotThread.Robot = new ROV(new RobotSimulator());
-			//simulator.Show();
 			if(simulator != null) {
 				if (simulator.IsDisposed) simulator = null;
 			}
@@ -293,6 +196,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private void ImageUpdateTimer_Tick(object sender, EventArgs e) {
 			CameraView1.Image = cameraThread.Image1;
 			CameraView2.Image = cameraThread.Image2;
+		}
+
+
+		private void ConnectRobot_MenuClick(object sender, EventArgs e) {
+			robotThread.Robot = new ROV(new EthernetInterface());
+		}
+
+		private void DisconnectRobot_MenuClick(object sender, EventArgs e) {
+			robotThread.Robot = null;
 		}
 	}
 }
