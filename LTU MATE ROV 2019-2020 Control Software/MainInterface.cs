@@ -76,7 +76,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
 			//lock (this) {
-			ROV rov = robotThread.Robot;
+/*			ROV rov = robotThread.Robot;
 
 			TestBtnMeter.Value = rov?.Button0?.State ?? false;
 			TestBtn2.Value = rov?.Button1?.State ?? false;
@@ -84,7 +84,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			TempLabel.Text = "Temperature: " + ((rov == null) ? "----" : rov.IMU.Temperature.ToString().PadLeft(4)) + "°C";
 			//Vector3Data euler = rov.IMU.Euler;
 			Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
-
+			*/
 			/*if (euler != null) {
 				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
 				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
@@ -92,16 +92,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}*/
 
 			//if (accel != null) {
-				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
+/*				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
 				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
 				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
-			//}
-
+*/			//}
+/*
 			WaterTempLabel.Text = "Water Temp: " + ((rov == null) ? "----------" : rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10)) + "°C";
 			PressureLabel.Text = "Pressure: " + ((rov == null) ? "----------" : rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10)) + " mBar";
 			AltitudeLabel.Text = "Altitude: " + ((rov == null) ? "----------" : rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10)) + " m above mean sea";
 			DepthLabel.Text = "Depth: " + ((rov == null) ? "----------" : rov.PressureSensor.Depth.ToString("0.00").PadLeft(10)) + " m";
-
+			*/
 			//PowerMeter.Value = Math.Min(PowerMeter.Maximum, Math.Max(PowerMeter.Minimum,
 			//	(decimal)inputThread.Input.Linear.X * (PowerMeter.Maximum - PowerMeter.Minimum) + PowerMeter.Minimum
 			//));
@@ -206,5 +206,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private void DisconnectRobot_MenuClick(object sender, EventArgs e) {
 			robotThread.Robot = null;
 		}
+
 	}
 }
