@@ -31,7 +31,7 @@ namespace CustomLogger.Outputs {
 				stream.AutoFlush = true;
 				return new FileLogger(stream);
 			} catch(Exception ex) {
-				Console.Error.Write("Error while initializing file logger: ");
+				Console.Error.Write("Error while initializing file logger: \"" + (file ?? "null") + "\"");
 				Console.Error.WriteLine(ex.Message);
 				Console.Error.WriteLine(ex.StackTrace);
 

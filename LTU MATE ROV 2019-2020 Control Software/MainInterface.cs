@@ -44,8 +44,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			Log.StartLogger(ThreadPriority.BelowNormal);
 			Log.AddOutput(new ConsoleLogger(), LogLevel.Info);
 			Log.Info("Program started.");
-			FileLogger fileLog = FileLogger.LoadFile("Log [" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss GMT zzz") + "].log");
-			if(fileLog == null) {
+			FileLogger fileLog = FileLogger.LoadFile("Log [" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss \"GMT\"zzz").Replace(':','_') + "].log");
+			if (fileLog == null) {
 				Log.Fatal("Unable to save the log to a file!");
 				Application.Exit();
 				return;
