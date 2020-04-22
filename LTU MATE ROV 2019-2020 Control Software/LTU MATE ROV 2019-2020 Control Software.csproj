@@ -163,7 +163,6 @@
     <Compile Include="Utils\DataRecorder.cs" />
     <Compile Include="Utils\Range.cs" />
     <Compile Include="Utils\ThreadedProcess.cs" />
-    <Compile Include="Utils\ThreadHelper.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
     <Compile Include="Utils\ThreadSwitcher.cs" />
     <Compile Include="Utils\Twist.cs" />

@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
+﻿using CustomLogger;
+using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		
 		public ROV Robot {
 			get => Process;
-			set => Process = value;
+			set {
+				if (value == null) Log.Info("Robot deselected.");
+				else Log.Info("New robot selected: IsSimulator = " + value.IsSimulator.ToString());
+				Process = value;
+			}
 		}
 
 		public RobotThread(ThreadPriority Priority = ThreadPriority.Normal) : base(Priority) {

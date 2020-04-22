@@ -110,11 +110,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
 			ROV rov = robotThread.Robot;
-			Log.All("Test tick");
 		}
 
 		private void LogToolStripMenuItem_Click(object sender, EventArgs e) {
 			LogWindow.Open();
+			Log.Info("Log window opened.");
 		}
 
 		private void HardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -122,10 +122,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			if(robot == null) {
 				MessageBox.Show("No robot connected!");
 			} else {
+				Log.Info("Pinging...");
 				long? timeMs = robot.Ping(1000);
 				if(timeMs == null) {
+					Log.Info("Ping failed.");
 					MessageBox.Show("Ping failed.");
 				} else {
+					Log.Info("Ping responded in " + ((long)timeMs).ToString() + " ms.");
 					MessageBox.Show("Ping: " + (long)timeMs + " ms");
 				}
 			}
@@ -138,9 +141,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 
 			if (simulator == null) {
+				Log.Info("Opening simulator...");
 				new RobotSimulatorUI(robotThread).Show();
 			}
-			//}
 		}
 
 		private void LedBtn_MouseDown(object sender, MouseEventArgs e) {
@@ -188,10 +191,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 
 		private void ConnectRobot_MenuClick(object sender, EventArgs e) {
+			Log.Info("Connecting to robot...");
 			robotThread.Robot = new ROV(new EthernetInterface());
 		}
 
 		private void DisconnectRobot_MenuClick(object sender, EventArgs e) {
+			Log.Info("Disconnecting from robot...");
 			robotThread.Robot = null;
 		}
 

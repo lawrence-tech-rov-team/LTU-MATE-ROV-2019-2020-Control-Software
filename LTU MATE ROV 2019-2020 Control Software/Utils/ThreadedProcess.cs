@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomLogger;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			get {
 				try {
 					return thread.Priority;
-				} catch (Exception) {
+				} catch (Exception ex) {
+					Log.Warn("Failed to get thread priority.", ex);
 					return ThreadPriority.Normal;
 				}
 			}
@@ -26,7 +28,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			set {
 				try {
 					thread.Priority = value;
-				} catch (Exception) { }
+					Log.Info("Thread \"" + (thread?.Name ?? "(null)") + "\" priority changed: " + value.ToString());
+				} catch (Exception ex) {
+					Log.Warn("Failed to set thread priority.", ex);
+				}
 			}
 		}
 
@@ -37,12 +42,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			this.Priority = Priority;
 		}
 
-		public void Start() {
+		public bool Start() {
 			try {
 				running = true;
 				thread.Start();
+				return true;
 			} catch (Exception ex) {
-				PrintError(ex);
+				Log.Error("Unable to start thread! Name = " + (thread?.Name ?? "null"), ex);
+				return false;
 			}
 		}
 
@@ -52,19 +59,24 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		}
 
 		private void ThreadLoop() {
+			Log.Info("Thread started."); 
 			try {
 				Initialize();
+				Log.Info("Thread initialized.");
 				try {
 					while (running) {
 						if (!Loop()) running = false;
 					}
 				} catch (Exception ex) {
-					PrintError(ex);
+					Log.Error("Unexpected error in thread loop.", ex);
+					running = false;
 				}
 				Cleanup();
+				Log.Info("Thread cleaned up.");
 			} catch (Exception ex) {
-				PrintError(ex);
+				Log.Error("Unexpected error in thread.", ex);
 			}
+			Log.Info("Thread finished.");
 		}
 
 		protected abstract void Initialize();
@@ -98,14 +110,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 				StopAsync();
 				thread.Join();
 			} catch (Exception ex) {
-				PrintError(ex);
+				Log.Info("Error stopping thread: \"" + (thread?.Name ?? "(null)") + "\"", ex);
 			}
-		}
-
-		private void PrintError(Exception e) {
-			Console.WriteLine("Error occured in thread \'" + thread?.Name ?? null + "\': ");
-			Console.WriteLine(e.Message);
-			Console.Write(e.StackTrace);
 		}
 
 	}

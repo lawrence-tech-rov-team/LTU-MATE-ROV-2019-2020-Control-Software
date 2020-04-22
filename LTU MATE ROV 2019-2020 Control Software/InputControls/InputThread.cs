@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+﻿using CustomLogger;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		}*/
 		public InputProgram InputDevice {
 			get => Process;
-			set => Process = value;
+			set {
+				if (value == null) Log.Info("Input program deselected.");
+				else Log.Info("New input program selected: \"" + value.Name + "\"");
+				Process = value;
+			}
 		}
 
 		public Twist Input {

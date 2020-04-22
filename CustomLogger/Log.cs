@@ -153,5 +153,23 @@ namespace CustomLogger {
 			logQueue.Enqueue(new Tuple<LogLevel, string, string, int, ThreadPriority>(level, msg, Thread.CurrentThread.Name, Thread.CurrentThread.ManagedThreadId, Thread.CurrentThread.Priority));
 		}
 
+		public static void Record(LogLevel level, string msg, Exception ex) {
+			StringBuilder str = new StringBuilder(msg);
+			str.Append("\n\t\t");
+			str.Append(ex.Message);
+			str.Append("\n\t\t");
+			foreach(string line in ex.StackTrace.Split('\n')) {
+				str.Append("\n\t\t\t");
+				str.Append(line);
+			}
+			Record(level, str.ToString());
+		}
+
+		public static void All(string msg, Exception ex) { Record(LogLevel.All, msg, ex); }
+		public static void Debug(string msg, Exception ex) { Record(LogLevel.Debug, msg, ex); }
+		public static void Info(string msg, Exception ex) { Record(LogLevel.Info, msg, ex); }
+		public static void Warn(string msg, Exception ex) { Record(LogLevel.Warn, msg, ex); }
+		public static void Error(string msg, Exception ex) { Record(LogLevel.Error, msg, ex); }
+		public static void Fatal(string msg, Exception ex) { Record(LogLevel.Fatal, msg, ex); }
 	}
 }
