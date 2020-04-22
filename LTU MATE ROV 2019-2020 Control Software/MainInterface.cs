@@ -1,4 +1,6 @@
-﻿using ExcelInterface.Writer;
+﻿using CustomLogger;
+using CustomLogger.Outputs;
+using ExcelInterface.Writer;
 using JoystickInput;
 using LTU_MATE_ROV_2019_2020_Control_Software.Cameras;
 using LTU_MATE_ROV_2019_2020_Control_Software.Controls;
@@ -24,7 +26,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
-	public partial class MainInterface : Form, ILogging {
+	public partial class MainInterface : Form {
 
 		private LogWindow LogWindow = new LogWindow(); //TODO static logging class.
 
@@ -37,31 +39,50 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		//Simulator window
 		private RobotSimulatorUI simulator;
 
-		//Initialize window and create threads / thread switchers
+		//Initialize window, create threads / thread switchers, and initialize logger.
 		public MainInterface() {
+			Log.StartLogger(ThreadPriority.BelowNormal);
+			Log.AddOutput(new ConsoleLogger(), LogLevel.Info);
+			Log.Info("Program started.");
+			FileLogger fileLog = FileLogger.LoadFile("Log [" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss GMT zzz") + "].log");
+			if(fileLog == null) {
+				Log.Fatal("Unable to save the log to a file!");
+				Application.Exit();
+				return;
+			}
+			Log.AddOutput(fileLog, LogLevel.Debug);
+			Log.Info("File log opened.");
+			
 			InitializeComponent();
+			Log.Info("Program initialized.");
+
+			Log.AddOutput(LogWindow);
+			Log.Info("Log window initialized.");
 
 			inputThread = new InputThread(ThreadPriority.Normal);
 			cameraThread = new CameraThread(ThreadPriority.Normal);
 			robotThread = new RobotThread(ThreadPriority.Normal);
 			controlsThread = new ControlsThread(inputThread, robotThread, ThreadPriority.Normal);
+			Log.Info("Threads initialized.");
 		}
 
 		//Once window loads, initialize logging window and start threads
 		private void MainInterface_Load(object sender, EventArgs e) {
-			this.GetLogger().AddOutput(LogWindow);
-
+			Log.Info("Main window loaded.");
 			cameraThread.Start();
 			controlsThread.Start();
+			Log.Info("Threads started.");
 
 			InputDataTimer.Start();
 			ImageUpdateTimer.Start();
+			Log.Info("Update timers started.");
 		}
 
 		//Stop all running threads and switchers
 		private void MainInterface_FormClosing(object sender, FormClosingEventArgs e) {
 			InputDataTimer.Stop();
 			ImageUpdateTimer.Stop();
+			Log.Info("Update timers stopped.");
 			//TODO before disconnecting, release all servos
 			robotThread.StopAsync();
 			cameraThread.StopAsync();
@@ -72,6 +93,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			cameraThread.Stop();
 			inputThread.Stop();
 			controlsThread.Stop();
+			Log.Info("All threads stopped.");
+
+			Log.Stop();
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
@@ -115,18 +139,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void LogToolStripMenuItem_Click(object sender, EventArgs e) {
 			LogWindow.Show();
-		}
-
-		private void Button1_Click(object sender, EventArgs e) {
-			this.Log(CustomLogger.LogLevel.Warn, "I\'m warning you!");
-		}
-
-		private void Button2_Click(object sender, EventArgs e) {
-			this.Log(CustomLogger.LogLevel.Info, "I am not the info desk.");
-		}
-
-		private void Button3_Click(object sender, EventArgs e) {
-			this.Log(CustomLogger.LogLevel.Debug, "Bugs everywhere!");
 		}
 
 		private void HardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {

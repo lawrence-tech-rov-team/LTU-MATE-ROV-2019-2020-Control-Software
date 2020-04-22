@@ -11,6 +11,7 @@ namespace CustomLogger.Outputs {
 	/// Writes the log to the console window.
 	/// </summary>
 	public class ConsoleLogger : TextWriterLogger {
+
 		public ConsoleLogger() : base(Console.Out) {
 		}
 

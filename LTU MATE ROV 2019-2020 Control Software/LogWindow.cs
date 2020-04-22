@@ -14,8 +14,18 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class LogWindow : Form, LogOutput {
 
-		public LogLevel LogLevel { get; private set; } = LogLevel.Info;
-		public LogFormat LogFormat { get; } = new LogFormat();
+		private delegate void LogLevelEvent(LogLevel NewLevel);
+		private event LogLevelEvent LogLevelChanged;
+
+		private LogLevel level = LogLevel.Info;
+		public LogLevel LogLevel {
+			get => level;
+			set {
+				level = value;
+				LogLevelChanged?.Invoke(value);
+			}
+		}
+		public LogFormat LogFormat { get; set; } = new LogFormat();
 
 		public LogWindow() {
 			InitializeComponent();
@@ -41,10 +51,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				box.Location = new Point(6, y);
 				box.Text = level.ToString();
 				box.Checked = (level == LogLevel);
-				box.CheckedChanged += 
-					(object checkSender, EventArgs checkArgs) => {
-						if (box.Checked) LogLevel = level;
-					};
+				box.CheckedChanged += (object checkSender, EventArgs checkArgs) => {
+					if (box.Checked) LogLevel = level;
+				};
+				LogLevelChanged += (LogLevel NewLevel) => {
+					box.Checked = (NewLevel == level);
+				};
 
 				y += 27;
 			}

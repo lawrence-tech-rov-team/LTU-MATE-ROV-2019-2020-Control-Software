@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogFormat.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="LogOutput.cs" />
     <Compile Include="LogLevel.cs" />
     <Compile Include="Outputs\LogOutputBase.cs" />

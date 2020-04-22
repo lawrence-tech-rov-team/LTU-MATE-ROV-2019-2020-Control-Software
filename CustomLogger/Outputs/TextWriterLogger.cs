@@ -54,7 +54,7 @@ namespace CustomLogger.Outputs {
 		public TextWriterLogger(TextWriter stream) {
 			this.Stream = stream;
 		}
-		
+
 		public override void Close() {
 			if (Stream != null) {
 				Stream.Flush();

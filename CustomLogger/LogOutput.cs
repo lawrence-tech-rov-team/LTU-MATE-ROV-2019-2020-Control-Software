@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace CustomLogger {
 	public interface LogOutput {
 
-		LogLevel LogLevel { get; }
-		LogFormat LogFormat { get; }
+		LogLevel LogLevel { get; set; }
+		LogFormat LogFormat { get; set; }
 
 		void Close();
 

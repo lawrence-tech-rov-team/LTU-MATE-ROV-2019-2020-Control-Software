@@ -16,6 +16,10 @@ namespace CustomLogger.Outputs {
 			}
 		}
 
+		protected LogOutputBase() {
+
+		}
+
 		public abstract void Close();
 
 		public abstract void Log(string msg);

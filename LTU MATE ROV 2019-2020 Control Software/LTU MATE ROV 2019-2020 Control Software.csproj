@@ -138,7 +138,6 @@
     </Compile>
     <Compile Include="Robot\Hardware\Sensors\DigitalSensor.cs" />
     <Compile Include="Robot\Hardware\Sensors\IMU.cs" />
-    <Compile Include="ILogging.cs" />
     <Compile Include="InputControls\Keyboard\IKeyboardListener.cs" />
     <Compile Include="InputControls\Keyboard\KeyboardProgram.cs" />
     <Compile Include="LogWindow.cs">
