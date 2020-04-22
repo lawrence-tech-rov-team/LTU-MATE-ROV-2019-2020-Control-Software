@@ -59,6 +59,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		//Initialize window, create threads / thread switchers, and initialize logger.
 		public MainInterface() {
+			try {
+				Thread.CurrentThread.Name = "Main UI";
+			} catch (Exception) { }
+
 			if (!InitializeLogging()) return;
 			Log.Info("Logging initialized.");
 
