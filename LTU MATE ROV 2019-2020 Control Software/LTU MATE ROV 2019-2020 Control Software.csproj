@@ -161,6 +161,7 @@
     <Compile Include="Simulator\Sensors\PressureSensorSimulator.cs" />
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\DataRecorder.cs" />
+    <Compile Include="Utils\FileServices.cs" />
     <Compile Include="Utils\Range.cs" />
     <Compile Include="Utils\ThreadedProcess.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
