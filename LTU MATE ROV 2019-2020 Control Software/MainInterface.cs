@@ -39,25 +39,31 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		//Simulator window
 		private RobotSimulatorUI simulator;
 
-		//Initialize window, create threads / thread switchers, and initialize logger.
-		public MainInterface() {
+		private bool InitializeLogging() {
 			Log.StartLogger(ThreadPriority.BelowNormal);
 			Log.AddOutput(new ConsoleLogger(), LogLevel.Info);
 			Log.Info("Program started.");
-			FileLogger fileLog = FileLogger.LoadFile("Log [" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss \"GMT\"zzz").Replace(':','_') + "].log");
+			FileLogger fileLog = FileLogger.LoadFile("Log [" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss \"GMT\"zzz").Replace(':', '_') + "].log");
 			if (fileLog == null) {
 				Log.Fatal("Unable to save the log to a file!");
 				Application.Exit();
-				return;
+				return false;
 			}
 			Log.AddOutput(fileLog, LogLevel.Debug);
 			Log.Info("File log opened.");
-			
-			InitializeComponent();
-			Log.Info("Program initialized.");
 
 			Log.AddOutput(LogWindow);
 			Log.Info("Log window initialized.");
+			return true;
+		}
+
+		//Initialize window, create threads / thread switchers, and initialize logger.
+		public MainInterface() {
+			if (!InitializeLogging()) return;
+			Log.Info("Logging initialized.");
+
+			InitializeComponent();
+			Log.Info("Program initialized.");
 
 			inputThread = new InputThread(ThreadPriority.Normal);
 			cameraThread = new CameraThread(ThreadPriority.Normal);
@@ -99,46 +105,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void InputDataTimer_Tick(object sender, EventArgs e) {
-			//lock (this) {
-/*			ROV rov = robotThread.Robot;
-
-			TestBtnMeter.Value = rov?.Button0?.State ?? false;
-			TestBtn2.Value = rov?.Button1?.State ?? false;
-
-			TempLabel.Text = "Temperature: " + ((rov == null) ? "----" : rov.IMU.Temperature.ToString().PadLeft(4)) + "°C";
-			//Vector3Data euler = rov.IMU.Euler;
-			Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
-			*/
-			/*if (euler != null) {
-				EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
-				EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
-				EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
-			}*/
-
-			//if (accel != null) {
-/*				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
-				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
-				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
-*/			//}
-/*
-			WaterTempLabel.Text = "Water Temp: " + ((rov == null) ? "----------" : rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10)) + "°C";
-			PressureLabel.Text = "Pressure: " + ((rov == null) ? "----------" : rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10)) + " mBar";
-			AltitudeLabel.Text = "Altitude: " + ((rov == null) ? "----------" : rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10)) + " m above mean sea";
-			DepthLabel.Text = "Depth: " + ((rov == null) ? "----------" : rov.PressureSensor.Depth.ToString("0.00").PadLeft(10)) + " m";
-			*/
-			//PowerMeter.Value = Math.Min(PowerMeter.Maximum, Math.Max(PowerMeter.Minimum,
-			//	(decimal)inputThread.Input.Linear.X * (PowerMeter.Maximum - PowerMeter.Minimum) + PowerMeter.Minimum
-			//));
-			//InputControlData data = RobotThread.GetInputData();
-			//if (data == null) data = new InputControlData(); 
-			//PowerMeter.Value = Math.Max(-1, Math.Min(1, (decimal)data.ForwardThrust));
-				
-			//}
-			
+			ROV rov = robotThread.Robot;
+			Log.All("Test tick");
 		}
 
 		private void LogToolStripMenuItem_Click(object sender, EventArgs e) {
-			LogWindow.Show();
+			LogWindow.Open();
 		}
 
 		private void HardwarePingToolStripMenuItem_Click(object sender, EventArgs e) {

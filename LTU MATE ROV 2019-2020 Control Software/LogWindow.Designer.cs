@@ -1,5 +1,5 @@
 ﻿namespace LTU_MATE_ROV_2019_2020_Control_Software {
-	partial class LogWindow {
+	partial class LogWindowForm {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -33,34 +33,39 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LogTextBox.BackColor = System.Drawing.SystemColors.HighlightText;
-			this.LogTextBox.Location = new System.Drawing.Point(12, 12);
+			this.LogTextBox.Location = new System.Drawing.Point(9, 10);
+			this.LogTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.LogTextBox.Multiline = true;
 			this.LogTextBox.Name = "LogTextBox";
 			this.LogTextBox.ReadOnly = true;
 			this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.LogTextBox.Size = new System.Drawing.Size(582, 387);
+			this.LogTextBox.Size = new System.Drawing.Size(438, 315);
 			this.LogTextBox.TabIndex = 0;
 			// 
 			// LogLevelsGroup
 			// 
 			this.LogLevelsGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.LogLevelsGroup.Location = new System.Drawing.Point(600, 12);
+			this.LogLevelsGroup.Location = new System.Drawing.Point(450, 10);
+			this.LogLevelsGroup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.LogLevelsGroup.Name = "LogLevelsGroup";
-			this.LogLevelsGroup.Size = new System.Drawing.Size(188, 387);
+			this.LogLevelsGroup.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.LogLevelsGroup.Size = new System.Drawing.Size(141, 314);
 			this.LogLevelsGroup.TabIndex = 1;
 			this.LogLevelsGroup.TabStop = false;
 			this.LogLevelsGroup.Text = "Log Levels";
 			// 
-			// LogWindow
+			// LogWindowForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 408);
+			this.ClientSize = new System.Drawing.Size(600, 332);
 			this.Controls.Add(this.LogLevelsGroup);
 			this.Controls.Add(this.LogTextBox);
-			this.Name = "LogWindow";
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Name = "LogWindowForm";
 			this.Text = "LogWindow";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogWindowForm_FormClosing);
 			this.Load += new System.EventHandler(this.LogWindow_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
