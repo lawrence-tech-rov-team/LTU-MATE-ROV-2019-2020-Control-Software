@@ -201,5 +201,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			robotThread.Robot = null;
 		}
 
+		private void initializationToolStripMenuItem_Click(object sender, EventArgs e) {
+
+		}
 	}
 }

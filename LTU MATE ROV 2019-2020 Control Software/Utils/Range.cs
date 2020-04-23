@@ -1,11 +1,12 @@
-﻿using System;
+﻿using JsonSerializable;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
-	public struct Range {
+	public struct Range : IJsonSerializable {
 
 		public ushort Minimum;
 		public ushort Maximum;
@@ -67,5 +68,26 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			return (float)(value - Minimum) / (float)(Maximum - Minimum);
 		}
 
+		public JsonData SaveToJson() {
+			JsonObject obj = new JsonObject();
+			obj["Minimum"] = new JsonInteger(Minimum);
+			obj["Maximum"] = new JsonInteger(Maximum);
+			return obj;
+		}
+
+		public bool LoadFromJson(JsonData Data) {
+			if((Data != null) && (Data is JsonObject obj)) {
+				JsonData data = obj["Minimum"];
+				if((data != null) && (data is JsonInteger minData)) {
+					Minimum = (ushort)Math.Max(ushort.MinValue, Math.Min(ushort.MaxValue, minData));
+					data = obj["Maximum"];
+					if((data != null) && (data is JsonInteger maxData)) {
+						Maximum = (ushort)Math.Max(ushort.MinValue, Math.Min(ushort.MaxValue, maxData));
+						return true;
+					}
+				}
+			}
+			return false;
+		}
 	}
 }

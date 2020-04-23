@@ -48,7 +48,7 @@
       <HintPath>..\packages\JoystickInput.1.0.3\lib\net461\JoystickInput.dll</HintPath>
     </Reference>
     <Reference Include="JsonSerializable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\JsonSerializable.1.0.1\lib\net461\JsonSerializable.dll</HintPath>
+      <HintPath>..\packages\JsonSerializable.1.0.2\lib\net461\JsonSerializable.dll</HintPath>
     </Reference>
     <Reference Include="Meters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Meters.1.0.0\lib\net461\Meters.dll</HintPath>
@@ -121,6 +121,8 @@
     <Compile Include="SensorsForm.Designer.cs">
       <DependentUpon>SensorsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings\AppSettings.cs" />
+    <Compile Include="Settings\IRovState.cs" />
     <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
     <Compile Include="Simulator\Actuators\ServoSimulator.cs" />
     <Compile Include="Simulator\ISimulatorDevice.cs" />
