@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 	public abstract class IRovState : IJsonSerializable {
+		public bool LoadFromJson(JsonData Data) {
+			throw new NotImplementedException();
+		}
 
-
-
+		public JsonData SaveToJson() {
+			throw new NotImplementedException();
+		}
 	}
 
 	public class ServoState : IJsonSerializable {

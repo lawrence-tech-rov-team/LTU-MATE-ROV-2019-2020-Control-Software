@@ -7,10 +7,11 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 	public class Vector3Data : IDataType {
-
+		
 		public float x;
 		public float y;
 		public float z;
+		
 
 		public override int NumberOfBytes => 12;
 

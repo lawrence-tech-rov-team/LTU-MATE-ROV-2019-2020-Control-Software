@@ -1,5 +1,6 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,11 +39,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				}*/
 
 			TempLabel.Text = "Temperature: " + ((rov == null) ? "----" : rov.IMU.Temperature.ToString().PadLeft(4)) + "°C";
-			Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
+			//Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
+			Vector3 accel = rov?.IMU?.Accelerometer ?? new Vector3();
 			//if (accel != null) {
-				AccelX.Text = "X: " + accel.x.ToString("0.00").PadLeft(10) + " m/s²";
-				AccelY.Text = "Y: " + accel.y.ToString("0.00").PadLeft(10) + "m/s²";
-				AccelZ.Text = "Z: " + accel.z.ToString("0.00").PadLeft(10) + "m/s²";
+				AccelX.Text = "X: " + accel.X.ToString("0.00").PadLeft(10) + " m/s²";
+				AccelY.Text = "Y: " + accel.Y.ToString("0.00").PadLeft(10) + "m/s²";
+				AccelZ.Text = "Z: " + accel.Z.ToString("0.00").PadLeft(10) + "m/s²";
 			//}
 
 			WaterTempLabel.Text = "Water Temp: " + ((rov == null) ? "----------" : rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10)) + "°C";

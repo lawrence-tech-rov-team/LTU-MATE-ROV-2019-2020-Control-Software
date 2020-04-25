@@ -29,7 +29,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 			if (robot != null) {
 				Twist input = inputThread.Input;
 				//robot.ServoA1.Enable = true;
-				robot.ServoA1.Pulse = (ushort)(1500 + (short)(500 * input.Linear.X));
+				ushort pulse = (ushort)(1500 + (short)(500 * input.Linear.X));
+				robot.ServoA1.Pulse = pulse;
+				robot.ServoD1.Pulse = pulse;
 			}
 
 			return Sleep(10);
@@ -42,7 +44,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 		private void RobotThread_OnConnected() {
 			ROV robot = robotThread.Robot;
 			if (robot != null) {
-				robot.ServoA1.Enable = true;
+				robot.ServoA1.Enabled = true;
+				robot.ServoD1.Enabled = true;
 			}
 		}
 

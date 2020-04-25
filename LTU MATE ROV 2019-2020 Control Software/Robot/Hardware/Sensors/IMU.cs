@@ -1,4 +1,5 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		private ReadableRegister<Int8Data> TemperatureRegister;
 		public sbyte Temperature => TemperatureRegister.Data?.Value ?? default(sbyte);
 
-		private ReadableRegister<Vector3Data> AccelerometerRegister;
-		public Vector3Data Accelerometer => AccelerometerRegister.Data;
+		private ReadableRegister<Imu100Vector3Data> AccelerometerRegister;
+		public Vector3 Accelerometer => AccelerometerRegister.Data?.Vector ?? new Vector3();
 
 		//public Vector3Data Magnetometer { get => Data2; } 
 		//public Vector3Data Gyroscope { get => Data3; }
@@ -29,7 +30,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 
 		public IMU(byte TemperatureId, float TemperatureRefreshRate, byte AccelerometerId, float AccelerometerRefreshRate) {
 			TemperatureRegister = new ReadableRegister<Int8Data>(TemperatureId, TemperatureRefreshRate);
-			AccelerometerRegister = new ReadableRegister<Vector3Data>(AccelerometerId, AccelerometerRefreshRate);
+			AccelerometerRegister = new ReadableRegister<Imu100Vector3Data>(AccelerometerId, AccelerometerRefreshRate);
 		}
 
 	}
