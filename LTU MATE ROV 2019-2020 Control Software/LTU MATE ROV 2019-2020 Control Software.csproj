@@ -90,6 +90,7 @@
     <Compile Include="Robot\Hardware\DataTypes\ImuVector3Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Int8Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\UInt16Data.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\UInt32Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\UInt8Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Vector3Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Vector4Data.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Robot\Hardware\IDevice.cs" />
     <Compile Include="Robot\Hardware\ReadableRegister.cs" />
     <Compile Include="Robot\Hardware\IRegister.cs" />
+    <Compile Include="Robot\Hardware\Registers\TwiRegister.cs" />
     <Compile Include="Robot\Hardware\Sensors\PressureSensor.cs" />
     <Compile Include="InputControls\Controller\ControllerProgram.cs" />
     <Compile Include="InputControls\InputProgram.cs" />
@@ -219,9 +221,7 @@
       <Name>ExcelInterface</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Robot\Hardware\Registers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="License-LGPL.txt" />
     <Content Include="Meters.dll">

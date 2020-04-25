@@ -17,20 +17,42 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		private ReadableRegister<Int8Data> TemperatureRegister;
 		public sbyte Temperature => TemperatureRegister.Data?.Value ?? default(sbyte);
 
+		private ReadableRegister<Imu16Vector3Data> MagnetometerRegister;
+		public Vector3 Magnetometer => MagnetometerRegister.Data?.Vector ?? new Vector3();
+
+		private ReadableRegister<Imu16Vector3Data> GyroscopseRegister;
+		public Vector3 Gyroscope => GyroscopseRegister.Data?.Vector ?? new Vector3();
+
+		private ReadableRegister<Imu16Vector3Data> EulerRegister;
+		public Vector3 Euler => EulerRegister.Data?.Vector ?? new Vector3();
+
 		private ReadableRegister<Imu100Vector3Data> AccelerometerRegister;
 		public Vector3 Accelerometer => AccelerometerRegister.Data?.Vector ?? new Vector3();
 
-		//public Vector3Data Magnetometer { get => Data2; } 
-		//public Vector3Data Gyroscope { get => Data3; }
-		//public Vector3Data Euler { get => Data4; }
-		//public Vector3Data Accelerometer { get => Data5; }
-		//public Vector3Data LinearAccelerometer { get => Data6; }
-		//public Vector3Data Gravity { get => Data7; }
+		private ReadableRegister<Imu100Vector3Data> LinearAccelRegister;
+		public Vector3 LinearAccel => LinearAccelRegister.Data?.Vector ?? new Vector3();
+
+		private ReadableRegister<Imu100Vector3Data> GravityRegister;
+		public Vector3 Gravity => GravityRegister.Data?.Vector ?? new Vector3();
+
 		//public Vector4Data Quaternion { get => Data8; }
 
-		public IMU(byte TemperatureId, float TemperatureRefreshRate, byte AccelerometerId, float AccelerometerRefreshRate) {
+		public IMU(
+			byte TemperatureId, float TemperatureRefreshRate, 
+			byte MagnetometerId, float MagnetometerRefreshRate,
+			byte GyroscopeId, float GyroscopeRefreshRate,
+			byte EulerId, float EulerRefreshRate,
+			byte AccelerometerId, float AccelerometerRefreshRate,
+			byte LinearAccelId, float LinearAccelRefreshRate,
+			byte GravityId, float GravityRefreshRate
+		) {
 			TemperatureRegister = new ReadableRegister<Int8Data>(TemperatureId, TemperatureRefreshRate);
+			MagnetometerRegister = new ReadableRegister<Imu16Vector3Data>(MagnetometerId, MagnetometerRefreshRate);
+			GyroscopseRegister = new ReadableRegister<Imu16Vector3Data>(GyroscopeId, GyroscopeRefreshRate);
+			EulerRegister = new ReadableRegister<Imu16Vector3Data>(EulerId, EulerRefreshRate);
 			AccelerometerRegister = new ReadableRegister<Imu100Vector3Data>(AccelerometerId, AccelerometerRefreshRate);
+			LinearAccelRegister = new ReadableRegister<Imu100Vector3Data>(LinearAccelId, LinearAccelRefreshRate);
+			GravityRegister = new ReadableRegister<Imu100Vector3Data>(GravityId, GravityRefreshRate);
 		}
 
 	}
