@@ -3,6 +3,7 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,7 +36,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		private ReadableRegister<Imu100Vector3Data> GravityRegister;
 		public Vector3 Gravity => GravityRegister.Data?.Vector ?? new Vector3();
 
-		//public Vector4Data Quaternion { get => Data8; }
+		private ReadableRegister<ImuQuaternionData> QuaternionRegister;
+		public Quaternion Quaternion => QuaternionRegister.Data?.Quaternion ?? new Quaternion();
 
 		public IMU(
 			byte TemperatureId, float TemperatureRefreshRate, 
@@ -44,7 +46,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 			byte EulerId, float EulerRefreshRate,
 			byte AccelerometerId, float AccelerometerRefreshRate,
 			byte LinearAccelId, float LinearAccelRefreshRate,
-			byte GravityId, float GravityRefreshRate
+			byte GravityId, float GravityRefreshRate,
+			byte QuaternionId, float QuaternionRefreshRate
 		) {
 			TemperatureRegister = new ReadableRegister<Int8Data>(TemperatureId, TemperatureRefreshRate);
 			MagnetometerRegister = new ReadableRegister<Imu16Vector3Data>(MagnetometerId, MagnetometerRefreshRate);
@@ -53,6 +56,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 			AccelerometerRegister = new ReadableRegister<Imu100Vector3Data>(AccelerometerId, AccelerometerRefreshRate);
 			LinearAccelRegister = new ReadableRegister<Imu100Vector3Data>(LinearAccelId, LinearAccelRefreshRate);
 			GravityRegister = new ReadableRegister<Imu100Vector3Data>(GravityId, GravityRefreshRate);
+			QuaternionRegister = new ReadableRegister<ImuQuaternionData>(QuaternionId, QuaternionRefreshRate);
 		}
 
 	}

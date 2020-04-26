@@ -62,10 +62,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 			/*Gyroscope*/		61,		50f,
 			/*Euler*/			62,		50f,
 			/*Linear Accel*/	63,		50f,
-			/*Gravity*/			64,		50f
+			/*Gravity*/			64,		50f,
+			/*Quaternion*/		65,		50f
 		);
 
-		public TwiRegister TwiSettings { get; } = new TwiRegister(65, 10f);
+		public TwiRegister TwiSettings { get; } = new TwiRegister(66, 10f);
 
 		public Dictionary<char, Servo[]> Servos;
 
