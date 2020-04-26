@@ -54,7 +54,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			DepthLabel.Text = "Depth: " + ((rov == null) ? "----------" : rov.PressureSensor.Depth.ToString("0.00").PadLeft(10)) + " m";
 
 			Quaternion quat = rov?.IMU?.Quaternion ?? new Quaternion();
-			Console.WriteLine(quat);
+			//Console.WriteLine(quat);
 		}
 	}
 }

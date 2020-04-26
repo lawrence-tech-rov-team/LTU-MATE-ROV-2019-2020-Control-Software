@@ -69,7 +69,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 		private bool ParseFloat(ByteArray bytes, out float val) {
 			if(bytes.Length == 2) {
 				try {
-					val = BitConverter.ToUInt16(bytes.ToArray(), 0) * Scale;
+					val = BitConverter.ToInt16(bytes.ToArray(), 0) * Scale;
+					return true;
 				} catch (Exception) {
 				}
 			}
