@@ -58,7 +58,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 			//Register			Id		Refresh Rate
 			/*Temperature*/		58,		0.5f,
 			/*Accelerometer*/	59,		50f,
-			/*Magnometer*/		60,		50f,
+			/*Magnometer*/		60,		10f,
 			/*Gyroscope*/		61,		50f,
 			/*Euler*/			62,		50f,
 			/*Linear Accel*/	63,		50f,

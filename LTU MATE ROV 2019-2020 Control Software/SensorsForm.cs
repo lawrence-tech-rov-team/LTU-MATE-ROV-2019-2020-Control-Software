@@ -52,6 +52,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			PressureLabel.Text = "Pressure: " + ((rov == null) ? "----------" : rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10)) + " mBar";
 			AltitudeLabel.Text = "Altitude: " + ((rov == null) ? "----------" : rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10)) + " m above mean sea";
 			DepthLabel.Text = "Depth: " + ((rov == null) ? "----------" : rov.PressureSensor.Depth.ToString("0.00").PadLeft(10)) + " m";
+
+			Quaternion quat = rov?.IMU?.Quaternion ?? new Quaternion();
+			Console.WriteLine(quat);
 		}
 	}
 }

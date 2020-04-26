@@ -12,7 +12,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 
 		public override IRegister[] Registers => new IRegister[]{
 			TemperatureRegister,
-			AccelerometerRegister
+			MagnetometerRegister,
+			GyroscopseRegister,
+			EulerRegister,
+			AccelerometerRegister,
+			LinearAccelRegister,
+			GravityRegister,
+			QuaternionRegister
 		};
 
 		private ReadableRegister<Int8Data> TemperatureRegister;
@@ -40,11 +46,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		public Quaternion Quaternion => QuaternionRegister.Data?.Quaternion ?? new Quaternion();
 
 		public IMU(
-			byte TemperatureId, float TemperatureRefreshRate, 
+			byte TemperatureId, float TemperatureRefreshRate,
+			byte AccelerometerId, float AccelerometerRefreshRate,
 			byte MagnetometerId, float MagnetometerRefreshRate,
 			byte GyroscopeId, float GyroscopeRefreshRate,
 			byte EulerId, float EulerRefreshRate,
-			byte AccelerometerId, float AccelerometerRefreshRate,
 			byte LinearAccelId, float LinearAccelRefreshRate,
 			byte GravityId, float GravityRefreshRate,
 			byte QuaternionId, float QuaternionRefreshRate
