@@ -12,12 +12,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 	public abstract class Robot : ThreadedProcess {
 
 		public delegate void IdCollisionEvent(byte IdConflict);
+		public delegate void RobotEvent(Robot sender);
+		public delegate void GenericEvent();
+
+		
 		public event IdCollisionEvent OnIdCollisionDetected; //TODO make use of event
 
-		public delegate void RobotEvent(Robot sender);
+		
+
+		/// <summary> Fired when the robot gets connected. </summary>
 		public event RobotEvent OnConnected;
 
-		public delegate void GenericEvent();
+		/// <summary> This event gets called right before the robot is disconnected. All updated actuators are (attempted) sent after this event is fired. </summary>
+		public event RobotEvent OnDisconnecting;
+
+		
 		public event GenericEvent OnConnectFailed;
 		public event GenericEvent OnDisconnected;
 		public event GenericEvent OnTimeoutWarning; //Called when a message is received at greater than 50% of the timeout time.
@@ -176,6 +185,19 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 
 		protected override void Cleanup() {
 			if(ether != null) {
+				if (ether.Connected) {
+					OnDisconnecting?.Invoke(this);
+					//Update all writable registers one last time.
+					for(int id = 0; id < MaxNumDevices; id++) {
+						if(registers[id] != null) {
+							byte[] update = registers[id].SendUpdate;
+							if((update != null) && (update.Length > 0)) {
+								ether?.Send(new UdpPacket((byte)id, update));
+							}
+						}
+					}
+				}
+				
 				ether.Disconnect();
 				ether.OnPacketReceived -= Ether_OnPacketReceived;
 			}
