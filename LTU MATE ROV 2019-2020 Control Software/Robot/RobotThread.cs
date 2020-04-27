@@ -12,8 +12,9 @@ using static LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Robot;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 	public class RobotThread : ThreadSwitcher<ROV> {
 
-		public event GenericEvent OnIdCollisionDetected;
-		public event GenericEvent OnConnected;
+		public event IdCollisionEvent OnIdCollisionDetected;
+		public event RobotEvent OnConnected;
+		public event RobotEvent OnDisconnecting;
 		public event GenericEvent OnConnectFailed;
 		public event GenericEvent OnDisconnected;
 		public event GenericEvent OnTimeoutWarning;
@@ -34,6 +35,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		protected override void ProcessStopped(ROV Process) {
 			Process.OnIdCollisionDetected -= OnIdCollisionDetected;
 			Process.OnConnected -= OnConnected;
+			Process.OnDisconnecting -= OnDisconnecting;
 			Process.OnConnectFailed -= OnConnectFailed;
 			Process.OnDisconnected -= OnDisconnected;
 			Process.OnTimeoutWarning -= OnTimeoutWarning;
@@ -43,6 +45,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		protected override void ProcessStarting(ROV Process) {
 			Process.OnIdCollisionDetected += OnIdCollisionDetected;
 			Process.OnConnected += OnConnected;
+			Process.OnDisconnecting += OnDisconnecting;
 			Process.OnConnectFailed += OnConnectFailed;
 			Process.OnDisconnected += OnDisconnected;
 			Process.OnTimeoutWarning += OnTimeoutWarning;

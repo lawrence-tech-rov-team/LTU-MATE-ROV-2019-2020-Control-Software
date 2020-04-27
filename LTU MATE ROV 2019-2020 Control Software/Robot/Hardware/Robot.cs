@@ -95,6 +95,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		/// </summary>
 		private volatile int numTimeouts = 0;
 
+		protected abstract void RegisterAllDevices();
+
 		protected void RegisterDevice(IDevice device) {
 			foreach(IRegister register in device) {
 				if (registers[register.Id] != null) {
@@ -173,6 +175,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		}
 
 		protected override void Initialize() {
+			RegisterAllDevices();
 			if (ether?.Connect() ?? false) {
 				ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnConnected?.Invoke(this); }));
 				ether.OnPacketReceived += Ether_OnPacketReceived;

@@ -87,6 +87,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			InputDataTimer.Start();
 			ImageUpdateTimer.Start();
 			Log.Info("Update timers started.");
+
+			robotThread.OnIdCollisionDetected += RobotThread_OnIdCollisionDetected;
 		}
 
 		//Stop all running threads and switchers
@@ -204,5 +206,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		private void initializationToolStripMenuItem_Click(object sender, EventArgs e) {
 
 		}
+
+		private void RobotThread_OnIdCollisionDetected(byte IdConflict) {
+			this.Invoke(new Action(() => {
+				MessageBox.Show("Id collision detected: " + IdConflict, "Id Conflict", MessageBoxButtons.OK);
+			}));
+		}
+
 	}
 }

@@ -78,13 +78,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 				{ 'D', new Servo[] { ServoD1, ServoD2, ServoD3, ServoD4, ServoD5, ServoD6, ServoD7, ServoD8 } }
 			};
 
+		}
+
+		protected override void RegisterAllDevices() {
 			RegisterDevice(Button0);
 			RegisterDevice(Button1);
 			RegisterDevice(Led);
 			RegisterDevice(PressureSensor);
 			RegisterDevice(IMU);
-			foreach(Servo[] servos in Servos.Values) {
-				foreach(Servo servo in servos) {
+			foreach (Servo[] servos in Servos.Values) {
+				foreach (Servo servo in servos) {
 					RegisterDevice(servo);
 				}
 			}

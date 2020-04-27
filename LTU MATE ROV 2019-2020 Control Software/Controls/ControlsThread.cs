@@ -17,7 +17,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 		public ControlsThread(InputThread Input, RobotThread Robot, ThreadPriority Priority = ThreadPriority.Normal) : base("Controls Thread", Priority) {
 			inputThread = Input;
 			robotThread = Robot;
-			robotThread.OnConnected += RobotThread_OnConnected;
+			//TODO add back in robotThread.OnConnected += RobotThread_OnConnected;
 		}
 
 		protected override void Initialize() {
