@@ -19,17 +19,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 		public override byte[] Bytes {
 			get {
 				List<byte> bytes = new List<byte>(NumberOfBytes);
-				bytes.AddRange(BitConverter.GetBytes(GetUint16(X * Ratio)));
-				bytes.AddRange(BitConverter.GetBytes(GetUint16(Y * Ratio)));
-				bytes.AddRange(BitConverter.GetBytes(GetUint16(Z * Ratio)));
+				bytes.AddRange(BitConverter.GetBytes(GetInt16(X * Ratio)));
+				bytes.AddRange(BitConverter.GetBytes(GetInt16(Y * Ratio)));
+				bytes.AddRange(BitConverter.GetBytes(GetInt16(Z * Ratio)));
 				return bytes.ToArray();
 			}
 		}
 
-		private ushort GetUint16(float val) {
-			if (val <= ushort.MinValue) return ushort.MinValue;
-			else if (val >= ushort.MaxValue) return ushort.MaxValue;
-			else return (ushort)Math.Round(val);
+		private short GetInt16(float val) {
+			if (val <= short.MinValue) return short.MinValue;
+			else if (val >= short.MaxValue) return short.MaxValue;
+			else return (short)Math.Round(val);
 		}
 
 		protected abstract float Ratio { get; }
