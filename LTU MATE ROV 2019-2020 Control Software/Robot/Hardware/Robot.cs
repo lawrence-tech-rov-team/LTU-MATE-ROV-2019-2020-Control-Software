@@ -15,21 +15,32 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public delegate void RobotEvent(Robot sender);
 		public delegate void GenericEvent();
 
-		
+		/// <summary> Fired when a collision when registering IDs is found. Ran in a new thread. </summary>
 		public event IdCollisionEvent OnIdCollisionDetected; //TODO make use of event
 
-		
-
-		/// <summary> Fired when the robot gets connected. </summary>
+		/// <summary> Fired when the robot gets connected. Ran in a new thread. </summary>
 		public event RobotEvent OnConnected;
 
-		/// <summary> This event gets called right before the robot is disconnected. All updated actuators are (attempted) sent after this event is fired. </summary>
+		/// <summary> 
+		/// This event gets called right before the robot is disconnected. 
+		/// All updated actuators are (attempted) sent after this event is fired. 
+		/// Ran in the same thread, so keep processing low. Meant to only be used to update robot states.
+		/// </summary>
 		public event RobotEvent OnDisconnecting;
 
-		
+		/// <summary> Fired if the robot tried connecting but failed. Ran in a new thread. </summary>
 		public event GenericEvent OnConnectFailed;
+
+		/// <summary> Fired once the robot finishes disconnecting. Ran in a new thread. </summary>
 		public event GenericEvent OnDisconnected;
-		public event GenericEvent OnTimeoutWarning; //Called when a message is received at greater than 50% of the timeout time.
+
+		/// <summary> Called when a message is received at greater than 50% of the timeout time. Ran on a new thread. </summary>
+		public event GenericEvent OnTimeoutWarning;
+		
+		/// <summary>
+		/// Called once a message has timed out. As it stands, timeouts do not cause the robot to disconnect.
+		/// It is advised if multiple timeouts are received to assume the robot has physically disconnected and to disconnect the robot in software.
+		/// </summary>
 		public event GenericEvent OnTimeout;
 
 		/// <summary>
@@ -87,7 +98,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		protected void RegisterDevice(IDevice device) {
 			foreach(IRegister register in device) {
 				if (registers[register.Id] != null) {
-					OnIdCollisionDetected?.Invoke(register.Id);
+					byte id = register.Id;
+					ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnIdCollisionDetected?.Invoke(id); }));
 				} else {
 					//updateAttempts[device.Id] = 0;
 					timeoutTimers[register.Id] = new Stopwatch();
@@ -145,7 +157,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 				if (SendMessage(id, registers[id].ResendUpdate)) {
 					timeoutTimers[id].Restart();
 				}
-				OnTimeout?.Invoke();
+				ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnTimeout?.Invoke(); }));
 				Console.Error.WriteLine("Message timeout! #{0}", n);
 			}
 		}
@@ -162,9 +174,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 
 		protected override void Initialize() {
 			if (ether?.Connect() ?? false) {
-				OnConnected?.Invoke(this);
+				ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnConnected?.Invoke(this); }));
 				ether.OnPacketReceived += Ether_OnPacketReceived;
-			} else OnConnectFailed?.Invoke();
+			} else ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnConnectFailed?.Invoke(); }));
 		}
 
 		protected override bool Loop() {
@@ -201,7 +213,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 				ether.Disconnect();
 				ether.OnPacketReceived -= Ether_OnPacketReceived;
 			}
-			OnDisconnected?.Invoke();
+			ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnDisconnected?.Invoke(); }));
 		}
 
 		//NOTE: OnReceived may be invoked on a secondary thread.
@@ -222,7 +234,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 						}
 					}
 				}
-				if(timeoutWarning) OnTimeoutWarning?.Invoke();
+				if(timeoutWarning) ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnTimeoutWarning?.Invoke(); }));
 			}
 		}
 
