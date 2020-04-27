@@ -11,9 +11,13 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 	public abstract class Robot : ThreadedProcess {
 
+		public delegate void IdCollisionEvent(byte IdConflict);
+		public event IdCollisionEvent OnIdCollisionDetected; //TODO make use of event
+
+		public delegate void RobotEvent(Robot sender);
+		public event RobotEvent OnConnected;
+
 		public delegate void GenericEvent();
-		public event GenericEvent OnIdCollisionDetected; //TODO make use of event
-		public event GenericEvent OnConnected;
 		public event GenericEvent OnConnectFailed;
 		public event GenericEvent OnDisconnected;
 		public event GenericEvent OnTimeoutWarning; //Called when a message is received at greater than 50% of the timeout time.
@@ -42,7 +46,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public bool IsSimulator => ether.IsSimulator;
 
 		private IEthernetLayer ether;
-		//private Thread thread;
 		private volatile int BytesSent = 0;
 
 		/// <summary>
@@ -72,12 +75,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		/// </summary>
 		private volatile int numTimeouts = 0;
 
-		//private volatile bool running = true;
-
 		protected void RegisterDevice(IDevice device) {
 			foreach(IRegister register in device) {
 				if (registers[register.Id] != null) {
-					OnIdCollisionDetected?.Invoke();
+					OnIdCollisionDetected?.Invoke(register.Id);
 				} else {
 					//updateAttempts[device.Id] = 0;
 					timeoutTimers[register.Id] = new Stopwatch();
@@ -89,45 +90,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		}
 
 		protected Robot(IEthernetLayer commInterface) : base("Robot Thread") {
-			//thread = ThreadHelper.StartNewThread("Robot Sender", true, RobotLoop, priority);
 			Volatile.Write<IEthernetLayer>(ref ether, commInterface);
 		}
-		/*
-		public bool Connect() {
-			return ether?.Connect() ?? false;
-		}
-
-		public void Disconnect() {
-			ether?.Disconnect();
-		}
-		
-		public void StopAsync() {
-			running = false;
-		}
-
-		public void Stop() {
-			StopAsync();
-			thread.Join();
-		}*/
 
 		private bool SendMessage(int id, byte[] msg) {
-			//byte[] bytes = new byte[msg.Length + 1];
-			//bytes[0] = (byte)id;
-			//Array.Copy(msg, 0, bytes, 1, msg.Length); //TODO ugh, memcopy
 			UdpPacket packet = new UdpPacket((byte)id, msg);
 			int len = packet.Length;
-			//while (true) {
 			lock (this) {
 				if ((BufferSize - BytesSent) >= len) {
 					BytesSent += len;
 					updateSize[id] = len;
-					//break;
 				} else {
 					return false;
 				}
 			}
-				//Thread.Sleep(1); //TODO this doesn't work. Need a better solution to waiting. 
-			//}
 
 			if (ether?.Send(packet) ?? false) return true;
 			else {
@@ -169,10 +145,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 			refreshTimers[id].Restart(); //Absolute timing. Keeps refresh rate as close to the requested rate as possible.
 			byte[] update = registers[id].SendUpdate; 
 			if (update != null) {
-				//UdpPacket packet = new UdpPacket(Command.UpdateDevice, update);
-				//if (SendUpdateRequest(id, update)) {
 				if (SendMessage(id, update)) {
-					//updateSize[id] = update.Length + 4; 
 					timeoutTimers[id].Restart();
 				}
 			}
@@ -180,7 +153,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 
 		protected override void Initialize() {
 			if (ether?.Connect() ?? false) {
-				OnConnected?.Invoke();
+				OnConnected?.Invoke(this);
 				ether.OnPacketReceived += Ether_OnPacketReceived;
 			} else OnConnectFailed?.Invoke();
 		}
@@ -211,12 +184,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 
 		//NOTE: OnReceived may be invoked on a secondary thread.
 		private void Ether_OnPacketReceived(UdpPacket packet) {
-			int id = packet.Id;//packet[0];
+			int id = packet.Id;
 			if (registers[id] != null) {
 				bool timeoutWarning = false;
 				lock (registers[id]) {
-					if (registers[id].Update(packet.Data/* + 1*/)) {
-						//updateTimers[id].Reset();
+					if (registers[id].Update(packet.Data)) {
 						messageReceived[id] = true;
 
 						lock (this) {

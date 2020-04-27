@@ -17,7 +17,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private RobotThread robotThread;
 
-		public SensorsForm(RobotThread Robot) { //TODO rov can be null, or change 
+		public SensorsForm(RobotThread Robot) {
 			InitializeComponent();
 			robotThread = Robot;
 		}
