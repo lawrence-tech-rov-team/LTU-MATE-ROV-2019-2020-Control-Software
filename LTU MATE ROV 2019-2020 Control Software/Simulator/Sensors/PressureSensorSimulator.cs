@@ -17,12 +17,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 			SensorRegister
 		};
 
-		private WritableRegister<FloatData, FloatData> SensorRegister;
+		private WritableRegister<Vector2Data> SensorRegister;
 		private float temp;
 		private float pressure;
 
 		public PressureSensorSimulator(byte id, TrackBar temp, TrackBar pres) {
-			SensorRegister = new WritableRegister<FloatData, FloatData>(id, 0f);
+			SensorRegister = new WritableRegister<Vector2Data>(id, 0f);
 			initTrackBar(temp, 10*5, 30*5, 25*5);
 			initTrackBar(pres, atmPressure * 5, (atmPressure + pressureRange) * 5, atmPressure * 5);
 			temp.Scroll += Temp_Scroll;
@@ -41,14 +41,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 
 		private void Pres_Scroll(object sender, EventArgs e) {
 			pressure = ((TrackBar)sender).Value / 5f;
-			SensorRegister.SetValues(new FloatData(pressure), new FloatData(temp));
+			SensorRegister.Data = new Vector2Data(pressure, temp);
+			//SensorRegister.SetValues(new FloatData(pressure), new FloatData(temp));
 			//SensorRegister.Value1 = new FloatData(pressure);
 			//SensorRegister.Value2 = new FloatData(temp);
 		}
 
 		private void Temp_Scroll(object sender, EventArgs e) {
 			temp = ((TrackBar)sender).Value / 5f;
-			SensorRegister.SetValues(new FloatData(pressure), new FloatData(temp));
+			SensorRegister.Data = new Vector2Data(pressure, temp);
+			//SensorRegister.SetValues(new FloatData(pressure), new FloatData(temp));
 			//SensorRegister.Value1 = new FloatData(pressure);
 			//SensorRegister.Value2 = new FloatData(temp);
 		}

@@ -93,6 +93,7 @@
     <Compile Include="Robot\Hardware\DataTypes\UInt16Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\UInt32Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\UInt8Data.cs" />
+    <Compile Include="Robot\Hardware\DataTypes\Vector2Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Vector3Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Vector4Data.cs" />
     <Compile Include="Robot\Hardware\Ethernet\EthernetInterface.cs" />

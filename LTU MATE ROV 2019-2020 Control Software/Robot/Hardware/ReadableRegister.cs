@@ -31,7 +31,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 			}
 		}
 	}
-
+	/*
 	public class ReadableRegister<T1, T2> : IRegister<T1, T2>
 		where T1 : IDataType, new()
 		where T2 : IDataType, new()
@@ -63,6 +63,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 				return false;
 			}
 		}
-	}
+	}*/
 
 }
