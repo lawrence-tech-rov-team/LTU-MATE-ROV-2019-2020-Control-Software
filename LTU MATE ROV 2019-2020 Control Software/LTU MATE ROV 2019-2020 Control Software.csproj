@@ -176,6 +176,9 @@
     <Compile Include="Utils\Vector3Panel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Utils\Vector4Panel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="InputVisualizer.resx">
       <DependentUpon>InputVisualizer.cs</DependentUpon>
     </EmbeddedResource>

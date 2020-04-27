@@ -25,15 +25,6 @@
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.AccelZ = new System.Windows.Forms.Label();
-			this.AccelY = new System.Windows.Forms.Label();
-			this.AccelX = new System.Windows.Forms.Label();
-			this.EulerZ = new System.Windows.Forms.Label();
-			this.EulerY = new System.Windows.Forms.Label();
-			this.EulerX = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
 			this.TempLabel = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.DepthLabel = new System.Windows.Forms.Label();
@@ -51,111 +42,15 @@
 			// groupBox1
 			// 
 			this.groupBox1.Controls.Add(this.AccelVectorPanel);
-			this.groupBox1.Controls.Add(this.panel1);
-			this.groupBox1.Controls.Add(this.AccelZ);
-			this.groupBox1.Controls.Add(this.AccelY);
-			this.groupBox1.Controls.Add(this.AccelX);
-			this.groupBox1.Controls.Add(this.EulerZ);
-			this.groupBox1.Controls.Add(this.EulerY);
-			this.groupBox1.Controls.Add(this.EulerX);
-			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.label1);
 			this.groupBox1.Controls.Add(this.TempLabel);
 			this.groupBox1.Location = new System.Drawing.Point(9, 10);
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox1.Size = new System.Drawing.Size(494, 132);
+			this.groupBox1.Size = new System.Drawing.Size(494, 184);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "IMU";
-			// 
-			// panel1
-			// 
-			this.panel1.Location = new System.Drawing.Point(389, 136);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(175, 101);
-			this.panel1.TabIndex = 35;
-			// 
-			// AccelZ
-			// 
-			this.AccelZ.AutoSize = true;
-			this.AccelZ.Location = new System.Drawing.Point(163, 70);
-			this.AccelZ.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.AccelZ.Name = "AccelZ";
-			this.AccelZ.Size = new System.Drawing.Size(34, 13);
-			this.AccelZ.TabIndex = 27;
-			this.AccelZ.Text = "Accel";
-			// 
-			// AccelY
-			// 
-			this.AccelY.AutoSize = true;
-			this.AccelY.Location = new System.Drawing.Point(163, 56);
-			this.AccelY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.AccelY.Name = "AccelY";
-			this.AccelY.Size = new System.Drawing.Size(34, 13);
-			this.AccelY.TabIndex = 26;
-			this.AccelY.Text = "Accel";
-			// 
-			// AccelX
-			// 
-			this.AccelX.AutoSize = true;
-			this.AccelX.Location = new System.Drawing.Point(163, 42);
-			this.AccelX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.AccelX.Name = "AccelX";
-			this.AccelX.Size = new System.Drawing.Size(34, 13);
-			this.AccelX.TabIndex = 25;
-			this.AccelX.Text = "Accel";
-			// 
-			// EulerZ
-			// 
-			this.EulerZ.AutoSize = true;
-			this.EulerZ.Location = new System.Drawing.Point(4, 70);
-			this.EulerZ.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.EulerZ.Name = "EulerZ";
-			this.EulerZ.Size = new System.Drawing.Size(31, 13);
-			this.EulerZ.TabIndex = 24;
-			this.EulerZ.Text = "Euler";
-			// 
-			// EulerY
-			// 
-			this.EulerY.AutoSize = true;
-			this.EulerY.Location = new System.Drawing.Point(4, 56);
-			this.EulerY.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.EulerY.Name = "EulerY";
-			this.EulerY.Size = new System.Drawing.Size(31, 13);
-			this.EulerY.TabIndex = 23;
-			this.EulerY.Text = "Euler";
-			// 
-			// EulerX
-			// 
-			this.EulerX.AutoSize = true;
-			this.EulerX.Location = new System.Drawing.Point(4, 42);
-			this.EulerX.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.EulerX.Name = "EulerX";
-			this.EulerX.Size = new System.Drawing.Size(31, 13);
-			this.EulerX.TabIndex = 22;
-			this.EulerX.Text = "Euler";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(163, 28);
-			this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(34, 13);
-			this.label2.TabIndex = 21;
-			this.label2.Text = "Accel";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(4, 28);
-			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(31, 13);
-			this.label1.TabIndex = 20;
-			this.label1.Text = "Euler";
 			// 
 			// TempLabel
 			// 
@@ -173,7 +68,7 @@
 			this.groupBox2.Controls.Add(this.AltitudeLabel);
 			this.groupBox2.Controls.Add(this.PressureLabel);
 			this.groupBox2.Controls.Add(this.WaterTempLabel);
-			this.groupBox2.Location = new System.Drawing.Point(9, 146);
+			this.groupBox2.Location = new System.Drawing.Point(9, 210);
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -230,7 +125,7 @@
 			// TestBtn2
 			// 
 			this.TestBtn2.BorderColor = System.Drawing.Color.Black;
-			this.TestBtn2.Location = new System.Drawing.Point(40, 297);
+			this.TestBtn2.Location = new System.Drawing.Point(40, 361);
 			this.TestBtn2.Margin = new System.Windows.Forms.Padding(2);
 			this.TestBtn2.Name = "TestBtn2";
 			this.TestBtn2.OffColor = System.Drawing.Color.Firebrick;
@@ -245,7 +140,7 @@
 			// TestBtnMeter
 			// 
 			this.TestBtnMeter.BorderColor = System.Drawing.Color.Black;
-			this.TestBtnMeter.Location = new System.Drawing.Point(9, 297);
+			this.TestBtnMeter.Location = new System.Drawing.Point(9, 361);
 			this.TestBtnMeter.Margin = new System.Windows.Forms.Padding(2);
 			this.TestBtnMeter.Name = "TestBtnMeter";
 			this.TestBtnMeter.OffColor = System.Drawing.Color.Firebrick;
@@ -259,7 +154,7 @@
 			// 
 			// AccelVectorPanel
 			// 
-			this.AccelVectorPanel.Location = new System.Drawing.Point(292, 28);
+			this.AccelVectorPanel.Location = new System.Drawing.Point(7, 31);
 			this.AccelVectorPanel.MaximumSize = new System.Drawing.Size(100, 60);
 			this.AccelVectorPanel.MinimumSize = new System.Drawing.Size(100, 60);
 			this.AccelVectorPanel.Name = "AccelVectorPanel";
@@ -275,7 +170,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(630, 450);
+			this.ClientSize = new System.Drawing.Size(630, 467);
 			this.Controls.Add(this.TestBtn2);
 			this.Controls.Add(this.TestBtnMeter);
 			this.Controls.Add(this.groupBox2);
@@ -295,14 +190,6 @@
 		#endregion
 
 		private System.Windows.Forms.GroupBox groupBox1; 
-		private System.Windows.Forms.Label AccelZ;
-		private System.Windows.Forms.Label AccelY;
-		private System.Windows.Forms.Label AccelX;
-		private System.Windows.Forms.Label EulerZ;
-		private System.Windows.Forms.Label EulerY;
-		private System.Windows.Forms.Label EulerX;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label TempLabel;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label DepthLabel;
@@ -312,7 +199,6 @@
 		private System.Windows.Forms.Timer timer1;
 		private Meters.IOMeter TestBtn2;
 		private Meters.IOMeter TestBtnMeter;
-		private System.Windows.Forms.Panel panel1;
 		private Utils.Vector3Panel AccelVectorPanel;
 	}
 }
