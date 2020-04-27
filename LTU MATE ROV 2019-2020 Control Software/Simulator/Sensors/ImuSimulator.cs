@@ -16,7 +16,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 
 		private Label tempFeedbackLabel;
 		private WritableRegister<Int8Data> TemperatureRegister;
-		private WritableRegister<Vector3Data> AccelerometerRegister;
+		private WritableRegister<Imu16Vector3Data> MagnetometerRegister;
+		private WritableRegister<Imu16Vector3Data> GyroscopeRegister;
+		private WritableRegister<Imu16Vector3Data> EulerRegister;
+		private WritableRegister<Imu100Vector3Data> AccelerometerRegister;
+		private WritableRegister<Imu100Vector3Data> LinearAccelRegister;
+		private WritableRegister<Imu100Vector3Data> GravityRegister;
+		private WritableRegister<ImuQuaternionData> QuaternionRegister;
 		private float accelX = 0f;
 		private float accelY = 0f;
 		private float accelZ = 0f;

@@ -13,7 +13,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		public override IRegister[] Registers => new IRegister[]{
 			TemperatureRegister,
 			MagnetometerRegister,
-			GyroscopseRegister,
+			GyroscopeRegister,
 			EulerRegister,
 			AccelerometerRegister,
 			LinearAccelRegister,
@@ -27,8 +27,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		private ReadableRegister<Imu16Vector3Data> MagnetometerRegister;
 		public Vector3 Magnetometer => MagnetometerRegister.Data?.Vector ?? new Vector3();
 
-		private ReadableRegister<Imu16Vector3Data> GyroscopseRegister;
-		public Vector3 Gyroscope => GyroscopseRegister.Data?.Vector ?? new Vector3();
+		private ReadableRegister<Imu16Vector3Data> GyroscopeRegister;
+		public Vector3 Gyroscope => GyroscopeRegister.Data?.Vector ?? new Vector3();
 
 		private ReadableRegister<Imu16Vector3Data> EulerRegister;
 		public Vector3 Euler => EulerRegister.Data?.Vector ?? new Vector3();
@@ -57,7 +57,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors {
 		) {
 			TemperatureRegister = new ReadableRegister<Int8Data>(TemperatureId, TemperatureRefreshRate);
 			MagnetometerRegister = new ReadableRegister<Imu16Vector3Data>(MagnetometerId, MagnetometerRefreshRate);
-			GyroscopseRegister = new ReadableRegister<Imu16Vector3Data>(GyroscopeId, GyroscopeRefreshRate);
+			GyroscopeRegister = new ReadableRegister<Imu16Vector3Data>(GyroscopeId, GyroscopeRefreshRate);
 			EulerRegister = new ReadableRegister<Imu16Vector3Data>(EulerId, EulerRefreshRate);
 			AccelerometerRegister = new ReadableRegister<Imu100Vector3Data>(AccelerometerId, AccelerometerRefreshRate);
 			LinearAccelRegister = new ReadableRegister<Imu100Vector3Data>(LinearAccelId, LinearAccelRefreshRate);

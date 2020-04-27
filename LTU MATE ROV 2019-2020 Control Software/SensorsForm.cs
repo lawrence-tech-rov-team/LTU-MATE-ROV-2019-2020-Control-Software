@@ -17,7 +17,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private RobotThread robotThread;
 
-		public SensorsForm(RobotThread Robot) { //TODO rov can be null, or change
+		public SensorsForm(RobotThread Robot) { //TODO rov can be null, or change 
 			InitializeComponent();
 			robotThread = Robot;
 		}
@@ -41,12 +41,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 			TempLabel.Text = "Temperature: " + ((rov == null) ? "----" : rov.IMU.Temperature.ToString().PadLeft(4)) + "°C";
 			//Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
-			Vector3 accel = rov?.IMU?.Accelerometer ?? new Vector3();
+			//Vector3 accel = rov?.IMU?.Accelerometer ?? new Vector3();
 			//if (accel != null) {
-				AccelX.Text = "X: " + accel.X.ToString("0.00").PadLeft(10) + " m/s²";
-				AccelY.Text = "Y: " + accel.Y.ToString("0.00").PadLeft(10) + "m/s²";
-				AccelZ.Text = "Z: " + accel.Z.ToString("0.00").PadLeft(10) + "m/s²";
+			//	AccelX.Text = "X: " + accel.X.ToString("0.00").PadLeft(10) + " m/s²";
+			//	AccelY.Text = "Y: " + accel.Y.ToString("0.00").PadLeft(10) + "m/s²";
+			//	AccelZ.Text = "Z: " + accel.Z.ToString("0.00").PadLeft(10) + "m/s²";
 			//}
+			AccelVectorPanel.Vector = rov?.IMU?.Accelerometer ?? new Vector3();
 
 			WaterTempLabel.Text = "Water Temp: " + ((rov == null) ? "----------" : rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10)) + "°C";
 			PressureLabel.Text = "Pressure: " + ((rov == null) ? "----------" : rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10)) + " mBar";
