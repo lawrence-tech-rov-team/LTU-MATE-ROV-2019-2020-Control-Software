@@ -186,6 +186,203 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			}
 		}
 
+		#region Parsing
+		public bool ParseBool(int index, out bool result) {
+			if((index >= 0) && ((index + sizeof(bool)) <= Length)) {
+				try {
+					result = BitConverter.ToBoolean(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(bool);
+			return false;
+		}
+		public bool ParseBool(out bool result) {
+			if (Length != sizeof(bool)) {
+				result = default(bool);
+				return false;
+			} else return ParseBool(0, out result);
+		}
+
+		public bool ParseChar(int index, out char result) {
+			if((index >= 0) && ((index + sizeof(char)) <= Length)) {
+				try {
+					result = BitConverter.ToChar(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(char);
+			return false;
+		}
+		public bool ParseChar(out char result) {
+			if (Length != sizeof(char)) {
+				result = default(char);
+				return false;
+			} else return ParseChar(0, out result);
+		}
+
+		public bool ParseUInt8(int index, out byte result) {
+			if((index >= 0) && (index < Length)) {
+				result = source[this.index + index];
+				return true;
+			}
+
+			result = default(byte);
+			return false;
+		}
+		public bool ParseUInt8(out byte result) {
+			if (Length != sizeof(byte)) {
+				result = default(byte);
+				return false;
+			} else return ParseUInt8(0, out result);
+		}
+
+		public bool ParseInt8(int index, out sbyte result) {
+			if((index >= 0) && (index < Length)) {
+				result = (sbyte)source[this.index + index];
+				return true;
+			}
+
+			result = default(sbyte);
+			return false;
+		}
+		public bool ParseInt8(out sbyte result) {
+			if (Length != sizeof(sbyte)) {
+				result = default(sbyte);
+				return false;
+			} else return ParseInt8(0, out result);
+		}
+
+		public bool ParseUInt16(int index, out ushort result) {
+			if((index >= 0) && ((index + sizeof(ushort)) <= Length)) {
+				try {
+					result = BitConverter.ToUInt16(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(ushort);
+			return false;
+
+		}
+		public bool ParseUInt16(out ushort result) {
+			if (Length != sizeof(ushort)) {
+				result = default(ushort);
+				return false;
+			} else return ParseUInt16(0, out result);
+		}
+
+		public bool ParseInt16(int index, out short result) {
+			if((index >= 0) && ((index + sizeof(short)) <= Length)) {
+				try {
+					result = BitConverter.ToInt16(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(short);
+			return false;
+		}
+		public bool ParseInt16(out short result) {
+			if (Length != sizeof(short)) {
+				result = default(short);
+				return false;
+			} else return ParseInt16(0, out result);
+		}
+
+		public bool ParseUInt32(int index, out uint result) {
+			if((index >= 0) && ((index + sizeof(uint)) <= Length)) {
+				try {
+					result = BitConverter.ToUInt32(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(uint);
+			return false;
+		}
+		public bool ParseUInt32(out uint result) {
+			if (Length != sizeof(uint)) {
+				result = default(uint);
+				return false;
+			} else return ParseUInt32(out result);
+		}
+
+		public bool ParseInt32(int index, out int result) {
+			if((index >= 0) && ((index + sizeof(int)) <= Length)) {
+				try {
+					result = BitConverter.ToInt32(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(int);
+			return false;
+		}
+		public bool ParseInt32(out int result) {
+			if (Length != sizeof(int)) {
+				result = default(int);
+				return false;
+			} else return ParseInt32(0, out result);
+		}
+
+		public bool ParseUInt64(int index, out ulong result) {
+			if((index >= 0) && ((index + sizeof(ulong)) <= Length)) {
+				try {
+					result = BitConverter.ToUInt64(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(ulong);
+			return false;
+		}
+		public bool ParseUInt64(out ulong result) {
+			if (Length != sizeof(ulong)) {
+				result = default(ulong);
+				return false;
+			} else return ParseUInt64(0, out result);
+		}
+
+		public bool ParseSingle(int index, out float result) {
+			if ((index >= 0) && ((index + sizeof(float)) <= Length)) {
+				try {
+					result = BitConverter.ToSingle(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(float);
+			return false;
+		}
+		public bool ParseSingle(out float result) {
+			if (Length != sizeof(float)) {
+				result = default(float);
+				return false;
+			} else return ParseSingle(0, out result);
+		}
+
+		public bool ParseDouble(int index, out double result) {
+			if((index >= 0) && ((index + sizeof(double)) <= Length)) {
+				try {
+					result = BitConverter.ToDouble(source, this.index + index);
+					return true;
+				} catch (Exception) { }
+			}
+
+			result = default(double);
+			return false;
+		}
+		public bool ParseDouble(out double result) {
+			if (Length != sizeof(double)) {
+				result = default(double);
+				return false;
+			} else return ParseDouble(0, out result);
+		}
+		#endregion
+
 		/// <summary>
 		/// Increment the start index of the sub-array. Same as calling <see cref="Sub(int)"/>
 		/// </summary>

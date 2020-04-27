@@ -28,7 +28,7 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form {
 
-		private LogWindow LogWindow = new LogWindow(); //TODO static logging class.
+		private LogWindow LogWindow = new LogWindow(); 
 
 		//Threads
 		private RobotThread robotThread;

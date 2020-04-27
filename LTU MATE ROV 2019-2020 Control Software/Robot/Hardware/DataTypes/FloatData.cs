@@ -8,8 +8,7 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 	public class FloatData : IDataType {
 
-		private volatile float value;
-		public float Value { get => value; private set => this.value = value; }
+		public float Value;
 
 		public override int NumberOfBytes => 4;
 
@@ -37,15 +36,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 
 		public override bool Parse(ByteArray bytes) {
 			if (bytes.Length == NumberOfBytes) {
-				try {
-					Value = BitConverter.ToSingle(bytes.ToArray(), 0); 
-					return true;
-				}catch(Exception) {
-					return false;
-				}
-			} else {
-				return false;
+				return bytes.ParseSingle(out Value);
 			}
+
+			return false;
 		}
 	}
 }

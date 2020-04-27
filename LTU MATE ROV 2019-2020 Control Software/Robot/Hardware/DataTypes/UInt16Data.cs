@@ -46,13 +46,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 		}
 
 		public override bool Parse(ByteArray bytes) {
-			if (bytes.Length == NumberOfBytes) {
-				try {
-					Value = BitConverter.ToUInt16(bytes.ToArray(), 0);
-					return true;
-				} catch (Exception) {
-					return false;
-				}
+			ushort result;
+			if(bytes.ParseUInt16(out result)) {
+				Value = result;
+				return true;
 			} else {
 				return false;
 			}

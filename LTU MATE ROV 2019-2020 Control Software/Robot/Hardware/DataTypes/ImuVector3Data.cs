@@ -55,21 +55,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 
 		public override bool Parse(ByteArray bytes) {
 			if (bytes.Length == NumberOfBytes) {
-				return ParseFloat(bytes.Sub(0, 2), out Vector.X) && ParseFloat(bytes.Sub(2, 2), out Vector.Y) && ParseFloat(bytes.Sub(4, 2), out Vector.Z);
+				return ParseFloat(bytes, 0, out Vector.X) && ParseFloat(bytes, 2, out Vector.Y) && ParseFloat(bytes, 4, out Vector.Z);
 			} else {
 				return false;
 			}
 		}
 
-		private bool ParseFloat(ByteArray bytes, out float val) {
-			if (bytes.Length == 2) {
-				try {
-					val = BitConverter.ToInt16(bytes.ToArray(), 0) / Ratio;
-					return true;
-				} catch (Exception) {
-					val = default(float);
-					return false;
-				}
+		private bool ParseFloat(ByteArray bytes, int index, out float val) {
+			short result;
+			if(bytes.ParseInt16(index, out result)) {
+				val = result / Ratio;
+				return true;
 			} else {
 				val = default(float);
 				return false;
