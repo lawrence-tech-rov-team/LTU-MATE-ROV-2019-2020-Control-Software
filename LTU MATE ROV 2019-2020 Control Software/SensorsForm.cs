@@ -32,30 +32,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			TestBtnMeter.Value = rov?.Button0?.State ?? false;
 			TestBtn2.Value = rov?.Button1?.State ?? false;
 
-			//Vector3Data euler = rov.IMU.Euler;
-			/*if (euler != null) {
-					EulerX.Text = "X: " + euler.x.ToString("0.00").PadLeft(10) + "°";
-					EulerY.Text = "Y: " + euler.y.ToString("0.00").PadLeft(10) + "°";
-					EulerZ.Text = "Z: " + euler.z.ToString("0.00").PadLeft(10) + "°";
-				}*/
-
 			TempLabel.Text = "Temperature: " + ((rov == null) ? "----" : rov.IMU.Temperature.ToString().PadLeft(4)) + "°C";
-			//Vector3Data accel = rov?.IMU?.Accelerometer ?? new Vector3Data();
-			//Vector3 accel = rov?.IMU?.Accelerometer ?? new Vector3();
-			//if (accel != null) {
-			//	AccelX.Text = "X: " + accel.X.ToString("0.00").PadLeft(10) + " m/s²";
-			//	AccelY.Text = "Y: " + accel.Y.ToString("0.00").PadLeft(10) + "m/s²";
-			//	AccelZ.Text = "Z: " + accel.Z.ToString("0.00").PadLeft(10) + "m/s²";
-			//}
 			AccelVectorPanel.Vector = rov?.IMU?.Accelerometer ?? new Vector3();
+			MagVectorPanel.Vector = rov?.IMU?.Magnetometer ?? new Vector3();
+			GyroVectorPanel.Vector = rov?.IMU?.Gyroscope ?? new Vector3();
+			EulerVectorPanel.Vector = rov?.IMU?.Euler ?? new Vector3();
+			LinearVectorPanel.Vector = rov?.IMU?.LinearAccel ?? new Vector3();
+			GravityVectorPanel.Vector = rov?.IMU?.Gravity ?? new Vector3();
+			Quaternion quat = rov?.IMU?.Quaternion ?? new Quaternion();
+			QuatVectorPanel.Vector = new Vector4(quat.X, quat.Y, quat.Z, quat.W);
 
 			WaterTempLabel.Text = "Water Temp: " + ((rov == null) ? "----------" : rov.PressureSensor.Temperature.ToString("0.00").PadLeft(10)) + "°C";
 			PressureLabel.Text = "Pressure: " + ((rov == null) ? "----------" : rov.PressureSensor.Pressure.ToString("0.00").PadLeft(10)) + " mBar";
 			AltitudeLabel.Text = "Altitude: " + ((rov == null) ? "----------" : rov.PressureSensor.Altitude.ToString("0.00").PadLeft(10)) + " m above mean sea";
 			DepthLabel.Text = "Depth: " + ((rov == null) ? "----------" : rov.PressureSensor.Depth.ToString("0.00").PadLeft(10)) + " m";
-
-			Quaternion quat = rov?.IMU?.Quaternion ?? new Quaternion();
-			//Console.WriteLine(quat);
 		}
 	}
 }

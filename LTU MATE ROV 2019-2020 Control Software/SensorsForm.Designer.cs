@@ -35,19 +35,31 @@
 			this.TestBtn2 = new Meters.IOMeter();
 			this.TestBtnMeter = new Meters.IOMeter();
 			this.AccelVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector3Panel();
+			this.MagVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector3Panel();
+			this.GyroVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector3Panel();
+			this.EulerVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector3Panel();
+			this.LinearVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector3Panel();
+			this.GravityVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector3Panel();
+			this.QuatVectorPanel = new LTU_MATE_ROV_2019_2020_Control_Software.Utils.Vector4Panel();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.QuatVectorPanel);
+			this.groupBox1.Controls.Add(this.GravityVectorPanel);
+			this.groupBox1.Controls.Add(this.LinearVectorPanel);
+			this.groupBox1.Controls.Add(this.EulerVectorPanel);
+			this.groupBox1.Controls.Add(this.GyroVectorPanel);
+			this.groupBox1.Controls.Add(this.MagVectorPanel);
 			this.groupBox1.Controls.Add(this.AccelVectorPanel);
 			this.groupBox1.Controls.Add(this.TempLabel);
 			this.groupBox1.Location = new System.Drawing.Point(9, 10);
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox1.Size = new System.Drawing.Size(494, 184);
+			this.groupBox1.Size = new System.Drawing.Size(494, 183);
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "IMU";
@@ -68,7 +80,7 @@
 			this.groupBox2.Controls.Add(this.AltitudeLabel);
 			this.groupBox2.Controls.Add(this.PressureLabel);
 			this.groupBox2.Controls.Add(this.WaterTempLabel);
-			this.groupBox2.Location = new System.Drawing.Point(9, 210);
+			this.groupBox2.Location = new System.Drawing.Point(9, 197);
 			this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
@@ -125,7 +137,7 @@
 			// TestBtn2
 			// 
 			this.TestBtn2.BorderColor = System.Drawing.Color.Black;
-			this.TestBtn2.Location = new System.Drawing.Point(40, 361);
+			this.TestBtn2.Location = new System.Drawing.Point(40, 348);
 			this.TestBtn2.Margin = new System.Windows.Forms.Padding(2);
 			this.TestBtn2.Name = "TestBtn2";
 			this.TestBtn2.OffColor = System.Drawing.Color.Firebrick;
@@ -140,7 +152,7 @@
 			// TestBtnMeter
 			// 
 			this.TestBtnMeter.BorderColor = System.Drawing.Color.Black;
-			this.TestBtnMeter.Location = new System.Drawing.Point(9, 361);
+			this.TestBtnMeter.Location = new System.Drawing.Point(9, 348);
 			this.TestBtnMeter.Margin = new System.Windows.Forms.Padding(2);
 			this.TestBtnMeter.Name = "TestBtnMeter";
 			this.TestBtnMeter.OffColor = System.Drawing.Color.Firebrick;
@@ -166,11 +178,96 @@
 			this.AccelVectorPanel.Y = 0F;
 			this.AccelVectorPanel.Z = 0F;
 			// 
+			// MagVectorPanel
+			// 
+			this.MagVectorPanel.Location = new System.Drawing.Point(113, 31);
+			this.MagVectorPanel.MaximumSize = new System.Drawing.Size(100, 60);
+			this.MagVectorPanel.MinimumSize = new System.Drawing.Size(100, 60);
+			this.MagVectorPanel.Name = "MagVectorPanel";
+			this.MagVectorPanel.Size = new System.Drawing.Size(100, 60);
+			this.MagVectorPanel.TabIndex = 36;
+			this.MagVectorPanel.TabStop = false;
+			this.MagVectorPanel.Text = "Magnetometer";
+			this.MagVectorPanel.X = 0F;
+			this.MagVectorPanel.Y = 0F;
+			this.MagVectorPanel.Z = 0F;
+			// 
+			// GyroVectorPanel
+			// 
+			this.GyroVectorPanel.Location = new System.Drawing.Point(219, 31);
+			this.GyroVectorPanel.MaximumSize = new System.Drawing.Size(100, 60);
+			this.GyroVectorPanel.MinimumSize = new System.Drawing.Size(100, 60);
+			this.GyroVectorPanel.Name = "GyroVectorPanel";
+			this.GyroVectorPanel.Size = new System.Drawing.Size(100, 60);
+			this.GyroVectorPanel.TabIndex = 37;
+			this.GyroVectorPanel.TabStop = false;
+			this.GyroVectorPanel.Text = "Gyroscope";
+			this.GyroVectorPanel.X = 0F;
+			this.GyroVectorPanel.Y = 0F;
+			this.GyroVectorPanel.Z = 0F;
+			// 
+			// EulerVectorPanel
+			// 
+			this.EulerVectorPanel.Location = new System.Drawing.Point(325, 31);
+			this.EulerVectorPanel.MaximumSize = new System.Drawing.Size(100, 60);
+			this.EulerVectorPanel.MinimumSize = new System.Drawing.Size(100, 60);
+			this.EulerVectorPanel.Name = "EulerVectorPanel";
+			this.EulerVectorPanel.Size = new System.Drawing.Size(100, 60);
+			this.EulerVectorPanel.TabIndex = 38;
+			this.EulerVectorPanel.TabStop = false;
+			this.EulerVectorPanel.Text = "Euler";
+			this.EulerVectorPanel.X = 0F;
+			this.EulerVectorPanel.Y = 0F;
+			this.EulerVectorPanel.Z = 0F;
+			// 
+			// LinearVectorPanel
+			// 
+			this.LinearVectorPanel.Location = new System.Drawing.Point(11, 97);
+			this.LinearVectorPanel.MaximumSize = new System.Drawing.Size(100, 60);
+			this.LinearVectorPanel.MinimumSize = new System.Drawing.Size(100, 60);
+			this.LinearVectorPanel.Name = "LinearVectorPanel";
+			this.LinearVectorPanel.Size = new System.Drawing.Size(100, 60);
+			this.LinearVectorPanel.TabIndex = 39;
+			this.LinearVectorPanel.TabStop = false;
+			this.LinearVectorPanel.Text = "Linear Accel";
+			this.LinearVectorPanel.X = 0F;
+			this.LinearVectorPanel.Y = 0F;
+			this.LinearVectorPanel.Z = 0F;
+			// 
+			// GravityVectorPanel
+			// 
+			this.GravityVectorPanel.Location = new System.Drawing.Point(113, 97);
+			this.GravityVectorPanel.MaximumSize = new System.Drawing.Size(100, 60);
+			this.GravityVectorPanel.MinimumSize = new System.Drawing.Size(100, 60);
+			this.GravityVectorPanel.Name = "GravityVectorPanel";
+			this.GravityVectorPanel.Size = new System.Drawing.Size(100, 60);
+			this.GravityVectorPanel.TabIndex = 40;
+			this.GravityVectorPanel.TabStop = false;
+			this.GravityVectorPanel.Text = "Gravity";
+			this.GravityVectorPanel.X = 0F;
+			this.GravityVectorPanel.Y = 0F;
+			this.GravityVectorPanel.Z = 0F;
+			// 
+			// QuatVectorPanel
+			// 
+			this.QuatVectorPanel.Location = new System.Drawing.Point(219, 97);
+			this.QuatVectorPanel.MaximumSize = new System.Drawing.Size(100, 74);
+			this.QuatVectorPanel.MinimumSize = new System.Drawing.Size(100, 74);
+			this.QuatVectorPanel.Name = "QuatVectorPanel";
+			this.QuatVectorPanel.Size = new System.Drawing.Size(100, 74);
+			this.QuatVectorPanel.TabIndex = 41;
+			this.QuatVectorPanel.TabStop = false;
+			this.QuatVectorPanel.Text = "Quaternion";
+			this.QuatVectorPanel.W = 0F;
+			this.QuatVectorPanel.X = 0F;
+			this.QuatVectorPanel.Y = 0F;
+			this.QuatVectorPanel.Z = 0F;
+			// 
 			// SensorsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(630, 467);
+			this.ClientSize = new System.Drawing.Size(530, 382);
 			this.Controls.Add(this.TestBtn2);
 			this.Controls.Add(this.TestBtnMeter);
 			this.Controls.Add(this.groupBox2);
@@ -200,5 +297,11 @@
 		private Meters.IOMeter TestBtn2;
 		private Meters.IOMeter TestBtnMeter;
 		private Utils.Vector3Panel AccelVectorPanel;
+		private Utils.Vector4Panel QuatVectorPanel;
+		private Utils.Vector3Panel GravityVectorPanel;
+		private Utils.Vector3Panel LinearVectorPanel;
+		private Utils.Vector3Panel EulerVectorPanel;
+		private Utils.Vector3Panel GyroVectorPanel;
+		private Utils.Vector3Panel MagVectorPanel;
 	}
 }
