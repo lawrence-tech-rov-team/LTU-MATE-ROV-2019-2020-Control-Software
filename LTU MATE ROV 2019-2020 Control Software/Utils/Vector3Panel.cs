@@ -10,10 +10,35 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 	public class Vector3Panel : GroupBox {
 
-		public Vector3 Vector;
-		public float X { get => Vector.X; set => Vector.X = value; }
-		public float Y { get => Vector.Y; set => Vector.Y = value; }
-		public float Z { get => Vector.Z; set => Vector.Z = value; }
+		private Vector3 vector;
+		public Vector3 Vector {
+			get => vector;
+			set {
+				vector = value;
+				Invalidate();
+			}
+		}
+		public float X {
+			get => Vector.X;
+			set {
+				vector.X = value;
+				Invalidate();
+			}
+		}
+		public float Y {
+			get => Vector.Y;
+			set {
+				vector.Y = value;
+				Invalidate();
+			}
+		}
+		public float Z {
+			get => Vector.Z;
+			set {
+				vector.Z = value;
+				Invalidate();
+			}
+		}
 
 		public override Size MinimumSize {
 			get => new Size(100, 60);

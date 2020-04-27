@@ -27,7 +27,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 		private float accelY = 0f;
 		private float accelZ = 0f;
 
-		public ImuSimulator(byte TemperatureId, byte accelId, TrackBar TemperatureTrackBar, Label TemperatureFeedbackLabel, TrackBar trackBarX, TrackBar trackBarY, TrackBar trackBarZ) {
+		public ImuSimulator(
+			byte TemperatureId, TrackBar TemperatureTrackBar, Label TemperatureFeedbackLabel,
+			byte accelId, TrackBar trackBarX, TrackBar trackBarY, TrackBar trackBarZ,
+			byte magnetometerId,
+			byte gyroscopeId,
+			byte eulerId,
+			byte linearAccelId,
+			byte gravityId,
+			byte quatId
+		) {
 			TemperatureRegister = new WritableRegister<Int8Data>(TemperatureId, 0f);
 			this.tempFeedbackLabel = TemperatureFeedbackLabel;
 
@@ -46,7 +55,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 			TemperatureTrackBar.Scroll += TemperatureTrackBar_ValueChanged;
 			TemperatureTrackBar_ValueChanged(TemperatureTrackBar, null);
 
-			AccelerometerRegister = new WritableRegister<Vector3Data>(accelId, 0f);
+			AccelerometerRegister = new WritableRegister<Imu100Vector3Data>(accelId, 0f);
 
 			initTrackBar(trackBarX);
 			initTrackBar(trackBarY);
@@ -58,6 +67,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 			AccelTrackBarX_ValueChanged(trackBarX, null);
 			AccelTrackBarY_ValueChanged(trackBarY, null);
 			AccelTrackBarZ_ValueChanged(trackBarZ, null);
+
+			MagnetometerRegister = new WritableRegister<Imu16Vector3Data>(magnetometerId, 0f);
+			GyroscopeRegister = new WritableRegister<Imu16Vector3Data>(gyroscopeId, 0f);
+			EulerRegister = new WritableRegister<Imu16Vector3Data>(eulerId, 0f);
+			LinearAccelRegister = new WritableRegister<Imu100Vector3Data>(linearAccelId, 0f);
+			GravityRegister = new WritableRegister<Imu100Vector3Data>(gravityId, 0f);
+			QuaternionRegister = new WritableRegister<ImuQuaternionData>(quatId, 0f);
 		}
 
 		private void initTrackBar(TrackBar bar) {
@@ -76,7 +92,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Simulator.Sensors {
 
 		private void accelScroll(TrackBar bar, ref float val) {
 			val = bar.Value / 5f;
-			AccelerometerRegister.Data = new Vector3Data(accelX, accelY, accelZ);
+			AccelerometerRegister.Data = new Imu100Vector3Data(accelX, accelY, accelZ);
 		}
 
 		private void AccelTrackBarX_ValueChanged(object sender, EventArgs e) {

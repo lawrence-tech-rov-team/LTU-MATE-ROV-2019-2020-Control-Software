@@ -80,9 +80,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes {
 
 	public class Imu16Vector3Data : ImuVector3Data {
 		protected override float Ratio => 16f;
+		public Imu16Vector3Data() { }
+		public Imu16Vector3Data(float x, float y, float z) : base(x, y, z) { }
 	}
 
 	public class Imu100Vector3Data : ImuVector3Data {
 		protected override float Ratio => 100f;
+		public Imu100Vector3Data() { }
+		public Imu100Vector3Data(float x, float y, float z) : base(x, y, z) { }
 	}
 }
