@@ -10,33 +10,38 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 	public class Vector3Panel : GroupBox {
 
+		protected override bool DoubleBuffered {
+			get => true;
+			set => base.DoubleBuffered = true;
+		}
+
 		private Vector3 vector;
 		public Vector3 Vector {
 			get => vector;
 			set {
+				if (value != vector) Invalidate();
 				vector = value;
-				Invalidate();
 			}
 		}
 		public float X {
 			get => Vector.X;
 			set {
+				if (value != vector.X) Invalidate();
 				vector.X = value;
-				Invalidate();
 			}
 		}
 		public float Y {
 			get => Vector.Y;
 			set {
+				if (value != vector.Y) Invalidate();
 				vector.Y = value;
-				Invalidate();
 			}
 		}
 		public float Z {
 			get => Vector.Z;
 			set {
+				if (value != vector.Z) Invalidate();
 				vector.Z = value;
-				Invalidate();
 			}
 		}
 
