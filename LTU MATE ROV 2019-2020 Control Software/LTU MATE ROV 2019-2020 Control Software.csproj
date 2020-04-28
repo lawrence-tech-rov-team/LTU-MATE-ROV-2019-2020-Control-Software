@@ -128,6 +128,12 @@
     </Compile>
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\IRovState.cs" />
+    <Compile Include="Settings\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Settings\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Simulator\Actuators\DigitalActuatorSimulator.cs" />
     <Compile Include="Simulator\Actuators\ServoSimulator.cs" />
     <Compile Include="Simulator\ISimulatorDevice.cs" />
@@ -185,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SensorsForm.resx">
       <DependentUpon>SensorsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Simulator\RobotSimulatorUI.resx">
       <DependentUpon>RobotSimulatorUI.cs</DependentUpon>
