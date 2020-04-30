@@ -18,7 +18,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 		public ControlsThread(InputThread Input, RobotThread Robot, ThreadPriority Priority = ThreadPriority.Normal) : base("Controls Thread", Priority) {
 			inputThread = Input;
 			robotThread = Robot;
-			//TODO add back in robotThread.OnConnected += RobotThread_OnConnected;
+			robotThread.OnConnected += RobotThread_OnConnected;
 		}
 
 		protected override void Initialize() {
@@ -29,10 +29,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 			ROV robot = robotThread.Robot;
 			if ((robot != null) && (Enabled)) {
 				Twist input = inputThread.Input;
-				//robot.ServoA1.Enable = true;
-				ushort pulse = (ushort)(1500 + (short)(500 * input.Linear.X));
-				robot.ServoA1.Pulse = pulse;
-				robot.ServoD1.Pulse = pulse;
+
+				robot.ServoA1.Position = input.Linear.X;
+				robot.ServoD1.Position = input.Linear.X;
 			}
 
 			return Sleep(10);
@@ -42,11 +41,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 			
 		}
 
-		private void RobotThread_OnConnected() {
-			ROV robot = robotThread.Robot;
-			if (robot != null) {
-				robot.ServoA1.Enabled = true;
-				robot.ServoD1.Enabled = true;
+		private void RobotThread_OnConnected(Robot.Hardware.Robot sender) {
+			if((sender != null) && (sender is ROV rov)) {
+				rov.ServoA1.Enabled = true;
+				rov.ServoD1.Enabled = true;
 			}
 		}
 
