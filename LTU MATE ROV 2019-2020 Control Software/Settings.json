@@ -1,0 +1,31 @@
+{
+	"Servo Ranges": {
+		"A1": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		}
+	},
+	"Gripper Positions": {
+		"Sponge": {
+			"Open": 200,
+			"Closed": 170
+		},
+		"Medium": {
+			"Open": 170,
+			"Closed": 20
+		},
+		"Small": {
+			"Open": 20,
+			"Closed": 5
+		},
+		"Tiny": {
+			"Open": 20,
+			"Closed": 0
+		},
+		"Net": {
+			"Open": 120,
+			"Closed": 0
+		}
+	}
+}
+}

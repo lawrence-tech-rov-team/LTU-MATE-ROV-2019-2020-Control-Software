@@ -232,5 +232,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 				settingsForm.Show();
 			}
 		}
+
+		private void GrippersComboBox_DropDown(object sender, EventArgs e) {
+			GrippersComboBox.Items.Clear();
+			GrippersComboBox.Items.AddRange(new GripperPosition[]{
+				settings.SpongeGripper,
+				settings.MediumGripper,
+				settings.SmallGripper,
+				settings.TinyGripper,
+				settings.NetGripper
+			});
+		}
+
+		private void GrippersComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+
+		}
 	}
 }

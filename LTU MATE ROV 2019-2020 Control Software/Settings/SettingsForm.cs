@@ -27,9 +27,19 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 
 		private void SettingsForm_Load(object sender, EventArgs e) {
+			controls.Enabled = false;
 			MinPulseUpDown.Minimum = MaxPulseUpDown.Minimum = ushort.MinValue;
 			MinPulseUpDown.Maximum = MaxPulseUpDown.Maximum = ushort.MaxValue;
-			controls.Enabled = false;
+			SpongeOpenPos.Value = settings.SpongeGripper.Open;
+			SpongeClosedPos.Value = settings.SpongeGripper.Closed;
+			MediumOpenPos.Value = settings.MediumGripper.Open;
+			MediumClosedPos.Value = settings.MediumGripper.Closed;
+			SmallOpenPos.Value = settings.SmallGripper.Open;
+			SmallClosedPos.Value = settings.SmallGripper.Closed;
+			TinyOpenPos.Value = settings.TinyGripper.Open;
+			TinyClosedPos.Value = settings.TinyGripper.Closed;
+			NetOpenPos.Value = settings.NetGripper.Open;
+			NetClosedPos.Value = settings.NetGripper.Closed;
 		}
 
 		private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -118,7 +128,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			}
 		}
 
-		private class ServoWrapper : IJsonSerializable {
+		private class ServoWrapper {
 
 			public string Name;
 			public Servo Servo;
@@ -128,19 +138,50 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 				Servo = servo;
 			}
 
-			public bool LoadFromJson(JsonData Data) {
-				throw new NotImplementedException();
-			}
-
-			public JsonData SaveToJson() {
-				throw new NotImplementedException();
-			}
-
 			public override string ToString() {
 				return Name;
 			}
 
 		}
 
+		private void SpongeOpenPos_ValueChanged(object sender, EventArgs e) {
+			settings.SpongeGripper.Open = decimal.ToUInt16(SpongeOpenPos.Value);
+		}
+
+		private void SpongeClosedPos_ValueChanged(object sender, EventArgs e) {
+			settings.SpongeGripper.Closed = decimal.ToUInt16(SpongeClosedPos.Value);
+		}
+
+		private void MediumOpenPos_ValueChanged(object sender, EventArgs e) {
+			settings.MediumGripper.Open = decimal.ToUInt16(MediumOpenPos.Value);
+		}
+
+		private void MediumClosedPos_ValueChanged(object sender, EventArgs e) {
+			settings.MediumGripper.Closed = decimal.ToUInt16(MediumClosedPos.Value);
+		}
+
+		private void SmallOpenPos_ValueChanged(object sender, EventArgs e) {
+			settings.SmallGripper.Open = decimal.ToUInt16(SmallOpenPos.Value);
+		}
+
+		private void SmallClosedPos_ValueChanged(object sender, EventArgs e) {
+			settings.SmallGripper.Closed = decimal.ToUInt16(SmallClosedPos.Value);
+		}
+
+		private void TinyOpenPos_ValueChanged(object sender, EventArgs e) {
+			settings.TinyGripper.Open = decimal.ToUInt16(TinyOpenPos.Value);
+		}
+
+		private void TinyClosedPos_ValueChanged(object sender, EventArgs e) {
+			settings.TinyGripper.Closed = decimal.ToUInt16(TinyClosedPos.Value);
+		}
+
+		private void NetOpenPos_ValueChanged(object sender, EventArgs e) {
+			settings.NetGripper.Open = decimal.ToUInt16(NetOpenPos.Value);
+		}
+
+		private void NetClosedPos_ValueChanged(object sender, EventArgs e) {
+			settings.NetGripper.Closed = decimal.ToUInt16(NetClosedPos.Value);
+		}
 	}
 }

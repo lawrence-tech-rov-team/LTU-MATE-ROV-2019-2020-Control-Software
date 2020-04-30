@@ -46,6 +46,9 @@
 			this.ImageUpdateTimer = new System.Windows.Forms.Timer(this.components);
 			this.CameraView2 = new Emgu.CV.UI.ImageBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.GrippersComboBox = new System.Windows.Forms.ComboBox();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView2)).BeginInit();
@@ -248,11 +251,44 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(938, 460);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(803, 504);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(34, 13);
+			this.label1.TabIndex = 38;
+			this.label1.Text = "Input:";
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(554, 504);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(49, 13);
+			this.label2.TabIndex = 40;
+			this.label2.Text = "Grippers:";
+			// 
+			// GrippersComboBox
+			// 
+			this.GrippersComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.GrippersComboBox.FormattingEnabled = true;
+			this.GrippersComboBox.Location = new System.Drawing.Point(608, 501);
+			this.GrippersComboBox.Margin = new System.Windows.Forms.Padding(2);
+			this.GrippersComboBox.Name = "GrippersComboBox";
+			this.GrippersComboBox.Size = new System.Drawing.Size(106, 21);
+			this.GrippersComboBox.TabIndex = 39;
+			this.GrippersComboBox.DropDown += new System.EventHandler(this.GrippersComboBox_DropDown);
+			this.GrippersComboBox.SelectedIndexChanged += new System.EventHandler(this.GrippersComboBox_SelectedIndexChanged);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(959, 533);
+			this.Controls.Add(this.label2);
+			this.Controls.Add(this.GrippersComboBox);
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.InputComboBox);
 			this.Controls.Add(this.LedBtn);
@@ -297,6 +333,9 @@
 		private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.ComboBox GrippersComboBox;
 	}
 }
 
