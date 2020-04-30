@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Controls;
+﻿using JsonSerializable;
+using LTU_MATE_ROV_2019_2020_Control_Software.Controls;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Actuators;
 using System;
@@ -16,11 +17,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		private RobotThread thread;
 		private ControlsThread controls;
+		private AppSettings settings;
 
-		public SettingsForm(RobotThread Robot, ControlsThread Controls) {
+		public SettingsForm(RobotThread Robot, ControlsThread Controls, AppSettings Settings) {
 			InitializeComponent();
 			thread = Robot;
 			controls = Controls;
+			settings = Settings;
 		}
 
 		private void SettingsForm_Load(object sender, EventArgs e) {
@@ -31,6 +34,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) {
 			controls.Enabled = true;
+
+			bool retry = false;
+			do {
+				if (!settings.Save()) {
+					DialogResult result = MessageBox.Show("Unable to save settings. Would you like to try again?", "Error", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error);
+					if (result == DialogResult.Yes) retry = true;
+					else if (result == DialogResult.Cancel) e.Cancel = true;
+				}
+			} while (retry);
 		}
 
 		private void ServoSelector_DropDown(object sender, EventArgs e) {
@@ -39,7 +51,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			if (robot != null) {
 				foreach(KeyValuePair<char, Servo[]> servos in robot.Servos) {
 					for(int i = 0; i < servos.Value.Length; i++) {
-						ServoSelector.Items.Add(new ServoWrapper(servos.Value[i], servos.Key + "" + (i + 1)));
+						ServoSelector.Items.Add(new ServoWrapper(servos.Value[i], servos.Key + (i + 1).ToString()));
 					}
 				}
 			}
@@ -59,6 +71,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 				}
 				MinPulseUpDown.ValueChanged += MinPulseUpDown_ValueChanged;
 				MaxPulseUpDown.ValueChanged += MaxPulseUpDown_ValueChanged;
+				settings.ServoRanges[wrapper.Name] = servo.PulseRange;
 			}
 
 			EnableBtn.Enabled = enabled;
@@ -74,6 +87,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 				ushort pulse = decimal.ToUInt16(MinPulseUpDown.Value);
 				servo.MinimumPulse = pulse;
 				servo.Pulse = pulse;
+				settings.ServoRanges[wrapper.Name] = servo.PulseRange;
 			}
 		}
 
@@ -84,6 +98,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 				ushort pulse = decimal.ToUInt16(MaxPulseUpDown.Value);
 				servo.MaximumPulse = pulse;
 				servo.Pulse = pulse;
+				settings.ServoRanges[wrapper.Name] = servo.PulseRange;
 			}
 		}
 
@@ -103,7 +118,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			}
 		}
 
-		private class ServoWrapper {
+		private class ServoWrapper : IJsonSerializable {
 
 			public string Name;
 			public Servo Servo;
@@ -111,6 +126,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			public ServoWrapper(Servo servo, string name) {
 				Name = name;
 				Servo = servo;
+			}
+
+			public bool LoadFromJson(JsonData Data) {
+				throw new NotImplementedException();
+			}
+
+			public JsonData SaveToJson() {
+				throw new NotImplementedException();
 			}
 
 			public override string ToString() {

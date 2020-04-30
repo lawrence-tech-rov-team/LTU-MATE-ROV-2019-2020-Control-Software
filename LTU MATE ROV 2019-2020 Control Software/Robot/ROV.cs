@@ -68,6 +68,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 
 		public TwiRegister TwiSettings { get; } = new TwiRegister(66, 10f);
 
+		public IEnumerable<Servo> AllServos {
+			get {
+				IEnumerable<Servo> list = null;
+				foreach (Servo[] servos in Servos.Values) {
+					if (list == null) list = servos.AsEnumerable();
+					else list.Concat(servos.AsEnumerable());
+				}
+				return list ?? new List<Servo>().AsEnumerable();
+			}
+		}
 		public Dictionary<char, Servo[]> Servos;
 
 		public ROV(IEthernetLayer ether) : base(ether) {
@@ -77,7 +87,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 				{ 'C', new Servo[] { ServoC1, ServoC2, ServoC3, ServoC4, ServoC5, ServoC6, ServoC7, ServoC8 } },
 				{ 'D', new Servo[] { ServoD1, ServoD2, ServoD3, ServoD4, ServoD5, ServoD6, ServoD7, ServoD8 } }
 			};
-
 		}
 
 		protected override void RegisterAllDevices() {

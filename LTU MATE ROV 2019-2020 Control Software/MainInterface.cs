@@ -2,6 +2,7 @@
 using CustomLogger.Outputs;
 using ExcelInterface.Writer;
 using JoystickInput;
+using JsonSerializable;
 using LTU_MATE_ROV_2019_2020_Control_Software.Cameras;
 using LTU_MATE_ROV_2019_2020_Control_Software.Controls;
 using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
@@ -29,8 +30,6 @@ using System.Windows.Forms;
 namespace LTU_MATE_ROV_2019_2020_Control_Software {
 	public partial class MainInterface : Form {
 
-		private LogWindow LogWindow = new LogWindow(); 
-
 		//Threads
 		private RobotThread robotThread;
 		private InputThread inputThread;
@@ -39,7 +38,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		//Simulator window
 		private RobotSimulatorUI simulator;
+
+		//Misc
+		private LogWindow LogWindow = new LogWindow();
 		private SettingsForm settingsForm;
+		private AppSettings settings;
 
 		private bool InitializeLogging() {
 			Log.StartLogger(ThreadPriority.BelowNormal);
@@ -77,10 +80,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			robotThread = new RobotThread(ThreadPriority.Normal);
 			controlsThread = new ControlsThread(inputThread, robotThread, ThreadPriority.Normal);
 			Log.Info("Threads initialized.");
+
+			settings = new AppSettings(robotThread);
 		}
 
-		//Once window loads, initialize logging window and start threads
+		//Once window loads, initialize logging window, load settings, and start threads
 		private void MainInterface_Load(object sender, EventArgs e) {
+			if(!settings.Load()) {
+				MessageBox.Show("An error occured while loading the settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+
 			Log.Info("Main window loaded.");
 			cameraThread.Start();
 			controlsThread.Start();
@@ -219,7 +228,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 			if (settingsForm == null) {
 				Log.Info("Opening settings...");
-				settingsForm = new SettingsForm(robotThread, controlsThread);
+				settingsForm = new SettingsForm(robotThread, controlsThread, settings);
 				settingsForm.Show();
 			}
 		}
