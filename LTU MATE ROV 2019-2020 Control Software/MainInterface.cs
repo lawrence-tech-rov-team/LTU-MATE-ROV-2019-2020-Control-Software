@@ -219,7 +219,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 			if (settingsForm == null) {
 				Log.Info("Opening settings...");
-				settingsForm = new SettingsForm(robotThread);
+				settingsForm = new SettingsForm(robotThread, controlsThread);
 				settingsForm.Show();
 			}
 		}

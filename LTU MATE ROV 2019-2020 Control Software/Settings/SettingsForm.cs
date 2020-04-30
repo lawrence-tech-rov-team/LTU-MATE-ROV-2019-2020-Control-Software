@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
+﻿using LTU_MATE_ROV_2019_2020_Control_Software.Controls;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Actuators;
 using System;
 using System.Collections.Generic;
@@ -14,15 +15,22 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 	public partial class SettingsForm : Form {
 
 		private RobotThread thread;
+		private ControlsThread controls;
 
-		public SettingsForm(RobotThread robot) {
+		public SettingsForm(RobotThread Robot, ControlsThread Controls) {
 			InitializeComponent();
-			thread = robot;
+			thread = Robot;
+			controls = Controls;
 		}
 
 		private void SettingsForm_Load(object sender, EventArgs e) {
 			MinPulseUpDown.Minimum = MaxPulseUpDown.Minimum = ushort.MinValue;
 			MinPulseUpDown.Maximum = MaxPulseUpDown.Maximum = ushort.MaxValue;
+			controls.Enabled = false;
+		}
+
+		private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) {
+			controls.Enabled = true;
 		}
 
 		private void ServoSelector_DropDown(object sender, EventArgs e) {
@@ -110,5 +118,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			}
 
 		}
+
 	}
 }

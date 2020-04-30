@@ -13,6 +13,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 
 		private InputThread inputThread;
 		private RobotThread robotThread;
+		public volatile bool Enabled = true;
 
 		public ControlsThread(InputThread Input, RobotThread Robot, ThreadPriority Priority = ThreadPriority.Normal) : base("Controls Thread", Priority) {
 			inputThread = Input;
@@ -26,7 +27,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 
 		protected override bool Loop() {
 			ROV robot = robotThread.Robot;
-			if (robot != null) {
+			if ((robot != null) && (Enabled)) {
 				Twist input = inputThread.Input;
 				//robot.ServoA1.Enable = true;
 				ushort pulse = (ushort)(1500 + (short)(500 * input.Linear.X));
