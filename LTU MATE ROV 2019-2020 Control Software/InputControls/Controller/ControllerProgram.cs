@@ -12,6 +12,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 		private Controller_Wrapper.Controller controller;
 		public override string Name => (controller == null) ? "null (Controller)" : "Controller " + controller.PlayerNumber.ToNumber();
 
+		private bool gripperState = true;
+		private bool gripperDB = true;
+
 		private ControllerProgram(Controller_Wrapper.Controller controller) {
 			this.controller = controller;
 		}
@@ -22,7 +25,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 
 		protected override bool Loop() {
 			if(controller.Connected && controller.Update()) {
-				Input = Translate();
+				Input = TranslateTwist();
+				GripperOpen = TranslateGripper();
 				return Sleep(33);
 			} else {
 				return false;
@@ -33,10 +37,23 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 			Input = new Twist();
 		}
 
-		private Twist Translate() {
+		private Twist TranslateTwist() {
 			Twist twist = new Twist();
 			twist.Linear.X = controller.LeftThumbstick.Y;
 			return twist;
+		}
+
+		private bool TranslateGripper() {
+			if (controller.A) {
+				if (gripperDB) {
+					gripperDB = false;
+					gripperState = !gripperState;
+				}
+			} else {
+				gripperDB = true;
+			}
+
+			return gripperState;
 		}
 
 		public static InputProgram[] GetPrograms() {
