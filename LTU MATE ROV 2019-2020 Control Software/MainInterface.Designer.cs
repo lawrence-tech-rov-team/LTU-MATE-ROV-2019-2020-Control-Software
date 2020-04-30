@@ -28,6 +28,7 @@
 			this.robotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.connectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.disconnectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ControlsMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.inputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.sensorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +46,6 @@
 			this.ImageUpdateTimer = new System.Windows.Forms.Timer(this.components);
 			this.CameraView2 = new Emgu.CV.UI.ImageBox();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.initializationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView2)).BeginInit();
@@ -63,8 +62,8 @@
             this.simulatorToolStripMenuItem});
 			this.MenuStrip.Location = new System.Drawing.Point(0, 0);
 			this.MenuStrip.Name = "MenuStrip";
-			this.MenuStrip.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			this.MenuStrip.Size = new System.Drawing.Size(1279, 28);
+			this.MenuStrip.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+			this.MenuStrip.Size = new System.Drawing.Size(959, 24);
 			this.MenuStrip.TabIndex = 1;
 			this.MenuStrip.Text = "menuStrip1";
 			// 
@@ -75,22 +74,29 @@
             this.disconnectToolStripMenuItem1,
             this.settingsToolStripMenuItem});
 			this.robotToolStripMenuItem.Name = "robotToolStripMenuItem";
-			this.robotToolStripMenuItem.Size = new System.Drawing.Size(62, 24);
+			this.robotToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
 			this.robotToolStripMenuItem.Text = "Robot";
 			// 
 			// connectToolStripMenuItem1
 			// 
 			this.connectToolStripMenuItem1.Name = "connectToolStripMenuItem1";
-			this.connectToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
+			this.connectToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.connectToolStripMenuItem1.Text = "Connect";
 			this.connectToolStripMenuItem1.Click += new System.EventHandler(this.ConnectRobot_MenuClick);
 			// 
 			// disconnectToolStripMenuItem1
 			// 
 			this.disconnectToolStripMenuItem1.Name = "disconnectToolStripMenuItem1";
-			this.disconnectToolStripMenuItem1.Size = new System.Drawing.Size(216, 26);
+			this.disconnectToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
 			this.disconnectToolStripMenuItem1.Text = "Disconnect";
 			this.disconnectToolStripMenuItem1.Click += new System.EventHandler(this.DisconnectRobot_MenuClick);
+			// 
+			// settingsToolStripMenuItem
+			// 
+			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.settingsToolStripMenuItem.Text = "Settings";
+			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
 			// 
 			// ControlsMenu
 			// 
@@ -98,20 +104,20 @@
             this.inputToolStripMenuItem,
             this.sensorsToolStripMenuItem});
 			this.ControlsMenu.Name = "ControlsMenu";
-			this.ControlsMenu.Size = new System.Drawing.Size(66, 24);
+			this.ControlsMenu.Size = new System.Drawing.Size(54, 20);
 			this.ControlsMenu.Text = "Debug";
 			// 
 			// inputToolStripMenuItem
 			// 
 			this.inputToolStripMenuItem.Name = "inputToolStripMenuItem";
-			this.inputToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
+			this.inputToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
 			this.inputToolStripMenuItem.Text = "Input";
 			this.inputToolStripMenuItem.Click += new System.EventHandler(this.InputToolStripMenuItem_Click);
 			// 
 			// sensorsToolStripMenuItem
 			// 
 			this.sensorsToolStripMenuItem.Name = "sensorsToolStripMenuItem";
-			this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(134, 26);
+			this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
 			this.sensorsToolStripMenuItem.Text = "Sensors";
 			this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.SensorsToolStripMenuItem_Click);
 			// 
@@ -121,7 +127,7 @@
             this.ethernetToolStripMenuItem,
             this.logToolStripMenuItem});
 			this.developerToolStripMenuItem.Name = "developerToolStripMenuItem";
-			this.developerToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
+			this.developerToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
 			this.developerToolStripMenuItem.Text = "Developer";
 			// 
 			// ethernetToolStripMenuItem
@@ -131,41 +137,41 @@
             this.disconnectToolStripMenuItem,
             this.hardwarePingToolStripMenuItem});
 			this.ethernetToolStripMenuItem.Name = "ethernetToolStripMenuItem";
-			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+			this.ethernetToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.ethernetToolStripMenuItem.Text = "Ethernet";
 			// 
 			// connectToolStripMenuItem
 			// 
 			this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-			this.connectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.connectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.connectToolStripMenuItem.Text = "Connect";
 			this.connectToolStripMenuItem.Click += new System.EventHandler(this.ConnectRobot_MenuClick);
 			// 
 			// disconnectToolStripMenuItem
 			// 
 			this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.disconnectToolStripMenuItem.Text = "Disconnect";
 			this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.DisconnectRobot_MenuClick);
 			// 
 			// hardwarePingToolStripMenuItem
 			// 
 			this.hardwarePingToolStripMenuItem.Name = "hardwarePingToolStripMenuItem";
-			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
+			this.hardwarePingToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.hardwarePingToolStripMenuItem.Text = "Hardware Ping";
 			this.hardwarePingToolStripMenuItem.Click += new System.EventHandler(this.HardwarePingToolStripMenuItem_Click);
 			// 
 			// logToolStripMenuItem
 			// 
 			this.logToolStripMenuItem.Name = "logToolStripMenuItem";
-			this.logToolStripMenuItem.Size = new System.Drawing.Size(139, 26);
+			this.logToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
 			this.logToolStripMenuItem.Text = "Log";
 			this.logToolStripMenuItem.Click += new System.EventHandler(this.LogToolStripMenuItem_Click);
 			// 
 			// simulatorToolStripMenuItem
 			// 
 			this.simulatorToolStripMenuItem.Name = "simulatorToolStripMenuItem";
-			this.simulatorToolStripMenuItem.Size = new System.Drawing.Size(85, 24);
+			this.simulatorToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
 			this.simulatorToolStripMenuItem.Text = "Simulator";
 			this.simulatorToolStripMenuItem.Click += new System.EventHandler(this.SimulatorToolStripMenuItem_Click);
 			// 
@@ -177,10 +183,10 @@
 			// LedBtn
 			// 
 			this.LedBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.LedBtn.Location = new System.Drawing.Point(16, 610);
-			this.LedBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.LedBtn.Location = new System.Drawing.Point(12, 496);
+			this.LedBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.LedBtn.Name = "LedBtn";
-			this.LedBtn.Size = new System.Drawing.Size(83, 32);
+			this.LedBtn.Size = new System.Drawing.Size(62, 26);
 			this.LedBtn.TabIndex = 33;
 			this.LedBtn.Text = "LED";
 			this.LedBtn.UseVisualStyleBackColor = true;
@@ -191,10 +197,10 @@
 			// 
 			this.InputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.InputComboBox.FormattingEnabled = true;
-			this.InputComboBox.Location = new System.Drawing.Point(1123, 617);
-			this.InputComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.InputComboBox.Location = new System.Drawing.Point(842, 501);
+			this.InputComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.InputComboBox.Name = "InputComboBox";
-			this.InputComboBox.Size = new System.Drawing.Size(140, 24);
+			this.InputComboBox.Size = new System.Drawing.Size(106, 21);
 			this.InputComboBox.TabIndex = 37;
 			this.InputComboBox.DropDown += new System.EventHandler(this.InputComboBox_DropDown);
 			this.InputComboBox.SelectedIndexChanged += new System.EventHandler(this.InputComboBox_SelectedIndexChanged);
@@ -202,10 +208,9 @@
 			// CameraView1
 			// 
 			this.CameraView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CameraView1.Location = new System.Drawing.Point(4, 4);
-			this.CameraView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.CameraView1.Location = new System.Drawing.Point(3, 3);
 			this.CameraView1.Name = "CameraView1";
-			this.CameraView1.Size = new System.Drawing.Size(617, 558);
+			this.CameraView1.Size = new System.Drawing.Size(463, 454);
 			this.CameraView1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.CameraView1.TabIndex = 2;
 			this.CameraView1.TabStop = false;
@@ -218,10 +223,9 @@
 			// CameraView2
 			// 
 			this.CameraView2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.CameraView2.Location = new System.Drawing.Point(629, 4);
-			this.CameraView2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.CameraView2.Location = new System.Drawing.Point(472, 3);
 			this.CameraView2.Name = "CameraView2";
-			this.CameraView2.Size = new System.Drawing.Size(618, 558);
+			this.CameraView2.Size = new System.Drawing.Size(463, 454);
 			this.CameraView2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.CameraView2.TabIndex = 38;
 			this.CameraView2.TabStop = false;
@@ -236,41 +240,25 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.Controls.Add(this.CameraView1, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.CameraView2, 1, 0);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 33);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 27);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 1;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(1251, 566);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(938, 460);
 			this.tableLayoutPanel1.TabIndex = 0;
-			// 
-			// settingsToolStripMenuItem
-			// 
-			this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.initializationToolStripMenuItem});
-			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.settingsToolStripMenuItem.Text = "Settings";
-			// 
-			// initializationToolStripMenuItem
-			// 
-			this.initializationToolStripMenuItem.Name = "initializationToolStripMenuItem";
-			this.initializationToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
-			this.initializationToolStripMenuItem.Text = "Initialization";
-			this.initializationToolStripMenuItem.Click += new System.EventHandler(this.initializationToolStripMenuItem_Click);
 			// 
 			// MainInterface
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1279, 656);
+			this.ClientSize = new System.Drawing.Size(959, 533);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.InputComboBox);
 			this.Controls.Add(this.LedBtn);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
-			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.Name = "MainInterface";
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainInterface_FormClosing);
@@ -309,7 +297,6 @@
 		private System.Windows.Forms.ToolStripMenuItem disconnectToolStripMenuItem1;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem initializationToolStripMenuItem;
 	}
 }
 

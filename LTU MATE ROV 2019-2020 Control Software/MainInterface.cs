@@ -10,6 +10,7 @@ using LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.DataTypes;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet;
+using LTU_MATE_ROV_2019_2020_Control_Software.Settings;
 using LTU_MATE_ROV_2019_2020_Control_Software.Simulator;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
@@ -38,6 +39,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		//Simulator window
 		private RobotSimulatorUI simulator;
+		private SettingsForm settingsForm;
 
 		private bool InitializeLogging() {
 			Log.StartLogger(ThreadPriority.BelowNormal);
@@ -145,7 +147,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 			if (simulator == null) {
 				Log.Info("Opening simulator...");
-				new RobotSimulatorUI(robotThread).Show();
+				simulator = new RobotSimulatorUI(robotThread);
+				simulator.Show();
 			}
 		}
 
@@ -203,15 +206,22 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			robotThread.Robot = null;
 		}
 
-		private void initializationToolStripMenuItem_Click(object sender, EventArgs e) {
-
-		}
-
 		private void RobotThread_OnIdCollisionDetected(byte IdConflict) {
 			this.Invoke(new Action(() => {
 				MessageBox.Show("Id collision detected: " + IdConflict, "Id Conflict", MessageBoxButtons.OK);
 			}));
 		}
 
+		private void settingsToolStripMenuItem_Click(object sender, EventArgs e) {
+			if (settingsForm != null) {
+				if (settingsForm.IsDisposed) settingsForm = null;
+			}
+
+			if (settingsForm == null) {
+				Log.Info("Opening settings...");
+				settingsForm = new SettingsForm(robotThread);
+				settingsForm.Show();
+			}
+		}
 	}
 }

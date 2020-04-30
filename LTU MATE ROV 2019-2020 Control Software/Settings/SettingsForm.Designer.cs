@@ -23,41 +23,45 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.ServoSelector = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-			this.label2 = new System.Windows.Forms.Label();
-			this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
+			this.MaxPulseUpDown = new System.Windows.Forms.NumericUpDown();
+			this.label2 = new System.Windows.Forms.Label();
+			this.MinPulseUpDown = new System.Windows.Forms.NumericUpDown();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDown5 = new System.Windows.Forms.NumericUpDown();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.EnableBtn = new System.Windows.Forms.Button();
+			this.DisableBtn = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MaxPulseUpDown)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.MinPulseUpDown)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// comboBox1
+			// ServoSelector
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(62, 19);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(121, 21);
-			this.comboBox1.TabIndex = 0;
+			this.ServoSelector.FormattingEnabled = true;
+			this.ServoSelector.Location = new System.Drawing.Point(62, 19);
+			this.ServoSelector.Name = "ServoSelector";
+			this.ServoSelector.Size = new System.Drawing.Size(79, 21);
+			this.ServoSelector.TabIndex = 0;
+			this.ServoSelector.DropDown += new System.EventHandler(this.ServoSelector_DropDown);
+			this.ServoSelector.SelectedIndexChanged += new System.EventHandler(this.ServoSelector_SelectedIndexChanged);
 			// 
 			// label1
 			// 
@@ -70,27 +74,57 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.DisableBtn);
+			this.groupBox1.Controls.Add(this.EnableBtn);
 			this.groupBox1.Controls.Add(this.label8);
 			this.groupBox1.Controls.Add(this.label7);
 			this.groupBox1.Controls.Add(this.label3);
-			this.groupBox1.Controls.Add(this.numericUpDown2);
+			this.groupBox1.Controls.Add(this.MaxPulseUpDown);
 			this.groupBox1.Controls.Add(this.label2);
-			this.groupBox1.Controls.Add(this.numericUpDown1);
+			this.groupBox1.Controls.Add(this.MinPulseUpDown);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.comboBox1);
+			this.groupBox1.Controls.Add(this.ServoSelector);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(216, 110);
+			this.groupBox1.Size = new System.Drawing.Size(244, 110);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Servo Calibration";
 			// 
-			// numericUpDown1
+			// label8
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(63, 46);
-			this.numericUpDown1.Name = "numericUpDown1";
-			this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
-			this.numericUpDown1.TabIndex = 3;
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(147, 74);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(18, 13);
+			this.label8.TabIndex = 8;
+			this.label8.Text = "us";
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(147, 48);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(18, 13);
+			this.label7.TabIndex = 7;
+			this.label7.Text = "us";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(6, 74);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(54, 13);
+			this.label3.TabIndex = 6;
+			this.label3.Text = "Maximum:";
+			// 
+			// MaxPulseUpDown
+			// 
+			this.MaxPulseUpDown.Location = new System.Drawing.Point(63, 72);
+			this.MaxPulseUpDown.Name = "MaxPulseUpDown";
+			this.MaxPulseUpDown.Size = new System.Drawing.Size(78, 20);
+			this.MaxPulseUpDown.TabIndex = 5;
+			this.MaxPulseUpDown.ValueChanged += new System.EventHandler(this.MaxPulseUpDown_ValueChanged);
 			// 
 			// label2
 			// 
@@ -101,21 +135,13 @@
 			this.label2.TabIndex = 4;
 			this.label2.Text = "Minimum:";
 			// 
-			// numericUpDown2
+			// MinPulseUpDown
 			// 
-			this.numericUpDown2.Location = new System.Drawing.Point(63, 72);
-			this.numericUpDown2.Name = "numericUpDown2";
-			this.numericUpDown2.Size = new System.Drawing.Size(120, 20);
-			this.numericUpDown2.TabIndex = 5;
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 74);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(54, 13);
-			this.label3.TabIndex = 6;
-			this.label3.Text = "Maximum:";
+			this.MinPulseUpDown.Location = new System.Drawing.Point(63, 46);
+			this.MinPulseUpDown.Name = "MinPulseUpDown";
+			this.MinPulseUpDown.Size = new System.Drawing.Size(78, 20);
+			this.MinPulseUpDown.TabIndex = 3;
+			this.MinPulseUpDown.ValueChanged += new System.EventHandler(this.MinPulseUpDown_ValueChanged);
 			// 
 			// label4
 			// 
@@ -165,24 +191,6 @@
 			this.numericUpDown5.Size = new System.Drawing.Size(79, 20);
 			this.numericUpDown5.TabIndex = 8;
 			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(189, 48);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(18, 13);
-			this.label7.TabIndex = 7;
-			this.label7.Text = "us";
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Location = new System.Drawing.Point(189, 74);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(18, 13);
-			this.label8.TabIndex = 8;
-			this.label8.Text = "us";
-			// 
 			// label9
 			// 
 			this.label9.AutoSize = true;
@@ -228,6 +236,26 @@
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Gripper Positions";
 			// 
+			// EnableBtn
+			// 
+			this.EnableBtn.Location = new System.Drawing.Point(172, 43);
+			this.EnableBtn.Name = "EnableBtn";
+			this.EnableBtn.Size = new System.Drawing.Size(66, 23);
+			this.EnableBtn.TabIndex = 9;
+			this.EnableBtn.Text = "Enable";
+			this.EnableBtn.UseVisualStyleBackColor = true;
+			this.EnableBtn.Click += new System.EventHandler(this.EnableBtn_Click);
+			// 
+			// DisableBtn
+			// 
+			this.DisableBtn.Location = new System.Drawing.Point(172, 69);
+			this.DisableBtn.Name = "DisableBtn";
+			this.DisableBtn.Size = new System.Drawing.Size(66, 23);
+			this.DisableBtn.TabIndex = 10;
+			this.DisableBtn.Text = "Disable";
+			this.DisableBtn.UseVisualStyleBackColor = true;
+			this.DisableBtn.Click += new System.EventHandler(this.DisableBtn_Click);
+			// 
 			// SettingsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,10 +265,11 @@
 			this.Controls.Add(this.groupBox1);
 			this.Name = "SettingsForm";
 			this.Text = "SettingsForm";
+			this.Load += new System.EventHandler(this.SettingsForm_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MaxPulseUpDown)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.MinPulseUpDown)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown5)).EndInit();
@@ -252,15 +281,15 @@
 
 		#endregion
 
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox ServoSelector;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.NumericUpDown numericUpDown2;
+		private System.Windows.Forms.NumericUpDown MaxPulseUpDown;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.NumericUpDown numericUpDown1;
+		private System.Windows.Forms.NumericUpDown MinPulseUpDown;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
@@ -271,5 +300,7 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Button DisableBtn;
+		private System.Windows.Forms.Button EnableBtn;
 	}
 }
