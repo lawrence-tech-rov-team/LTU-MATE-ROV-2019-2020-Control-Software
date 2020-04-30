@@ -121,7 +121,6 @@
     </Compile>
     <Compile Include="Programs\RovProgram.cs" />
     <Compile Include="Programs\StartStopProgram.cs" />
-    <Compile Include="Robot\RovServo.cs" />
     <Compile Include="SensorsForm.cs">
       <SubType>Form</SubType>
     </Compile>

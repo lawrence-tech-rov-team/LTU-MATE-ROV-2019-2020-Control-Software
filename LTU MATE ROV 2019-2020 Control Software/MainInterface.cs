@@ -245,7 +245,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void GrippersComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-
+			GripperPosition gripper = null;
+			object obj = GrippersComboBox.SelectedItem;
+			if((obj != null) && (obj is GripperPosition)) {
+				gripper = (GripperPosition)obj;
+			}
+			controlsThread.Gripper = gripper;
 		}
 	}
 }

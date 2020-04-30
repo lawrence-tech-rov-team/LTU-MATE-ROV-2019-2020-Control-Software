@@ -16,8 +16,12 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 	public abstract class InputProgram : ThreadedProcess {
 
-		public TwistWrapper Value { get; private set; } = new TwistWrapper();
-		protected Twist Input { get => Value.Value; set => Value = new TwistWrapper(value); }
+		private volatile TwistWrapper Value = new TwistWrapper();
+		public Twist Input { get => Value.Value; protected set => Value = new TwistWrapper(value); }
+
+		private volatile bool gripperOpen = true;
+		public bool GripperOpen { get => gripperOpen; protected set => gripperOpen = value; }
+
 		public abstract string Name { get; }
 
 		public InputProgram(ThreadPriority Priority = ThreadPriority.Normal) : base("Input Reader", Priority) {

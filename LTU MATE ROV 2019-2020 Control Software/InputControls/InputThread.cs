@@ -34,13 +34,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			get {
 				InputProgram device = Process; //inputDevice;
 				if (device != null) {
-					TwistWrapper wrapper = device.Value;
-					if (wrapper != null) {
-						return wrapper.Value;
-					}
+					return device.Input;
 				}
 
 				return new Twist();
+			}
+		}
+
+		public bool GripperOpen {
+			get {
+				InputProgram device = Process;
+				if(device != null) {
+					return device.GripperOpen;
+				}
+
+				return true;
 			}
 		}
 
