@@ -12,8 +12,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 		private Controller_Wrapper.Controller controller;
 		public override string Name => (controller == null) ? "null (Controller)" : "Controller " + controller.PlayerNumber.ToNumber();
 
-		private bool gripperState = true;
-		private bool gripperDB = true;
+		private bool gripperLState = true;
+		private bool gripperLDB = true;
+
+		private bool gripperRState = true;
+		private bool gripperRDB = true;
+
+		private bool netState = false;
+		private bool netDB = true;
 
 		private ControllerProgram(Controller_Wrapper.Controller controller) {
 			this.controller = controller;
@@ -26,7 +32,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 		protected override bool Loop() {
 			if(controller.Connected && controller.Update()) {
 				Input = TranslateTwist();
-				GripperOpen = TranslateGripper();
+				GripperLOpen = ToggleState(ref gripperLState, ref gripperLDB, controller.LeftShoulder);
+				GripperROpen = ToggleState(ref gripperRState, ref gripperRDB, controller.RightShoulder);
+				NetOpen = ToggleState(ref netState, ref netDB, controller.Y);
 				return Sleep(33);
 			} else {
 				return false;
@@ -43,17 +51,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 			return twist;
 		}
 
-		private bool TranslateGripper() {
-			if (controller.A) {
-				if (gripperDB) {
-					gripperDB = false;
-					gripperState = !gripperState;
+		private static bool ToggleState(ref bool state, ref bool db, bool button) {
+			if (button) {
+				if (db) {
+					db = false;
+					state = !state;
 				}
 			} else {
-				gripperDB = true;
+				db = true;
 			}
 
-			return gripperState;
+			return state;
 		}
 
 		public static InputProgram[] GetPrograms() {

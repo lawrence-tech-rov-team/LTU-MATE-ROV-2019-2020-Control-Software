@@ -48,7 +48,9 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.GrippersComboBox = new System.Windows.Forms.ComboBox();
+			this.GrippersRComboBox = new System.Windows.Forms.ComboBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.GrippersLComboBox = new System.Windows.Forms.ComboBox();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView2)).BeginInit();
@@ -263,31 +265,54 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(554, 504);
+			this.label2.Location = new System.Drawing.Point(548, 504);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(49, 13);
+			this.label2.Size = new System.Drawing.Size(55, 13);
 			this.label2.TabIndex = 40;
-			this.label2.Text = "Grippers:";
+			this.label2.Text = "Gripper R:";
 			// 
-			// GrippersComboBox
+			// GrippersRComboBox
 			// 
-			this.GrippersComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.GrippersComboBox.FormattingEnabled = true;
-			this.GrippersComboBox.Location = new System.Drawing.Point(608, 501);
-			this.GrippersComboBox.Margin = new System.Windows.Forms.Padding(2);
-			this.GrippersComboBox.Name = "GrippersComboBox";
-			this.GrippersComboBox.Size = new System.Drawing.Size(106, 21);
-			this.GrippersComboBox.TabIndex = 39;
-			this.GrippersComboBox.DropDown += new System.EventHandler(this.GrippersComboBox_DropDown);
-			this.GrippersComboBox.SelectedIndexChanged += new System.EventHandler(this.GrippersComboBox_SelectedIndexChanged);
+			this.GrippersRComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.GrippersRComboBox.FormattingEnabled = true;
+			this.GrippersRComboBox.Location = new System.Drawing.Point(608, 501);
+			this.GrippersRComboBox.Margin = new System.Windows.Forms.Padding(2);
+			this.GrippersRComboBox.Name = "GrippersRComboBox";
+			this.GrippersRComboBox.Size = new System.Drawing.Size(106, 21);
+			this.GrippersRComboBox.TabIndex = 39;
+			this.GrippersRComboBox.DropDown += new System.EventHandler(this.GrippersComboBox_DropDown);
+			this.GrippersRComboBox.SelectedIndexChanged += new System.EventHandler(this.GrippersRComboBox_SelectedIndexChanged);
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(348, 504);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(53, 13);
+			this.label3.TabIndex = 42;
+			this.label3.Text = "Gripper L:";
+			// 
+			// GrippersLComboBox
+			// 
+			this.GrippersLComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.GrippersLComboBox.FormattingEnabled = true;
+			this.GrippersLComboBox.Location = new System.Drawing.Point(408, 501);
+			this.GrippersLComboBox.Margin = new System.Windows.Forms.Padding(2);
+			this.GrippersLComboBox.Name = "GrippersLComboBox";
+			this.GrippersLComboBox.Size = new System.Drawing.Size(106, 21);
+			this.GrippersLComboBox.TabIndex = 41;
+			this.GrippersLComboBox.DropDown += new System.EventHandler(this.GrippersComboBox_DropDown);
+			this.GrippersLComboBox.SelectedIndexChanged += new System.EventHandler(this.GrippersLComboBox_SelectedIndexChanged);
 			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(959, 533);
+			this.Controls.Add(this.label3);
+			this.Controls.Add(this.GrippersLComboBox);
 			this.Controls.Add(this.label2);
-			this.Controls.Add(this.GrippersComboBox);
+			this.Controls.Add(this.GrippersRComboBox);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Controls.Add(this.InputComboBox);
@@ -335,7 +360,9 @@
 		private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ComboBox GrippersComboBox;
+		private System.Windows.Forms.ComboBox GrippersRComboBox;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.ComboBox GrippersLComboBox;
 	}
 }
 

@@ -26,14 +26,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs {
 			Twist twist = new Twist();
 			twist.Linear.X = 1f;
 			Input = twist;
-			GripperOpen = true;
 			Mat cam1 = cameraThread.Image1;
 			if (cam1 != null) Console.WriteLine("Camera 1: {0} x {1}", cam1.Width, cam1.Height);
 			if (!Sleep(1000)) return false;
 
 			twist.Linear.X = 0f;
 			Input = twist;
-			GripperOpen = false;
 			Mat cam2 = cameraThread.Image2;
 			if (cam2 != null) Console.WriteLine("Camera 2: {0} x {1}", cam2.Width, cam2.Height);
 			return Sleep(1000);

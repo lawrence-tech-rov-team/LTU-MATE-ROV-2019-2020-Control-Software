@@ -89,6 +89,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			if(!settings.Load()) {
 				MessageBox.Show("An error occured while loading the settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
+			controlsThread.Net = settings.NetGripper;
 
 			Log.Info("Main window loaded.");
 			cameraThread.Start();
@@ -234,23 +235,33 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 		}
 
 		private void GrippersComboBox_DropDown(object sender, EventArgs e) {
-			GrippersComboBox.Items.Clear();
-			GrippersComboBox.Items.AddRange(new GripperPosition[]{
-				settings.SpongeGripper,
-				settings.MediumGripper,
-				settings.SmallGripper,
-				settings.TinyGripper,
-				settings.NetGripper
-			});
+			if ((sender != null) && (sender is ComboBox box)) {
+				box.Items.Clear();
+				box.Items.AddRange(new GripperPosition[]{
+					settings.SpongeGripper,
+					settings.MediumGripper,
+					settings.SmallGripper,
+					settings.TinyGripper
+				});
+			}
 		}
 
-		private void GrippersComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+		private void GrippersLComboBox_SelectedIndexChanged(object sender, EventArgs e) {
 			GripperPosition gripper = null;
-			object obj = GrippersComboBox.SelectedItem;
+			object obj = GrippersLComboBox.SelectedItem;
 			if((obj != null) && (obj is GripperPosition)) {
 				gripper = (GripperPosition)obj;
 			}
-			controlsThread.Gripper = gripper;
+			controlsThread.GripperL = gripper;
+		}
+
+		private void GrippersRComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+			GripperPosition gripper = null;
+			object obj = GrippersRComboBox.SelectedItem;
+			if ((obj != null) && (obj is GripperPosition)) {
+				gripper = (GripperPosition)obj;
+			}
+			controlsThread.GripperR = gripper;
 		}
 	}
 }

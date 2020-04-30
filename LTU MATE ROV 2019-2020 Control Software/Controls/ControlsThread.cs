@@ -14,7 +14,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 		private InputThread inputThread;
 		private RobotThread robotThread;
 		public volatile bool Enabled = true;
-		public volatile GripperPosition Gripper;
+		public volatile GripperPosition GripperL;
+		public volatile GripperPosition GripperR;
+		public volatile GripperPosition Net;
 
 		public ControlsThread(InputThread Input, RobotThread Robot, ThreadPriority Priority = ThreadPriority.Normal) : base("Controls Thread", Priority) {
 			inputThread = Input;
@@ -31,16 +33,30 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 			if ((robot != null) && (Enabled)) {
 				//Grab all inputs at once
 				Twist input = inputThread.Input;
-				bool gripperOpen = inputThread.GripperOpen;
+				bool gripperLOpen = inputThread.GripperLOpen;
+				bool gripperROpen = inputThread.GripperROpen;
+				bool netOpen = inputThread.NetOpen;
 
 				//Move servos for direction control
 				robot.ServoA1.Position = input.Linear.X;
 				robot.ServoD1.Position = input.Linear.X;
 
-				//Move gripper
-				GripperPosition gripper = Gripper;
-				if (gripper != null) {
-					robot.ServoA2.Position = ServoAngleToPosition(gripperOpen ? gripper.Open : gripper.Closed);
+				//Move gripper L
+				GripperPosition gripperL = GripperL;
+				if (gripperL != null) {
+					robot.ServoA2.Position = ServoAngleToPosition(gripperLOpen ? gripperL.Open : gripperL.Closed);
+				}
+
+				//Move gripper R
+				GripperPosition gripperR = GripperR;
+				if (gripperR != null) {
+					robot.ServoA3.Position = ServoAngleToPosition(gripperROpen ? gripperR.Open : gripperR.Closed);
+				}
+
+				//Move Net
+				GripperPosition net = Net;
+				if(net != null) {
+					robot.ServoA4.Position = ServoAngleToPosition(netOpen ? net.Open : net.Closed);
 				}
 			}
 
@@ -59,6 +75,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 			if((sender != null) && (sender is ROV rov)) {
 				rov.ServoA1.Enabled = true;
 				rov.ServoA2.Enabled = true;
+				rov.ServoA3.Enabled = true;
+				rov.ServoA4.Enabled = true;
 				rov.ServoD1.Enabled = true;
 			}
 		}

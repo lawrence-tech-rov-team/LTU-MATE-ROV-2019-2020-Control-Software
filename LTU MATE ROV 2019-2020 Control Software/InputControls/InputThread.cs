@@ -41,14 +41,36 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			}
 		}
 
-		public bool GripperOpen {
+		public bool GripperLOpen {
 			get {
 				InputProgram device = Process;
 				if(device != null) {
-					return device.GripperOpen;
+					return device.GripperLOpen;
 				}
 
 				return true;
+			}
+		}
+
+		public bool GripperROpen {
+			get {
+				InputProgram device = Process;
+				if (device != null) {
+					return device.GripperROpen;
+				}
+
+				return true;
+			}
+		}
+
+		public bool NetOpen {
+			get {
+				InputProgram device = Process;
+				if(device != null) {
+					return device.NetOpen;
+				}
+
+				return false;
 			}
 		}
 

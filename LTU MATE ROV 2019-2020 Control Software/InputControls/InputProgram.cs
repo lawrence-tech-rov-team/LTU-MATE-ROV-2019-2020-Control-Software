@@ -19,8 +19,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		private volatile TwistWrapper Value = new TwistWrapper();
 		public Twist Input { get => Value.Value; protected set => Value = new TwistWrapper(value); }
 
-		private volatile bool gripperOpen = true;
-		public bool GripperOpen { get => gripperOpen; protected set => gripperOpen = value; }
+		private volatile bool gripperLOpen = true;
+		public bool GripperLOpen { get => gripperLOpen; protected set => gripperLOpen = value; }
+
+		private volatile bool gripperROpen = true;
+		public bool GripperROpen { get => gripperROpen; protected set => gripperROpen = value; }
+
+		private volatile bool netOpen = false;
+		public bool NetOpen { get => netOpen; protected set => netOpen = value; }
 
 		public abstract string Name { get; }
 
