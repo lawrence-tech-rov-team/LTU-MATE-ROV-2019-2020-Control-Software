@@ -88,7 +88,8 @@
     <Compile Include="Controls\GripperPosition.cs" />
     <Compile Include="Robot\Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Robot\Hardware\Actuators\PWM.cs" />
-    <Compile Include="Robot\Servo.cs" />
+    <Compile Include="Robot\Hardware\Actuators\Servo.cs" />
+    <Compile Include="Robot\Hardware\Actuators\Thruster.cs" />
     <Compile Include="Robot\Hardware\DataTypes\ImuQuaternionData.cs" />
     <Compile Include="Robot\Hardware\DataTypes\ImuVector3Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Int8Data.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Utils\ByteArray.cs" />
     <Compile Include="Utils\DataRecorder.cs" />
     <Compile Include="Utils\FileServices.cs" />
+    <Compile Include="Utils\MidpointRange.cs" />
     <Compile Include="Utils\Range.cs" />
     <Compile Include="Utils\ThreadedProcess.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
