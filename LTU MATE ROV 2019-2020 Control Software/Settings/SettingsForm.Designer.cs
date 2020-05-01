@@ -23,7 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.ServoSelector = new System.Windows.Forms.ComboBox();
+			this.PwmSelector = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.DisableBtn = new System.Windows.Forms.Button();
@@ -75,22 +75,22 @@
 			// 
 			// ServoSelector
 			// 
-			this.ServoSelector.FormattingEnabled = true;
-			this.ServoSelector.Location = new System.Drawing.Point(62, 19);
-			this.ServoSelector.Name = "ServoSelector";
-			this.ServoSelector.Size = new System.Drawing.Size(79, 21);
-			this.ServoSelector.TabIndex = 0;
-			this.ServoSelector.DropDown += new System.EventHandler(this.ServoSelector_DropDown);
-			this.ServoSelector.SelectedIndexChanged += new System.EventHandler(this.ServoSelector_SelectedIndexChanged);
+			this.PwmSelector.FormattingEnabled = true;
+			this.PwmSelector.Location = new System.Drawing.Point(62, 19);
+			this.PwmSelector.Name = "ServoSelector";
+			this.PwmSelector.Size = new System.Drawing.Size(79, 21);
+			this.PwmSelector.TabIndex = 0;
+			this.PwmSelector.DropDown += new System.EventHandler(this.ServoSelector_DropDown);
+			this.PwmSelector.SelectedIndexChanged += new System.EventHandler(this.PwmSelector_SelectedIndexChanged);
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(6, 22);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(38, 13);
+			this.label1.Size = new System.Drawing.Size(37, 13);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "Servo:";
+			this.label1.Text = "PWM:";
 			// 
 			// groupBox1
 			// 
@@ -103,13 +103,13 @@
 			this.groupBox1.Controls.Add(this.label2);
 			this.groupBox1.Controls.Add(this.MinPulseUpDown);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Controls.Add(this.ServoSelector);
+			this.groupBox1.Controls.Add(this.PwmSelector);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(244, 110);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Servo Calibration";
+			this.groupBox1.Text = "PWM Calibration";
 			// 
 			// DisableBtn
 			// 
@@ -456,7 +456,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(338, 315);
+			this.ClientSize = new System.Drawing.Size(361, 315);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "SettingsForm";
@@ -485,7 +485,7 @@
 
 		#endregion
 
-		private System.Windows.Forms.ComboBox ServoSelector;
+		private System.Windows.Forms.ComboBox PwmSelector;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Label label8;

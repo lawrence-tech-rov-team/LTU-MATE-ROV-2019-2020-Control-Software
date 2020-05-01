@@ -38,33 +38,29 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 				bool netOpen = inputThread.NetOpen;
 
 				//Move servos for direction control
-				robot.ServoA1.Position = input.Linear.X;
-				robot.ServoD1.Position = input.Linear.X;
+				robot.PwmA1.DutyCycle = input.Linear.X;
+				robot.PwmD1.DutyCycle = input.Linear.X;
 
 				//Move gripper L
 				GripperPosition gripperL = GripperL;
 				if (gripperL != null) {
-					robot.ServoA2.Position = ServoAngleToPosition(gripperLOpen ? gripperL.Open : gripperL.Closed);
+					robot.LeftGripperServo.Angle = (gripperLOpen ? gripperL.Open : gripperL.Closed);
 				}
 
 				//Move gripper R
 				GripperPosition gripperR = GripperR;
 				if (gripperR != null) {
-					robot.ServoA3.Position = ServoAngleToPosition(gripperROpen ? gripperR.Open : gripperR.Closed);
+					robot.RightGripperServo.Angle = (gripperROpen ? gripperR.Open : gripperR.Closed);
 				}
 
 				//Move Net
 				GripperPosition net = Net;
 				if(net != null) {
-					robot.ServoA4.Position = ServoAngleToPosition(netOpen ? net.Open : net.Closed);
+					robot.NetServo.Angle = (netOpen ? net.Open : net.Closed);
 				}
 			}
 
 			return Sleep(10);
-		}
-
-		private static float ServoAngleToPosition(ushort angle) {
-			return angle / 270f;
 		}
 
 		protected override void Cleanup() {
@@ -73,11 +69,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 
 		private void RobotThread_OnConnected(Robot.Hardware.Robot sender) {
 			if((sender != null) && (sender is ROV rov)) {
-				rov.ServoA1.Enabled = true;
-				rov.ServoA2.Enabled = true;
-				rov.ServoA3.Enabled = true;
-				rov.ServoA4.Enabled = true;
-				rov.ServoD1.Enabled = true;
+				rov.LeftGripperServo
+
+				rov.PwmA1.Enabled = true;
+				rov.PwmA2.Enabled = true;
+				rov.PwmA3.Enabled = true;
+				rov.PwmA4.Enabled = true;
+				rov.PwmD1.Enabled = true;
 			}
 		}
 

@@ -28,8 +28,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		private void Robot_OnConnected(Robot.Hardware.Robot sender) {
 			if((sender != null) && (sender is ROV rov)) {
-				foreach(KeyValuePair<char, Servo[]> pair in rov.Servos) {
-					Servo[] servos = pair.Value;
+				foreach(KeyValuePair<char, PWM[]> pair in rov.PWM) {
+					PWM[] servos = pair.Value;
 					for(int i = 0; i < servos.Length; i++) {
 						string name = pair.Key + (i + 1).ToString();
 						if (ServoRanges.ContainsKey(name)) {

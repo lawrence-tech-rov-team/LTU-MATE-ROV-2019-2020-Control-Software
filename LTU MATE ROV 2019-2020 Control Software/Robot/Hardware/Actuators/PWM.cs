@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Actuators {
-	public class Servo : IDevice {
+	public class PWM : IDevice {
 
 		public override IRegister[] Registers => new IRegister[] {
 			PositionRegister,
@@ -23,9 +23,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Actuators {
 		public Range PulseRange = new Range(0, 3000);
 		public ushort MinimumPulse { get => PulseRange.Minimum; set => PulseRange.Minimum = value; }
 		public ushort MaximumPulse { get => PulseRange.Maximum; set => PulseRange.Maximum = value; }
-		public float Position { set => Pulse = PulseRange.Interpolate(value); }
+		public float DutyCycle { set => Pulse = PulseRange.Interpolate(value); }
 
-		public Servo(byte posId, byte enableId, float refreshRate = 25f) {
+		public PWM(byte posId, byte enableId, float refreshRate = 25f) {
 			PositionRegister = new WritableRegister<UInt16Data>(posId, refreshRate);
 			EnableRegister = new WritableRegister<BoolData>(enableId, refreshRate);
 		}

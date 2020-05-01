@@ -13,42 +13,46 @@ using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Sensors;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 	public class ROV : Hardware.Robot {
 
-		private const float ServoRefreshRate = 20f;
+		private const float PwmRefreshRate = 20f;
 
 		protected override int BufferSize => 258;
 		protected override int TimeoutAttempts => 2; 
 		protected override int MessageTimemout => 500;
 
-		public Servo ServoA1 { get; } = new Servo(0, 1, ServoRefreshRate);
-		public Servo ServoA2 { get; } = new Servo(2, 3, ServoRefreshRate);
-		public Servo ServoA3 { get; } = new Servo(4, 5, ServoRefreshRate);
-		public Servo ServoA4 { get; } = new Servo(6, 7, ServoRefreshRate);
-		public Servo ServoA5 { get; } = new Servo(8, 9, ServoRefreshRate);
+		public Servo LeftGripperServo { get; }
+		public Servo RightGripperServo { get; }
+		public Servo NetServo { get; }
 
-		public Servo ServoB1 { get; } = new Servo(10, 11, ServoRefreshRate);
-		public Servo ServoB2 { get; } = new Servo(12, 13, ServoRefreshRate);
-		public Servo ServoB3 { get; } = new Servo(14, 15, ServoRefreshRate);
-		public Servo ServoB4 { get; } = new Servo(16, 17, ServoRefreshRate);
-		public Servo ServoB5 { get; } = new Servo(18, 19, ServoRefreshRate);
-		public Servo ServoB6 { get; } = new Servo(20, 21, ServoRefreshRate);
+		public PWM PwmA1 { get; } = new PWM(0, 1, PwmRefreshRate);
+		public PWM PwmA2 { get; } = new PWM(2, 3, PwmRefreshRate);
+		public PWM PwmA3 { get; } = new PWM(4, 5, PwmRefreshRate);
+		public PWM PwmA4 { get; } = new PWM(6, 7, PwmRefreshRate);
+		public PWM PwmA5 { get; } = new PWM(8, 9, PwmRefreshRate);
 
-		public Servo ServoC1 { get; } = new Servo(22, 23, ServoRefreshRate);
-		public Servo ServoC2 { get; } = new Servo(24, 25, ServoRefreshRate);
-		public Servo ServoC3 { get; } = new Servo(26, 27, ServoRefreshRate);
-		public Servo ServoC4 { get; } = new Servo(28, 29, ServoRefreshRate);
-		public Servo ServoC5 { get; } = new Servo(30, 31, ServoRefreshRate);
-		public Servo ServoC6 { get; } = new Servo(32, 33, ServoRefreshRate);
-		public Servo ServoC7 { get; } = new Servo(34, 35, ServoRefreshRate);
-		public Servo ServoC8 { get; } = new Servo(36, 37, ServoRefreshRate);
+		public PWM PwmB1 { get; } = new PWM(10, 11, PwmRefreshRate);
+		public PWM PwmB2 { get; } = new PWM(12, 13, PwmRefreshRate);
+		public PWM PwmB3 { get; } = new PWM(14, 15, PwmRefreshRate);
+		public PWM PwmB4 { get; } = new PWM(16, 17, PwmRefreshRate);
+		public PWM PwmB5 { get; } = new PWM(18, 19, PwmRefreshRate);
+		public PWM PwmB6 { get; } = new PWM(20, 21, PwmRefreshRate);
 
-		public Servo ServoD1 { get; } = new Servo(38, 39, ServoRefreshRate);
-		public Servo ServoD2 { get; } = new Servo(40, 41, ServoRefreshRate);
-		public Servo ServoD3 { get; } = new Servo(42, 43, ServoRefreshRate);
-		public Servo ServoD4 { get; } = new Servo(44, 45, ServoRefreshRate);
-		public Servo ServoD5 { get; } = new Servo(46, 47, ServoRefreshRate);
-		public Servo ServoD6 { get; } = new Servo(48, 49, ServoRefreshRate);
-		public Servo ServoD7 { get; } = new Servo(50, 51, ServoRefreshRate);
-		public Servo ServoD8 { get; } = new Servo(52, 53, ServoRefreshRate);
+		public PWM PwmC1 { get; } = new PWM(22, 23, PwmRefreshRate);
+		public PWM PwmC2 { get; } = new PWM(24, 25, PwmRefreshRate);
+		public PWM PwmC3 { get; } = new PWM(26, 27, PwmRefreshRate);
+		public PWM PwmC4 { get; } = new PWM(28, 29, PwmRefreshRate);
+		public PWM PwmC5 { get; } = new PWM(30, 31, PwmRefreshRate);
+		public PWM PwmC6 { get; } = new PWM(32, 33, PwmRefreshRate);
+		public PWM PwmC7 { get; } = new PWM(34, 35, PwmRefreshRate);
+		public PWM PwmC8 { get; } = new PWM(36, 37, PwmRefreshRate);
+
+		public PWM PwmD1 { get; } = new PWM(38, 39, PwmRefreshRate);
+		public PWM PwmD2 { get; } = new PWM(40, 41, PwmRefreshRate);
+		public PWM PwmD3 { get; } = new PWM(42, 43, PwmRefreshRate);
+		public PWM PwmD4 { get; } = new PWM(44, 45, PwmRefreshRate);
+		public PWM PwmD5 { get; } = new PWM(46, 47, PwmRefreshRate);
+		public PWM PwmD6 { get; } = new PWM(48, 49, PwmRefreshRate);
+		public PWM PwmD7 { get; } = new PWM(50, 51, PwmRefreshRate);
+		public PWM PwmD8 { get; } = new PWM(52, 53, PwmRefreshRate);
 
 		public DigitalSensor Button0 { get; } = new DigitalSensor(54, 10f);
 		public DigitalSensor Button1 { get; } = new DigitalSensor(55, 10f);
@@ -68,25 +72,29 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 
 		public TwiRegister TwiSettings { get; } = new TwiRegister(66, 10f);
 
-		public IEnumerable<Servo> AllServos {
+		public IEnumerable<PWM> AllPWM {
 			get {
-				IEnumerable<Servo> list = null;
-				foreach (Servo[] servos in Servos.Values) {
-					if (list == null) list = servos.AsEnumerable();
-					else list.Concat(servos.AsEnumerable());
+				IEnumerable<PWM> list = null;
+				foreach (PWM[] pwm in PWM.Values) {
+					if (list == null) list = pwm.AsEnumerable();
+					else list.Concat(pwm.AsEnumerable());
 				}
-				return list ?? new List<Servo>().AsEnumerable();
+				return list ?? new List<PWM>().AsEnumerable();
 			}
 		}
-		public Dictionary<char, Servo[]> Servos;
+		public Dictionary<char, PWM[]> PWM;
 
 		public ROV(IEthernetLayer ether) : base(ether) {
-			Servos = new Dictionary<char, Servo[]> () {
-				{ 'A', new Servo[] { ServoA1, ServoA2, ServoA3, ServoA4, ServoA5 } },
-				{ 'B', new Servo[] { ServoB1, ServoB2, ServoB3, ServoB4, ServoB5, ServoB6 } },
-				{ 'C', new Servo[] { ServoC1, ServoC2, ServoC3, ServoC4, ServoC5, ServoC6, ServoC7, ServoC8 } },
-				{ 'D', new Servo[] { ServoD1, ServoD2, ServoD3, ServoD4, ServoD5, ServoD6, ServoD7, ServoD8 } }
+			PWM = new Dictionary<char, PWM[]> () {
+				{ 'A', new PWM[] { PwmA1, PwmA2, PwmA3, PwmA4, PwmA5 } },
+				{ 'B', new PWM[] { PwmB1, PwmB2, PwmB3, PwmB4, PwmB5, PwmB6 } },
+				{ 'C', new PWM[] { PwmC1, PwmC2, PwmC3, PwmC4, PwmC5, PwmC6, PwmC7, PwmC8 } },
+				{ 'D', new PWM[] { PwmD1, PwmD2, PwmD3, PwmD4, PwmD5, PwmD6, PwmD7, PwmD8 } }
 			};
+
+			LeftGripperServo = new Servo(PwmA2, 0, 270);
+			RightGripperServo = new Servo(PwmA3, 0, 270);
+			NetServo = new Servo(PwmA4, 0, 270);
 		}
 
 		protected override void RegisterAllDevices() {
@@ -95,9 +103,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 			RegisterDevice(Led);
 			RegisterDevice(PressureSensor);
 			RegisterDevice(IMU);
-			foreach (Servo[] servos in Servos.Values) {
-				foreach (Servo servo in servos) {
-					RegisterDevice(servo);
+			foreach (PWM[] pwms in PWM.Values) {
+				foreach (PWM pwm in pwms) {
+					RegisterDevice(pwm);
 				}
 			}
 			RegisterDevice(TwiSettings);

@@ -56,22 +56,22 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 
 		private void ServoSelector_DropDown(object sender, EventArgs e) {
-			ServoSelector.Items.Clear();
+			PwmSelector.Items.Clear();
 			ROV robot = thread.Robot;
 			if (robot != null) {
-				foreach(KeyValuePair<char, Servo[]> servos in robot.Servos) {
+				foreach(KeyValuePair<char, PWM[]> servos in robot.PWM) {
 					for(int i = 0; i < servos.Value.Length; i++) {
-						ServoSelector.Items.Add(new ServoWrapper(servos.Value[i], servos.Key + (i + 1).ToString()));
+						PwmSelector.Items.Add(new ServoWrapper(servos.Value[i], servos.Key + (i + 1).ToString()));
 					}
 				}
 			}
 		}
 
-		private void ServoSelector_SelectedIndexChanged(object sender, EventArgs e) {
+		private void PwmSelector_SelectedIndexChanged(object sender, EventArgs e) {
 			bool enabled = false;
-			object obj = ServoSelector.SelectedItem;
+			object obj = PwmSelector.SelectedItem;
 			if((obj != null) && (obj is ServoWrapper wrapper)) {
-				Servo servo = wrapper.Servo;
+				PWM servo = wrapper.Servo;
 				enabled = true;
 				MinPulseUpDown.ValueChanged -= MinPulseUpDown_ValueChanged;
 				MaxPulseUpDown.ValueChanged -= MaxPulseUpDown_ValueChanged;
@@ -91,9 +91,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 
 		private void MinPulseUpDown_ValueChanged(object sender, EventArgs e) {
-			object obj = ServoSelector.SelectedItem;
+			object obj = PwmSelector.SelectedItem;
 			if((obj != null) && (obj is ServoWrapper wrapper)) {
-				Servo servo = wrapper.Servo;
+				PWM servo = wrapper.Servo;
 				ushort pulse = decimal.ToUInt16(MinPulseUpDown.Value);
 				servo.MinimumPulse = pulse;
 				servo.Pulse = pulse;
@@ -102,9 +102,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 
 		private void MaxPulseUpDown_ValueChanged(object sender, EventArgs e) {
-			object obj = ServoSelector.SelectedItem;
+			object obj = PwmSelector.SelectedItem;
 			if ((obj != null) && (obj is ServoWrapper wrapper)) {
-				Servo servo = wrapper.Servo;
+				PWM servo = wrapper.Servo;
 				ushort pulse = decimal.ToUInt16(MaxPulseUpDown.Value);
 				servo.MaximumPulse = pulse;
 				servo.Pulse = pulse;
@@ -113,17 +113,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 
 		private void EnableBtn_Click(object sender, EventArgs e) {
-			object obj = ServoSelector.SelectedItem;
+			object obj = PwmSelector.SelectedItem;
 			if((obj != null) && (obj is ServoWrapper wrapper)) {
-				Servo servo = wrapper.Servo;
+				PWM servo = wrapper.Servo;
 				servo.Enabled = true;
 			}
 		}
 
 		private void DisableBtn_Click(object sender, EventArgs e) {
-			object obj = ServoSelector.SelectedItem;
+			object obj = PwmSelector.SelectedItem;
 			if ((obj != null) && (obj is ServoWrapper wrapper)) {
-				Servo servo = wrapper.Servo;
+				PWM servo = wrapper.Servo;
 				servo.Enabled = false;
 			}
 		}
@@ -131,9 +131,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		private class ServoWrapper {
 
 			public string Name;
-			public Servo Servo;
+			public PWM Servo;
 
-			public ServoWrapper(Servo servo, string name) {
+			public ServoWrapper(PWM servo, string name) {
 				Name = name;
 				Servo = servo;
 			}
