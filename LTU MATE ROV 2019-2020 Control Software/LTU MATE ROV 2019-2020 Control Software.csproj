@@ -86,6 +86,22 @@
     <Compile Include="Controls\ControlSystem.cs" />
     <Compile Include="Controls\ControlsThread.cs" />
     <Compile Include="Controls\GripperPosition.cs" />
+    <Compile Include="Programs\Count Mussels\Form1.cs" />
+    <Compile Include="Programs\Count Mussels\Form1.designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Programs\Photomasic\Form1.cs" />
+    <Compile Include="Programs\Photomasic\Form1.designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Programs\Transect Line\Form1.cs" />
+    <Compile Include="Programs\Transect Line\Form1.designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Programs\Transect Line\popup.cs" />
+    <Compile Include="Programs\Transect Line\popup.Designer.cs">
+      <DependentUpon>popup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Robot\Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Robot\Hardware\Actuators\Servo.cs" />
     <Compile Include="Robot\Hardware\DataTypes\ImuQuaternionData.cs" />
@@ -189,6 +205,18 @@
     </Compile>
     <EmbeddedResource Include="InputVisualizer.resx">
       <DependentUpon>InputVisualizer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Programs\Count Mussels\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Programs\Photomasic\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Programs\Transect Line\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Programs\Transect Line\popup.resx">
+      <DependentUpon>popup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SensorsForm.resx">
       <DependentUpon>SensorsForm.cs</DependentUpon>
