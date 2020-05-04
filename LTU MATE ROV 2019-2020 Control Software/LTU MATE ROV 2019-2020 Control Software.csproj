@@ -94,14 +94,19 @@
     <Compile Include="Programs\Photomasic\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Programs\Transect Line\Form1.cs" />
+    <Compile Include="Programs\Transect Line\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Programs\Transect Line\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Programs\Transect Line\popup.cs" />
+    <Compile Include="Programs\Transect Line\popup.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Programs\Transect Line\popup.Designer.cs">
       <DependentUpon>popup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Programs\Transect Line\TransectProgram.cs" />
     <Compile Include="Robot\Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Robot\Hardware\Actuators\PWM.cs" />
     <Compile Include="Robot\Hardware\Actuators\RangedPWM.cs" />

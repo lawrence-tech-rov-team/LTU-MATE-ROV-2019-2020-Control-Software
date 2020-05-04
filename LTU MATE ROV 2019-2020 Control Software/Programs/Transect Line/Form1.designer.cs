@@ -180,7 +180,6 @@
             this.label0.Size = new System.Drawing.Size(97, 22);
             this.label0.TabIndex = 12;
             this.label0.Text = "Live Feed";
-            this.label0.Click += new System.EventHandler(this.label1_Click);
             // 
             // label1
             // 

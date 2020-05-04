@@ -15,7 +15,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs {
 
 		public static InputProgram[] GetPrograms(CameraThread Cameras) {
 			return new InputProgram[] {
-				new StartStopProgram(Cameras)
+				new StartStopProgram(Cameras)/*,
+				new Transect_Line.TransectProgram(Cameras)*/
 			};
 		}
 
