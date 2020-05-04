@@ -35,16 +35,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			ThrusterMinPulse.Minimum = ThrusterZeroPulse.Minimum = ThrusterMaxPulse.Minimum = ushort.MinValue;
 			ThrusterMinPulse.Maximum = ThrusterZeroPulse.Maximum = ThrusterMaxPulse.Maximum = ushort.MaxValue;
 
-			SpongeOpenPos.Value = settings.SpongeGripper.Open;
-			SpongeClosedPos.Value = settings.SpongeGripper.Closed;
-			MediumOpenPos.Value = settings.MediumGripper.Open;
-			MediumClosedPos.Value = settings.MediumGripper.Closed;
-			SmallOpenPos.Value = settings.SmallGripper.Open;
-			SmallClosedPos.Value = settings.SmallGripper.Closed;
-			TinyOpenPos.Value = settings.TinyGripper.Open;
-			TinyClosedPos.Value = settings.TinyGripper.Closed;
-			NetOpenPos.Value = settings.NetGripper.Open;
-			NetClosedPos.Value = settings.NetGripper.Closed;
+			SpongeOpenPos.Value = settings.SpongeGripper.OpenAngle;
+			SpongeClosedPos.Value = settings.SpongeGripper.ClosedAngle;
+			MediumOpenPos.Value = settings.MediumGripper.OpenAngle;
+			MediumClosedPos.Value = settings.MediumGripper.ClosedAngle;
+			SmallOpenPos.Value = settings.SmallGripper.OpenAngle;
+			SmallClosedPos.Value = settings.SmallGripper.ClosedAngle;
+			TinyOpenPos.Value = settings.TinyGripper.OpenAngle;
+			TinyClosedPos.Value = settings.TinyGripper.ClosedAngle;
+			NetOpenPos.Value = settings.NetGripper.OpenAngle;
+			NetClosedPos.Value = settings.NetGripper.ClosedAngle;
 		}
 
 		private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -232,43 +232,43 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		#region Gripper Position
 		private void SpongeOpenPos_ValueChanged(object sender, EventArgs e) {
-			settings.SpongeGripper.Open = decimal.ToUInt16(SpongeOpenPos.Value);
+			settings.SpongeGripper.OpenAngle = decimal.ToUInt16(SpongeOpenPos.Value);
 		}
 
 		private void SpongeClosedPos_ValueChanged(object sender, EventArgs e) {
-			settings.SpongeGripper.Closed = decimal.ToUInt16(SpongeClosedPos.Value);
+			settings.SpongeGripper.ClosedAngle = decimal.ToUInt16(SpongeClosedPos.Value);
 		}
 
 		private void MediumOpenPos_ValueChanged(object sender, EventArgs e) {
-			settings.MediumGripper.Open = decimal.ToUInt16(MediumOpenPos.Value);
+			settings.MediumGripper.OpenAngle = decimal.ToUInt16(MediumOpenPos.Value);
 		}
 
 		private void MediumClosedPos_ValueChanged(object sender, EventArgs e) {
-			settings.MediumGripper.Closed = decimal.ToUInt16(MediumClosedPos.Value);
+			settings.MediumGripper.ClosedAngle = decimal.ToUInt16(MediumClosedPos.Value);
 		}
 
 		private void SmallOpenPos_ValueChanged(object sender, EventArgs e) {
-			settings.SmallGripper.Open = decimal.ToUInt16(SmallOpenPos.Value);
+			settings.SmallGripper.OpenAngle = decimal.ToUInt16(SmallOpenPos.Value);
 		}
 
 		private void SmallClosedPos_ValueChanged(object sender, EventArgs e) {
-			settings.SmallGripper.Closed = decimal.ToUInt16(SmallClosedPos.Value);
+			settings.SmallGripper.ClosedAngle = decimal.ToUInt16(SmallClosedPos.Value);
 		}
 
 		private void TinyOpenPos_ValueChanged(object sender, EventArgs e) {
-			settings.TinyGripper.Open = decimal.ToUInt16(TinyOpenPos.Value);
+			settings.TinyGripper.OpenAngle = decimal.ToUInt16(TinyOpenPos.Value);
 		}
 
 		private void TinyClosedPos_ValueChanged(object sender, EventArgs e) {
-			settings.TinyGripper.Closed = decimal.ToUInt16(TinyClosedPos.Value);
+			settings.TinyGripper.ClosedAngle = decimal.ToUInt16(TinyClosedPos.Value);
 		}
 
 		private void NetOpenPos_ValueChanged(object sender, EventArgs e) {
-			settings.NetGripper.Open = decimal.ToUInt16(NetOpenPos.Value);
+			settings.NetGripper.OpenAngle = decimal.ToUInt16(NetOpenPos.Value);
 		}
 
 		private void NetClosedPos_ValueChanged(object sender, EventArgs e) {
-			settings.NetGripper.Closed = decimal.ToUInt16(NetClosedPos.Value);
+			settings.NetGripper.ClosedAngle = decimal.ToUInt16(NetClosedPos.Value);
 		}
 		#endregion
 

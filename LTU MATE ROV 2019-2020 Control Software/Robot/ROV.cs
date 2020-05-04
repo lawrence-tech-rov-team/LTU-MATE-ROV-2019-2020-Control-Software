@@ -61,7 +61,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 			/*Quaternion*/		65,		50f
 		);
 
-		public TwiRegister TwiSettings { get; } = new TwiRegister(66, 10f); //TODO set TWI to 400khz
+		public TwiRegister TwiSettings { get; } = new TwiRegister(66, 10f);
 
 		public Servo FrontLeftServo { get; }
 		public Servo FrontRightServo { get; }

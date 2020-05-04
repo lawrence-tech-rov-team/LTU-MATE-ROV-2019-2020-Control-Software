@@ -16,7 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		public SerializableDictionary<Range> ServoRanges = new SerializableDictionary<Range>();
 		public SerializableDictionary<MidpointRange> ThrusterRanges = new SerializableDictionary<MidpointRange>();
-		//TODO Gripper class that contains these definitions? Allows input to simply say open/close?
+		
 		public GripperPosition SpongeGripper = new GripperPosition("Sponge");
 		public GripperPosition MediumGripper = new GripperPosition("Medium");
 		public GripperPosition SmallGripper = new GripperPosition("Small");

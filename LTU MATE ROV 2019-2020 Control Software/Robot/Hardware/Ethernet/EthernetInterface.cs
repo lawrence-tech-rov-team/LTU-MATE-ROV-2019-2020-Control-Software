@@ -77,7 +77,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 
 			Console.WriteLine("Counts: {0}", counts);
 
-			return counts >= 5; //TODO try up to ten times, but if one suceeds then it will try five times, not counting towards the ten
+			return counts >= 5;
 		}
 
 		protected override bool TryConnect() {

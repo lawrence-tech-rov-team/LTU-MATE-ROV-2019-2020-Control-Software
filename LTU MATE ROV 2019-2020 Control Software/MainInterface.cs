@@ -89,7 +89,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			if(!settings.Load()) {
 				MessageBox.Show("An error occured while loading the settings.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-			controlsThread.Net = settings.NetGripper;
+			controlsThread.Settings = settings;
 
 			Log.Info("Main window loaded.");
 			cameraThread.Start();
@@ -101,6 +101,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			Log.Info("Update timers started.");
 
 			robotThread.OnIdCollisionDetected += RobotThread_OnIdCollisionDetected;
+			robotThread.OnConnectFailed += RobotThread_OnConnectFailed;
+			robotThread.OnTimeoutWarning += RobotThread_OnTimeoutWarning;
 		}
 
 		//Stop all running threads and switchers
@@ -108,7 +110,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			InputDataTimer.Stop();
 			ImageUpdateTimer.Stop();
 			Log.Info("Update timers stopped.");
-			//TODO before disconnecting, release all servos
+			
 			robotThread.StopAsync();
 			cameraThread.StopAsync();
 			inputThread.StopAsync();
@@ -222,7 +224,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}));
 		}
 
-		private void settingsToolStripMenuItem_Click(object sender, EventArgs e) {
+		private void RobotThread_OnTimeoutWarning() {
+			Console.WriteLine("WARNING: POSSIBLE TIMEOUT DETECTED!");
+		}
+
+		private void RobotThread_OnConnectFailed() {
+			this.Invoke(new Action(() => {
+				MessageBox.Show("Connection failed!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}));
+		}
+
+		private void SettingsToolStripMenuItem_Click(object sender, EventArgs e) {
 			if (settingsForm != null) {
 				if (settingsForm.IsDisposed) settingsForm = null;
 			}
@@ -263,5 +275,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			}
 			controlsThread.GripperR = gripper;
 		}
+
 	}
 }

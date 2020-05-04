@@ -16,7 +16,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public delegate void GenericEvent();
 
 		/// <summary> Fired when a collision when registering IDs is found. Ran in a new thread. </summary>
-		public event IdCollisionEvent OnIdCollisionDetected; //TODO make use of event
+		public event IdCollisionEvent OnIdCollisionDetected; 
 
 		/// <summary> Fired when the robot gets connected. Ran in a new thread. </summary>
 		public event RobotEvent OnConnected;

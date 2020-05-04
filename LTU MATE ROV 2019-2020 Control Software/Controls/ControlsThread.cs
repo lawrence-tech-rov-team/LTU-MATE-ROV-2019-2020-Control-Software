@@ -1,5 +1,6 @@
 ﻿using LTU_MATE_ROV_2019_2020_Control_Software.InputControls;
 using LTU_MATE_ROV_2019_2020_Control_Software.Robot;
+using LTU_MATE_ROV_2019_2020_Control_Software.Settings;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 		private InputThread inputThread;
 		private RobotThread robotThread;
 		public volatile bool Enabled = true;
+		public volatile AppSettings Settings;
+
 		public volatile GripperPosition GripperL;
 		public volatile GripperPosition GripperR;
-		public volatile GripperPosition Net;
 
 		public ControlsThread(InputThread Input, RobotThread Robot, ThreadPriority Priority = ThreadPriority.Normal) : base("Controls Thread", Priority) {
 			inputThread = Input;
@@ -45,19 +47,22 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 				//Move gripper L
 				GripperPosition gripperL = GripperL;
 				if (gripperL != null) {
-					robot.LeftGripperServo.Angle = (gripperLOpen ? gripperL.Open : gripperL.Closed);
+					if (gripperLOpen) gripperL.Open(robot.LeftGripperServo);
+					else gripperL.Close(robot.LeftGripperServo);
 				}
 
 				//Move gripper R
 				GripperPosition gripperR = GripperR;
 				if (gripperR != null) {
-					robot.RightGripperServo.Angle = (gripperROpen ? gripperR.Open : gripperR.Closed);
+					if (gripperROpen) gripperR.Open(robot.RightGripperServo);
+					else gripperR.Close(robot.RightGripperServo);
 				}
 
 				//Move Net
-				GripperPosition net = Net;
+				GripperPosition net = Settings.NetGripper;
 				if(net != null) {
-					robot.NetServo.Angle = (netOpen ? net.Open : net.Closed);
+					if (netOpen) net.Open(robot.NetServo);
+					else net.Close(robot.NetServo);
 				}
 			}
 
@@ -70,6 +75,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 
 		private void RobotThread_OnConnected(Robot.Hardware.Robot sender) {
 			if((sender != null) && (sender is ROV rov)) {
+				rov.TwiSettings.Frequency = 400000;
+
 				rov.FrontLeftServo.Enabled = true;
 				rov.FrontRightServo.Enabled = true;
 				rov.BackLeftServo.Enabled = true;
