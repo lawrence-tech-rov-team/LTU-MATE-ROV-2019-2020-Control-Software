@@ -17,12 +17,18 @@ using Emgu.CV.Util;
 
 namespace CountObjects
 {
+
     public partial class Form1 : Form
     {
         //---------Initial Setup
         //video capture setup
         private VideoCapture _capture;
         private Thread _captureThread;
+
+        private int height = 0;
+        private int width = 0;
+        private int mussels = 0;
+        
 
         public Form1()
         {
@@ -54,7 +60,9 @@ namespace CountObjects
 
                     int num_O = contours.Size - 1; // it ounts the frame as 1 contour so we subtract it
                     label1.Invoke(new Action(() => {
-                        label1.Text = "# of Objects:  " + num_O.ToString();
+                        label1.Text = "Mussels:  " + num_O.ToString();
+                        mussels = num_O;
+                        calculateFilteredAmount(height, width, num_O);
                     }));
 
 
@@ -67,6 +75,34 @@ namespace CountObjects
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            int stringToInt;
+            if (Int32.TryParse(textBox1.Text, out stringToInt))
+            {
+                height = stringToInt;
+                calculateFilteredAmount(height, width, mussels);
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            int stringToInt;
+            if (Int32.TryParse(textBox2.Text, out stringToInt))
+            {
+                width = stringToInt;
+                calculateFilteredAmount(height, width, mussels);
+            }
+
+        }
+
+        private void calculateFilteredAmount(int h, int w, int mussels)
+        {
+            double area = h*w;
+            double musselT = Math.Ceiling((area / .25) * mussels);
+            label5.Text = "Water Filtered(L / hr): " + (musselT *0.97).ToString();
         }
     }
 }
