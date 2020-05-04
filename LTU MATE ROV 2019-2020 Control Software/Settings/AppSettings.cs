@@ -15,6 +15,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		private const string SettingsSavePath = "Settings.json";
 
 		public SerializableDictionary<Range> ServoRanges = new SerializableDictionary<Range>();
+		public SerializableDictionary<MidpointRange> ThrusterRanges = new SerializableDictionary<MidpointRange>();
 		//TODO Gripper class that contains these definitions? Allows input to simply say open/close?
 		public GripperPosition SpongeGripper = new GripperPosition("Sponge");
 		public GripperPosition MediumGripper = new GripperPosition("Medium");
@@ -28,13 +29,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		private void Robot_OnConnected(Robot.Hardware.Robot sender) {
 			if((sender != null) && (sender is ROV rov)) {
-				foreach(KeyValuePair<char, PWM[]> pair in rov.PWM) {
-					PWM[] servos = pair.Value;
-					for(int i = 0; i < servos.Length; i++) {
-						string name = pair.Key + (i + 1).ToString();
-						if (ServoRanges.ContainsKey(name)) {
-							servos[i].PulseRange = ServoRanges[name];
-						}
+				foreach(KeyValuePair<string, Servo> pair in rov.Servos) {
+					Servo servo = pair.Value;
+					if (ServoRanges.ContainsKey(pair.Key)) {
+						servo.PWM.PulseRange = ServoRanges[pair.Key];
+					}
+				}
+
+				foreach(KeyValuePair<string, Thruster> pair in rov.Thrusters) {
+					Thruster thruster = pair.Value;
+					if (ThrusterRanges.ContainsKey(pair.Key)) {
+						thruster.PulseRange = ThrusterRanges[pair.Key];
 					}
 				}
 			}
@@ -53,6 +58,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 				bool successful = true;
 
 				if (!ServoRanges.LoadFromJson(obj["Servo Ranges"])) successful = false;
+				if (!ThrusterRanges.LoadFromJson(obj["Thruster Ranges"])) successful = false;
 				if (!LoadGripperPositions(obj["Gripper Positions"])) successful = false;
 
 				return successful;
@@ -80,6 +86,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		public JsonData SaveToJson() {
 			JsonObject obj = new JsonObject();
 			obj["Servo Ranges"] = ServoRanges.SaveToJson();
+			obj["Thruster Ranges"] = ThrusterRanges.SaveToJson();
 			{
 				JsonObject grippers = new JsonObject();
 				grippers["Sponge"] = SpongeGripper.SaveToJson();

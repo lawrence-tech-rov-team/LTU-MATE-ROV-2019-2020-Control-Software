@@ -22,6 +22,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 			inputThread = Input;
 			robotThread = Robot;
 			robotThread.OnConnected += RobotThread_OnConnected;
+			robotThread.OnDisconnecting += RobotThread_OnDisconnecting;
 		}
 
 		protected override void Initialize() {
@@ -69,13 +70,35 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 
 		private void RobotThread_OnConnected(Robot.Hardware.Robot sender) {
 			if((sender != null) && (sender is ROV rov)) {
-				rov.LeftGripperServo
+				rov.FrontLeftServo.Enabled = true;
+				rov.FrontRightServo.Enabled = true;
+				rov.BackLeftServo.Enabled = true;
+				rov.BackRightServo.Enabled = true;
 
-				rov.PwmA1.Enabled = true;
-				rov.PwmA2.Enabled = true;
-				rov.PwmA3.Enabled = true;
-				rov.PwmA4.Enabled = true;
-				rov.PwmD1.Enabled = true;
+				rov.FrontLeftThruster.Enabled = true;
+				rov.FrontRightThruster.Enabled = true;
+				rov.BackLeftThruster.Enabled = true;
+				rov.BackRightThruster.Enabled = true;
+
+				rov.LeftGripperServo.Enabled = true;
+				rov.RightGripperServo.Enabled = true;
+				rov.NetServo.Enabled = true;
+			}
+		}
+
+		private void RobotThread_OnDisconnecting(Robot.Hardware.Robot sender) {
+			if((sender != null) && (sender is ROV rov)) {
+				rov.FrontLeftThruster.Stop();
+				rov.FrontLeftThruster.Enabled = false;
+
+				rov.FrontRightThruster.Stop();
+				rov.FrontRightThruster.Enabled = false;
+
+				rov.BackLeftThruster.Stop();
+				rov.BackLeftThruster.Enabled = false;
+
+				rov.BackRightThruster.Stop();
+				rov.BackRightThruster.Enabled = false;
 			}
 		}
 

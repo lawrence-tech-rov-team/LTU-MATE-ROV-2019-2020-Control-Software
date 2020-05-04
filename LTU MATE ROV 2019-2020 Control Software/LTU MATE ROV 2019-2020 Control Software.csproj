@@ -88,6 +88,7 @@
     <Compile Include="Controls\GripperPosition.cs" />
     <Compile Include="Robot\Hardware\Actuators\DigitalActuator.cs" />
     <Compile Include="Robot\Hardware\Actuators\PWM.cs" />
+    <Compile Include="Robot\Hardware\Actuators\RangedPWM.cs" />
     <Compile Include="Robot\Hardware\Actuators\Servo.cs" />
     <Compile Include="Robot\Hardware\Actuators\Thruster.cs" />
     <Compile Include="Robot\Hardware\DataTypes\ImuQuaternionData.cs" />
@@ -123,7 +124,6 @@
     </Compile>
     <Compile Include="Programs\RovProgram.cs" />
     <Compile Include="Programs\StartStopProgram.cs" />
-    <Compile Include="Robot\Thruster.cs" />
     <Compile Include="SensorsForm.cs">
       <SubType>Form</SubType>
     </Compile>

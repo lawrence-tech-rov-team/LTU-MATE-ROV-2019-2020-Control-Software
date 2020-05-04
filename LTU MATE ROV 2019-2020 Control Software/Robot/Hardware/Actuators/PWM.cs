@@ -17,13 +17,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Actuators {
 		private WritableRegister<UInt16Data> PositionRegister;
 		private WritableRegister<BoolData> EnableRegister;
 
-		public ushort Pulse { set => PositionRegister.Data = new UInt16Data(PulseRange.Limit(value)); }
+		public ushort Pulse { set => PositionRegister.Data = new UInt16Data(value); }
 		public bool Enabled { set => EnableRegister.Data = new BoolData(value); }
-
-		public Range PulseRange = new Range(0, 3000);
-		public ushort MinimumPulse { get => PulseRange.Minimum; set => PulseRange.Minimum = value; }
-		public ushort MaximumPulse { get => PulseRange.Maximum; set => PulseRange.Maximum = value; }
-		public float DutyCycle { set => Pulse = PulseRange.Interpolate(value); }
 
 		public PWM(byte posId, byte enableId, float refreshRate = 25f) {
 			PositionRegister = new WritableRegister<UInt16Data>(posId, refreshRate);

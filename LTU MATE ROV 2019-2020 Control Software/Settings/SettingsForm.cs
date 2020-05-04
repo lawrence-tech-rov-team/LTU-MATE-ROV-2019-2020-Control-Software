@@ -28,8 +28,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		private void SettingsForm_Load(object sender, EventArgs e) {
 			controls.Enabled = false;
+
 			MinPulseUpDown.Minimum = MaxPulseUpDown.Minimum = ushort.MinValue;
 			MinPulseUpDown.Maximum = MaxPulseUpDown.Maximum = ushort.MaxValue;
+
+			ThrusterMinPulse.Minimum = ThrusterZeroPulse.Minimum = ThrusterMaxPulse.Minimum = ushort.MinValue;
+			ThrusterMinPulse.Maximum = ThrusterZeroPulse.Maximum = ThrusterMaxPulse.Maximum = ushort.MaxValue;
+
 			SpongeOpenPos.Value = settings.SpongeGripper.Open;
 			SpongeClosedPos.Value = settings.SpongeGripper.Closed;
 			MediumOpenPos.Value = settings.MediumGripper.Open;
@@ -55,33 +60,32 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			} while (retry);
 		}
 
+		#region Servo Settings
 		private void ServoSelector_DropDown(object sender, EventArgs e) {
-			PwmSelector.Items.Clear();
+			ServoSelector.Items.Clear();
 			ROV robot = thread.Robot;
 			if (robot != null) {
-				foreach(KeyValuePair<char, PWM[]> servos in robot.PWM) {
-					for(int i = 0; i < servos.Value.Length; i++) {
-						PwmSelector.Items.Add(new ServoWrapper(servos.Value[i], servos.Key + (i + 1).ToString()));
-					}
+				foreach(KeyValuePair<string, Servo> servo in robot.Servos) {
+					ServoSelector.Items.Add(new ServoWrapper(servo.Value, servo.Key));
 				}
 			}
 		}
 
-		private void PwmSelector_SelectedIndexChanged(object sender, EventArgs e) {
+		private void ServoSelector_SelectedIndexChanged(object sender, EventArgs e) {
 			bool enabled = false;
-			object obj = PwmSelector.SelectedItem;
+			object obj = ServoSelector.SelectedItem;
 			if((obj != null) && (obj is ServoWrapper wrapper)) {
-				PWM servo = wrapper.Servo;
+				Servo servo = wrapper.Servo;
 				enabled = true;
 				MinPulseUpDown.ValueChanged -= MinPulseUpDown_ValueChanged;
 				MaxPulseUpDown.ValueChanged -= MaxPulseUpDown_ValueChanged;
 				{
-					MinPulseUpDown.Value = servo.MinimumPulse;
-					MaxPulseUpDown.Value = servo.MaximumPulse;
+					MinPulseUpDown.Value = servo.PWM.MinimumPulse;
+					MaxPulseUpDown.Value = servo.PWM.MaximumPulse;
 				}
 				MinPulseUpDown.ValueChanged += MinPulseUpDown_ValueChanged;
 				MaxPulseUpDown.ValueChanged += MaxPulseUpDown_ValueChanged;
-				settings.ServoRanges[wrapper.Name] = servo.PulseRange;
+				settings.ServoRanges[wrapper.Name] = servo.PWM.PulseRange;
 			}
 
 			EnableBtn.Enabled = enabled;
@@ -91,59 +95,142 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 
 		private void MinPulseUpDown_ValueChanged(object sender, EventArgs e) {
-			object obj = PwmSelector.SelectedItem;
+			object obj = ServoSelector.SelectedItem;
 			if((obj != null) && (obj is ServoWrapper wrapper)) {
-				PWM servo = wrapper.Servo;
+				Servo servo = wrapper.Servo;
 				ushort pulse = decimal.ToUInt16(MinPulseUpDown.Value);
-				servo.MinimumPulse = pulse;
-				servo.Pulse = pulse;
-				settings.ServoRanges[wrapper.Name] = servo.PulseRange;
+				servo.PWM.MinimumPulse = pulse;
+				servo.PWM.Pulse = pulse;
+				settings.ServoRanges[wrapper.Name] = servo.PWM.PulseRange;
 			}
 		}
 
 		private void MaxPulseUpDown_ValueChanged(object sender, EventArgs e) {
-			object obj = PwmSelector.SelectedItem;
+			object obj = ServoSelector.SelectedItem;
 			if ((obj != null) && (obj is ServoWrapper wrapper)) {
-				PWM servo = wrapper.Servo;
+				Servo servo = wrapper.Servo;
 				ushort pulse = decimal.ToUInt16(MaxPulseUpDown.Value);
-				servo.MaximumPulse = pulse;
-				servo.Pulse = pulse;
-				settings.ServoRanges[wrapper.Name] = servo.PulseRange;
+				servo.PWM.MaximumPulse = pulse;
+				servo.PWM.Pulse = pulse;
+				settings.ServoRanges[wrapper.Name] = servo.PWM.PulseRange;
 			}
 		}
 
 		private void EnableBtn_Click(object sender, EventArgs e) {
-			object obj = PwmSelector.SelectedItem;
+			object obj = ServoSelector.SelectedItem;
 			if((obj != null) && (obj is ServoWrapper wrapper)) {
-				PWM servo = wrapper.Servo;
+				Servo servo = wrapper.Servo;
 				servo.Enabled = true;
 			}
 		}
 
 		private void DisableBtn_Click(object sender, EventArgs e) {
-			object obj = PwmSelector.SelectedItem;
+			object obj = ServoSelector.SelectedItem;
 			if ((obj != null) && (obj is ServoWrapper wrapper)) {
-				PWM servo = wrapper.Servo;
+				Servo servo = wrapper.Servo;
 				servo.Enabled = false;
 			}
 		}
+		#endregion
 
-		private class ServoWrapper {
-
-			public string Name;
-			public PWM Servo;
-
-			public ServoWrapper(PWM servo, string name) {
-				Name = name;
-				Servo = servo;
+		#region Thruster Settings
+		private void ThrusterSelector_DropDown(object sender, EventArgs e) {
+			ThrusterSelector.Items.Clear();
+			ROV robot = thread.Robot;
+			if (robot != null) {
+				foreach (KeyValuePair<string, Thruster> thruster in robot.Thrusters) {
+					ThrusterSelector.Items.Add(new ThrusterWrapper(thruster.Value, thruster.Key));
+				}
 			}
-
-			public override string ToString() {
-				return Name;
-			}
-
 		}
 
+		private void ThrusterSelector_SelectedIndexChanged(object sender, EventArgs e) {
+			bool enabled = false;
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				enabled = true;
+				ThrusterMinPulse.ValueChanged -= ThrusterMinPulse_ValueChanged;
+				ThrusterZeroPulse.ValueChanged -= ThrusterZeroPulse_ValueChanged;
+				ThrusterMaxPulse.ValueChanged -= ThrusterMaxPulse_ValueChanged;
+				{
+					ThrusterMinPulse.Value = thruster.MinimumPulse;
+					ThrusterZeroPulse.Value = thruster.ZeroPulse;
+					ThrusterMaxPulse.Value = thruster.MaximumPulse;
+				}
+				ThrusterMinPulse.ValueChanged += ThrusterMinPulse_ValueChanged;
+				ThrusterZeroPulse.ValueChanged += ThrusterZeroPulse_ValueChanged;
+				ThrusterMaxPulse.ValueChanged += ThrusterMaxPulse_ValueChanged;
+				settings.ThrusterRanges[wrapper.Name] = thruster.PulseRange;
+			}
+
+			EnableThrustBtn.Enabled = enabled;
+			DisableThrustBtn.Enabled = enabled;
+			StopThrustBtn.Enabled = enabled;
+			ThrusterMinPulse.Enabled = enabled;
+			ThrusterZeroPulse.Enabled = enabled;
+			ThrusterMaxPulse.Enabled = enabled;
+		}
+
+		private void ThrusterMinPulse_ValueChanged(object sender, EventArgs e) {
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				ushort pulse = decimal.ToUInt16(ThrusterMinPulse.Value);
+				thruster.MinimumPulse = pulse;
+				thruster.Thrust = -1f;
+				settings.ThrusterRanges[wrapper.Name] = thruster.PulseRange;
+			}
+		}
+
+		private void ThrusterZeroPulse_ValueChanged(object sender, EventArgs e) {
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				ushort pulse = decimal.ToUInt16(ThrusterZeroPulse.Value);
+				thruster.ZeroPulse = pulse;
+				thruster.Stop();
+				settings.ThrusterRanges[wrapper.Name] = thruster.PulseRange;
+			}
+		}
+
+		private void ThrusterMaxPulse_ValueChanged(object sender, EventArgs e) {
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				ushort pulse = decimal.ToUInt16(ThrusterMaxPulse.Value);
+				thruster.MaximumPulse = pulse;
+				thruster.Thrust = 1f;
+				settings.ThrusterRanges[wrapper.Name] = thruster.PulseRange;
+			}
+		}
+
+		private void EnableThrustBtn_Click(object sender, EventArgs e) {
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				thruster.Enabled = true;
+			}
+		}
+
+		private void DisableThrustBtn_Click(object sender, EventArgs e) {
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				thruster.Enabled = false;
+			}
+		}
+
+		private void StopThrustBtn_Click(object sender, EventArgs e) {
+			object obj = ThrusterSelector.SelectedItem;
+			if ((obj != null) && (obj is ThrusterWrapper wrapper)) {
+				Thruster thruster = wrapper.Thruster;
+				thruster.Stop();
+			}
+		}
+		#endregion
+
+		#region Gripper Position
 		private void SpongeOpenPos_ValueChanged(object sender, EventArgs e) {
 			settings.SpongeGripper.Open = decimal.ToUInt16(SpongeOpenPos.Value);
 		}
@@ -182,6 +269,39 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 		private void NetClosedPos_ValueChanged(object sender, EventArgs e) {
 			settings.NetGripper.Closed = decimal.ToUInt16(NetClosedPos.Value);
+		}
+		#endregion
+
+		private class ServoWrapper {
+
+			public string Name;
+			public Servo Servo;
+
+			public ServoWrapper(Servo servo, string name) {
+				Name = name;
+				Servo = servo;
+			}
+
+			public override string ToString() {
+				return Name;
+			}
+
+		}
+
+		private class ThrusterWrapper {
+
+			public string Name;
+			public Thruster Thruster;
+
+			public ThrusterWrapper(Thruster thruster, string name) {
+				Name = name;
+				Thruster = thruster;
+			}
+
+			public override string ToString() {
+				return Name;
+			}
+
 		}
 	}
 }

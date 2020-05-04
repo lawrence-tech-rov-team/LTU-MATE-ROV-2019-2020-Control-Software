@@ -1,8 +1,59 @@
 {
 	"Servo Ranges": {
-		"A1": {
+		"Front Left": {
 			"Minimum": 1000,
 			"Maximum": 2000
+		},
+		"Front Right": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		},
+		"Back Left": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		},
+		"Back Right": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		},
+		"Left Gripper": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		},
+		"Right Gripper": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		},
+		"Net": {
+			"Minimum": 1000,
+			"Maximum": 2000
+		}
+	},
+	"Thruster Ranges": {
+		"Front Left": {
+			"Minimum": 1180,
+			"Midpoint": 1500,
+			"Maximum": 1814
+		},
+		"Front Right": {
+			"Minimum": 1180,
+			"Midpoint": 1500,
+			"Maximum": 1814
+		},
+		"Back Left": {
+			"Minimum": 1180,
+			"Midpoint": 1500,
+			"Maximum": 1814
+		},
+		"Back Right": {
+			"Minimum": 1180,
+			"Midpoint": 1500,
+			"Maximum": 1814
+		},
+		"Mini ROV": {
+			"Minimum": 1140,
+			"Midpoint": 1500,
+			"Maximum": 1855
 		}
 	},
 	"Gripper Positions": {
@@ -27,5 +78,4 @@
 			"Closed": 0
 		}
 	}
-}
 }
