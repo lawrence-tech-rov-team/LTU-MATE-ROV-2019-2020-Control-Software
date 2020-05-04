@@ -51,6 +51,7 @@
 			this.GrippersRComboBox = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.GrippersLComboBox = new System.Windows.Forms.ComboBox();
+			this.errorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.CameraView2)).BeginInit();
@@ -77,7 +78,8 @@
 			this.robotToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectToolStripMenuItem1,
             this.disconnectToolStripMenuItem1,
-            this.settingsToolStripMenuItem});
+            this.settingsToolStripMenuItem,
+            this.errorsToolStripMenuItem});
 			this.robotToolStripMenuItem.Name = "robotToolStripMenuItem";
 			this.robotToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
 			this.robotToolStripMenuItem.Text = "Robot";
@@ -189,7 +191,7 @@
 			// 
 			this.LedBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LedBtn.Location = new System.Drawing.Point(12, 496);
-			this.LedBtn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.LedBtn.Margin = new System.Windows.Forms.Padding(2);
 			this.LedBtn.Name = "LedBtn";
 			this.LedBtn.Size = new System.Drawing.Size(62, 26);
 			this.LedBtn.TabIndex = 33;
@@ -203,7 +205,7 @@
 			this.InputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.InputComboBox.FormattingEnabled = true;
 			this.InputComboBox.Location = new System.Drawing.Point(842, 501);
-			this.InputComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.InputComboBox.Margin = new System.Windows.Forms.Padding(2);
 			this.InputComboBox.Name = "InputComboBox";
 			this.InputComboBox.Size = new System.Drawing.Size(106, 21);
 			this.InputComboBox.TabIndex = 37;
@@ -304,6 +306,13 @@
 			this.GrippersLComboBox.DropDown += new System.EventHandler(this.GrippersComboBox_DropDown);
 			this.GrippersLComboBox.SelectedIndexChanged += new System.EventHandler(this.GrippersLComboBox_SelectedIndexChanged);
 			// 
+			// errorsToolStripMenuItem
+			// 
+			this.errorsToolStripMenuItem.Name = "errorsToolStripMenuItem";
+			this.errorsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.errorsToolStripMenuItem.Text = "Errors";
+			this.errorsToolStripMenuItem.Click += new System.EventHandler(this.errorsToolStripMenuItem_Click);
+			// 
 			// MainInterface
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,7 +328,7 @@
 			this.Controls.Add(this.LedBtn);
 			this.Controls.Add(this.MenuStrip);
 			this.MainMenuStrip = this.MenuStrip;
-			this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "MainInterface";
 			this.Text = "Form1";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainInterface_FormClosing);
@@ -363,6 +372,7 @@
 		private System.Windows.Forms.ComboBox GrippersRComboBox;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ComboBox GrippersLComboBox;
+		private System.Windows.Forms.ToolStripMenuItem errorsToolStripMenuItem;
 	}
 }
 

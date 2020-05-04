@@ -14,6 +14,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		public delegate void IdCollisionEvent(byte IdConflict);
 		public delegate void RobotEvent(Robot sender);
 		public delegate void GenericEvent();
+		public delegate void ErrorEvent(Robot sender, ErrorCodes Errors);
 
 		/// <summary> Fired when a collision when registering IDs is found. Ran in a new thread. </summary>
 		public event IdCollisionEvent OnIdCollisionDetected; 
@@ -42,6 +43,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		/// It is advised if multiple timeouts are received to assume the robot has physically disconnected and to disconnect the robot in software.
 		/// </summary>
 		public event GenericEvent OnTimeout;
+
+		/// <summary>
+		/// Called when error codes are returned and successfully decoded. Codes sent are usually invoked manually.
+		/// Called on a different thread.
+		/// </summary>
+		public event ErrorEvent OnErrorsReceived;
 
 		/// <summary>
 		/// The maximum number of devices that can be attached.
@@ -94,6 +101,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		/// Number of timeouts that have occured in a row.
 		/// </summary>
 		private volatile int numTimeouts = 0;
+
+		private readonly object ErrorLock = new object();
+		private volatile bool CheckErrors = false;
 
 		protected abstract void RegisterAllDevices();
 
@@ -195,6 +205,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 					}
 				}
 			}
+			
+			lock (ErrorLock) {
+				if (CheckErrors) {
+					SendMessage(0xFF, new byte[0]);
+					CheckErrors = false;
+				}
+			}
 			return Sleep(1);
 		}
 
@@ -222,7 +239,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		//NOTE: OnReceived may be invoked on a secondary thread.
 		private void Ether_OnPacketReceived(UdpPacket packet) {
 			int id = packet.Id;
-			if (registers[id] != null) {
+			if(id == 0xFF) {
+				ErrorCodes errors = ErrorCodes.Decode(packet);
+				if(errors != null) ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnErrorsReceived?.Invoke(this, errors); }));
+			}else if (registers[id] != null) {
 				bool timeoutWarning = false;
 				lock (registers[id]) {
 					if (registers[id].Update(packet.Data)) {
@@ -238,6 +258,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 					}
 				}
 				if(timeoutWarning) ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnTimeoutWarning?.Invoke(); }));
+			}
+		}
+
+		public void RequestErrors() {
+			lock (ErrorLock) {
+				CheckErrors = true;
 			}
 		}
 

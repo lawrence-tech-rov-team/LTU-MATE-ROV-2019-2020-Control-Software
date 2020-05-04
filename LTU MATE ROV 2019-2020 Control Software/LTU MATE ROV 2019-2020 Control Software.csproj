@@ -100,6 +100,7 @@
     <Compile Include="Robot\Hardware\DataTypes\Vector2Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Vector3Data.cs" />
     <Compile Include="Robot\Hardware\DataTypes\Vector4Data.cs" />
+    <Compile Include="Robot\Hardware\ErrorCodes.cs" />
     <Compile Include="Robot\Hardware\Ethernet\EthernetInterface.cs" />
     <Compile Include="Robot\Hardware\Ethernet\IEthernetLayer.cs" />
     <Compile Include="Robot\Hardware\Ethernet\UdpPacket.cs" />

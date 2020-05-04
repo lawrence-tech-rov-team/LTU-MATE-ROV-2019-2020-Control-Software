@@ -103,6 +103,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			robotThread.OnIdCollisionDetected += RobotThread_OnIdCollisionDetected;
 			robotThread.OnConnectFailed += RobotThread_OnConnectFailed;
 			robotThread.OnTimeoutWarning += RobotThread_OnTimeoutWarning;
+			robotThread.OnErrorReceived += RobotThread_OnErrorReceived;
 		}
 
 		//Stop all running threads and switchers
@@ -276,5 +277,19 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 			controlsThread.GripperR = gripper;
 		}
 
+		private void errorsToolStripMenuItem_Click(object sender, EventArgs e) {
+			Robot.Hardware.Robot robot = robotThread.Robot;
+			if(robot != null) {
+				robot.RequestErrors();
+			}
+		}
+
+		private void RobotThread_OnErrorReceived(Robot.Hardware.Robot sender, Robot.Hardware.ErrorCodes Errors) {
+			this.Invoke(new Action(() => {
+				if (Errors != null) {
+					MessageBox.Show(Errors.ToString(), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}));
+		}
 	}
 }

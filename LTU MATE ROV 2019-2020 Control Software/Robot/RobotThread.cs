@@ -19,6 +19,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		public event GenericEvent OnDisconnected;
 		public event GenericEvent OnTimeoutWarning;
 		public event GenericEvent OnTimeout;
+		public event ErrorEvent OnErrorReceived;
 		
 		public ROV Robot {
 			get => Process;
@@ -40,6 +41,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 			Process.OnDisconnected -= OnDisconnected;
 			Process.OnTimeoutWarning -= OnTimeoutWarning;
 			Process.OnTimeout -= OnTimeout;
+			Process.OnErrorsReceived -= OnErrorReceived;
 		}
 
 		protected override void ProcessStarting(ROV Process) {
@@ -50,6 +52,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 			Process.OnDisconnected += OnDisconnected;
 			Process.OnTimeoutWarning += OnTimeoutWarning;
 			Process.OnTimeout += OnTimeout;
+			Process.OnErrorsReceived += OnErrorReceived;
 		}
 
 	}
