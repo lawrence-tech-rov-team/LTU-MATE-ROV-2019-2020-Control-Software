@@ -75,7 +75,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Controls {
 
 		private void RobotThread_OnConnected(Robot.Hardware.Robot sender) {
 			if((sender != null) && (sender is ROV rov)) {
-				rov.TwiSettings.Frequency = 400000;
+				//rov.TwiSettings.Frequency = 400000;
 
 				rov.FrontLeftServo.Enabled = true;
 				rov.FrontRightServo.Enabled = true;
