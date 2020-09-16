@@ -8,12 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System.Threading;
+using Ozeki.Camera;
+using Ozeki.Media;
+using utils;
+using System.Drawing;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 	public class CameraThread : ThreadedProcess {
 
 		private VideoCapture capture1;
-		private VideoCapture capture2;
+		//private VideoCapture capture2;
+		private OzekiCamera camera;
+		private MediaConnector connector = new MediaConnector();
+		private SnapshotHandler snapshotHandler = new SnapshotHandler();
 
 		private volatile Mat image1;
 		public Mat Image1 { get => image1; }
@@ -26,7 +33,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 
 		protected override void Initialize() {
 			capture1 = new VideoCapture(0);
-			capture2 = new VideoCapture(1);
+			//capture2 = new VideoCapture("rtsp://admin:admin123@192.168.0.108:554:network-caching=500");
+			//capture2 = new VideoCapture("http://192.168.0.108/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif");
+			//capture2 = new VideoCapture("rtsp://admin:admin123@192.168.0.108:554/"); 
+			camera = new OzekiCamera("http://192.168.0.108:80;Username=admin;Password=admin123;Transport=UDP;");
+			connector.Connect(camera.VideoChannel, snapshotHandler);
+			camera.Start();
 		}
 
 		protected override bool Loop() {
@@ -36,11 +48,25 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 				image1 = null;
 			}
 
-			if (capture2.IsOpened) {
+			/*if (capture2.IsOpened) {
 				image2 = capture2.QueryFrame();
 			} else {
 				image2 = null;
+			}*/
+			//		if (camera.Capturing) {
+			var snapshotRaw = snapshotHandler.TakeSnapshot();
+			if (snapshotRaw != null) {
+				Bitmap snapshot = (Bitmap)snapshotRaw.ToImage();
+				Image<Bgr, byte> imageCV = new Image<Bgr, byte>(snapshot);
+				image2 = imageCV.Mat;
+				snapshot.Dispose();
+			} else {
+				image2 = null;
 			}
+				//snapshot.Save("", System.Drawing.Imaging.ImageFormat.Jpeg);
+	//		} else {
+	//			image2 = null;
+	//		}
 
 			return true;
 		}
@@ -51,7 +77,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Cameras {
 			} catch (Exception) { }
 
 			try {
-				capture2?.Dispose();
+				//capture2?.Dispose();
+				camera.Disconnect();
+				camera.Dispose();
 			} catch (Exception) { }
 		}
 

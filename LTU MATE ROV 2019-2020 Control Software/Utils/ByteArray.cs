@@ -125,6 +125,12 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			return new ByteArray(source, index, newLength);
 		}
 
+		private void Copy<T>(T[] source, int sourceIndex, T[] destination, int destinationIndex, int length) {
+			for(int i = 0; i < length; i++) {
+				destination[destinationIndex++] = source[sourceIndex++];
+			}
+		}
+
 		/// <summary>
 		/// Creates a copy of the array, copying the source data as well.
 		/// Only the selected data from the source is copied. i.e. data outside of the bounds is not copied.
@@ -133,20 +139,20 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		public ByteArray Copy() {
 			if (source == null) return new ByteArray();
 			byte[] data = new byte[Length];
-			Array.Copy(source, index, data, 0, Length);
+			Copy(source, index, data, 0, Length);
 			return new ByteArray(data);
 		}
 
 		public void CopyTo(byte[] dest) {
-			Array.Copy(source, index, dest, 0, Length);
+			Copy(source, index, dest, 0, Length);
 		}
 
 		public void CopyTo(byte[] dest, int startIndex) {
-			Array.Copy(source, index, dest, startIndex, Length);
+			Copy(source, index, dest, startIndex, Length);
 		}
 
 		public void CopyTo(byte[] dest, int startIndex, int length) {
-			Array.Copy(source, index, dest, startIndex, length);
+			Copy(source, index, dest, startIndex, length);
 		}
 
 		/// <summary>
@@ -159,7 +165,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			if (Length == 0) return new byte[0];
 			else {
 				byte[] array = new byte[Length];
-				Array.Copy(source, index, array, 0, Length);
+				Copy(source, index, array, 0, Length);
 				return array;
 			}
 		}
