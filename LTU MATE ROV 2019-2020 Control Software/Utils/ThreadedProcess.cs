@@ -44,6 +44,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 
 		public bool Start() {
 			try {
+				MainThreadActivated();
 				running = true;
 				thread.Start();
 				return true;
@@ -79,6 +80,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 			Log.Info("Thread finished.");
 		}
 
+		protected virtual void MainThreadActivated() {
+
+		}
+
+		protected virtual void MainThreadDeactivated() {
+
+		}
+
 		protected abstract void Initialize();
 
 		/// <summary>
@@ -95,9 +104,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		protected bool Sleep(long millis) {
 			timer.Restart();
 			while (timer.ElapsedMilliseconds < millis) {
-				if (!running) return false;
+				if (!running || !SleepLoop()) return false;
 				Thread.Sleep(1);
 			}
+			return true;
+		}
+
+		protected virtual bool SleepLoop() {
 			return true;
 		}
 
@@ -108,6 +121,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		public void Stop() {
 			try {
 				StopAsync();
+				MainThreadDeactivated();
 				thread.Join();
 			} catch (Exception ex) {
 				Log.Info("Error stopping thread: \"" + (thread?.Name ?? "(null)") + "\"", ex);

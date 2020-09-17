@@ -24,14 +24,14 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks {
 			states[Type] = Value;
 		}
 
-		protected override void Initialize() {
+		protected override void Setup() {
 			Cleanup();
 			joystick = Joystick.Connect(device);
 			states[JoystickControl.PointOfViewControllers0] = -1;
 			if (joystick != null) joystick.OnInputChanged += Joystick_OnInputChanged;
 		}
 
-		protected override bool Loop() {
+		protected override bool Run() {
 			if (!(joystick?.Update() ?? false)) {
 				return false;
 			} else {
@@ -40,7 +40,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Joysticks {
 			}
 		}
 
-		protected override void Cleanup() {
+		protected override void Finish() {
 			if (joystick != null) {
 				joystick.OnInputChanged -= Joystick_OnInputChanged;
 				joystick.Disconnect();

@@ -25,11 +25,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 			this.controller = controller;
 		}
 
-		protected override void Initialize() {
+		protected override void Setup() {
 			
 		}
 
-		protected override bool Loop() {
+		protected override bool Run() {
 			if(controller.Connected && controller.Update()) {
 				Input = TranslateTwist();
 				GripperLOpen = ToggleState(ref gripperLState, ref gripperLDB, controller.LeftShoulder);
@@ -41,7 +41,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Controller {
 			}
 		}
 
-		protected override void Cleanup() {
+		protected override void Finish() {
 			Input = new Twist();
 		}
 

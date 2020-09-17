@@ -65,11 +65,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 
 		public override string Name => "Keyboard";
 
-		protected override void Initialize() {
+		protected override void Setup() {
 			
 		}
 
-		protected override bool Loop() {
+		protected override bool Run() {
 			int thrust = 0;
 			if (W) thrust++;
 			if (S) thrust--;
@@ -90,7 +90,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls.Keyboard {
 			return Sleep(33);
 		}
 
-		protected override void Cleanup() {
+		protected override void Finish() {
 			//	KeyListener = null;
 			Input = new Twist();
 		}

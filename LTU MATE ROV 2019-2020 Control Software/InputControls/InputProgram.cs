@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 	public abstract class InputProgram : ThreadedProcess {
@@ -30,8 +31,60 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 
 		public abstract string Name { get; }
 
+		private List<ThreadMethodLinker> eventListeners = new List<ThreadMethodLinker>();
+
+		private Form GUI;
+
 		public InputProgram(ThreadPriority Priority = ThreadPriority.Normal) : base("Input Reader", Priority) {
 
+		}
+
+		protected override void MainThreadActivated() {
+			GUI = CreateGUI();
+			GUI?.Show();
+		}
+
+		protected override void MainThreadDeactivated() {
+			GUI?.Close();
+			GUI = null;
+		}
+
+		protected override sealed void Initialize() {
+			eventListeners.Clear();
+			Setup();
+		}
+
+		protected override sealed bool Loop() {
+			ProcessEvents();
+			return Run();
+		}
+
+		protected override sealed void Cleanup() {
+			Finish();
+		}
+
+		protected abstract void Setup();
+		protected abstract bool Run();
+		protected abstract void Finish();
+
+		protected virtual Form CreateGUI() {
+			return null;
+		}
+
+
+		protected override bool SleepLoop() {
+			ProcessEvents();
+			return true;
+		}
+
+		protected void AddEventListener(ThreadMethodLinker linker) {
+			eventListeners.Add(linker);
+		}
+
+		protected void ProcessEvents() {
+			foreach (ThreadMethodLinker linker in eventListeners) {
+				linker.ProcessEvent();
+			}
 		}
 
 		public override string ToString() {

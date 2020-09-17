@@ -20,16 +20,16 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Programs.Transect_Line {
 			cameraThread = Cameras;
 		}
 
-		protected override void Initialize() {
+		protected override void Setup() {
 			form = new Form1(SleepMillis, SetInput, ReadCamera1, ReadCamera2);
 		}
 
-		protected override bool Loop() {
+		protected override bool Run() {
 			form.ShowDialog();
 			return false;
 		}
 
-		protected override void Cleanup() {
+		protected override void Finish() {
 			form.Dispose();
 		}
 

@@ -89,13 +89,23 @@
     <Compile Include="Controls\ControlSystem.cs" />
     <Compile Include="Controls\ControlsThread.cs" />
     <Compile Include="Controls\GripperPosition.cs" />
-    <Compile Include="Programs\Count Mussels\Form1.cs" />
+    <Compile Include="Programs\Count Mussels\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Programs\Count Mussels\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Programs\Photomasic\Form1.cs" />
+    <Compile Include="Programs\Photomasic\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Programs\Photomasic\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Programs\StartStop\StartStopGui.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Programs\StartStop\StartStopGui.Designer.cs">
+      <DependentUpon>StartStopGui.cs</DependentUpon>
     </Compile>
     <Compile Include="Programs\Transect Line\Form1.cs">
       <SubType>Form</SubType>
@@ -148,7 +158,7 @@
       <DependentUpon>InputVisualizer.cs</DependentUpon>
     </Compile>
     <Compile Include="Programs\RovProgram.cs" />
-    <Compile Include="Programs\StartStopProgram.cs" />
+    <Compile Include="Programs\StartStop\StartStopProgram.cs" />
     <Compile Include="SensorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +218,7 @@
     <Compile Include="Utils\Range.cs" />
     <Compile Include="Utils\ThreadedProcess.cs" />
     <Compile Include="Utils\EnumUtils.cs" />
+    <Compile Include="Utils\ThreadMethodLinker.cs" />
     <Compile Include="Utils\ThreadSwitcher.cs" />
     <Compile Include="Utils\Twist.cs" />
     <Compile Include="Utils\Vector3Panel.cs">
@@ -224,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Programs\Photomasic\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Programs\StartStop\StartStopGui.resx">
+      <DependentUpon>StartStopGui.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Programs\Transect Line\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
