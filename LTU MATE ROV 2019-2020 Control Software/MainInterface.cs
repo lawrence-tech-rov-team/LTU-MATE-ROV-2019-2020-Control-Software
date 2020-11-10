@@ -211,7 +211,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software {
 
 		private void ConnectRobot_MenuClick(object sender, EventArgs e) {
 			Log.Info("Connecting to robot...");
-			robotThread.Robot = new ROV(new EthernetInterface());
+			robotThread.Robot = new ROV(new EthernetInterface(settings.RobotIP, settings.RobotPort));
 		}
 
 		private void DisconnectRobot_MenuClick(object sender, EventArgs e) {

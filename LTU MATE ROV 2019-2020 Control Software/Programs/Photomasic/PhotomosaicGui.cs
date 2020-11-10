@@ -21,7 +21,7 @@ using Emgu.CV.Util;
 
 namespace PhotoMosaic
 {
-    public partial class Form1 : Form
+    public partial class PhotomosaicGui : Form
     {
         //---------Initial Setup
         //video capture setup
@@ -44,7 +44,7 @@ namespace PhotoMosaic
             }
         }
 
-        public Form1()
+        public PhotomosaicGui()
         {
             InitializeComponent();
             //---------Start Video Capture 

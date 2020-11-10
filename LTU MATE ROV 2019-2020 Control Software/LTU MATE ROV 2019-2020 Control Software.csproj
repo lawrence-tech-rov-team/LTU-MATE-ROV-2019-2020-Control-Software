@@ -95,12 +95,13 @@
     <Compile Include="Programs\Count Mussels\Form1.designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Programs\Photomasic\Form1.cs">
+    <Compile Include="Programs\Photomasic\PhotomosaicGui.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Programs\Photomasic\Form1.designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Programs\Photomasic\PhotomosaicGui.designer.cs">
+      <DependentUpon>PhotomosaicGui.cs</DependentUpon>
     </Compile>
+    <Compile Include="Programs\Photomasic\PhotomosaicProgram.cs" />
     <Compile Include="Programs\StartStop\StartStopGui.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -233,8 +234,8 @@
     <EmbeddedResource Include="Programs\Count Mussels\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Programs\Photomasic\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Programs\Photomasic\PhotomosaicGui.resx">
+      <DependentUpon>PhotomosaicGui.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Programs\StartStop\StartStopGui.resx">
       <DependentUpon>StartStopGui.cs</DependentUpon>

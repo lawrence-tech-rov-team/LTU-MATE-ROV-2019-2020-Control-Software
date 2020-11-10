@@ -1,4 +1,7 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+﻿using CustomLogger;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+using onvif10_receiver;
+using Ozeki.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +14,10 @@ using System.Threading.Tasks;
 namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 	public class EthernetInterface : IEthernetLayer{
 
-		public int DestinationPort { get; } = 6001;
-		public int ReceivePort { get; } = 6002;
-		public string TargetIp { get; set; } = "169.254.240.157"; //255.255.255.255
+		public int HostPort { get; private set; }
+		//public int ReceivePort { get; private set; }
+		public IPAddress TargetIp { get; }// = "169.254.240.157"; //255.255.255.255
+		public int DestinationPort { get; } //= 6001;
 
 		public override bool IsSimulator => false;
 
@@ -21,14 +25,26 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 		//public bool Connected { get => connected; private set => connected = value; }
 
 		private UdpClient client;
+		//private IPEndPoint ReceiverIP;
+		private IPEndPoint DestinationIP;
 		private Random random = new Random();
 
 		//public delegate void NewPacketHandler(UdpPacket packet);
 		//public event NewPacketHandler OnPacketReceived;
 
-		public EthernetInterface() {
-
+		public EthernetInterface(IPAddress DestinationIP, int DestinationPort, int HostPort = 0) {
+			TargetIp = DestinationIP;
+			this.DestinationPort = DestinationPort;
+			this.HostPort = /*this.ReceivePort =*/ HostPort;
 		}
+		/*
+		public EthernetInterface(IPAddress DestinationIP, int DestinationPort, int HostPort, int ReceiverPort) {
+			TargetIp = DestinationIP;
+			this.DestinationPort = DestinationPort;
+			this.HostPort = HostPort;
+			this.ReceivePort = ReceiverPort;
+		}
+		*/
 		/*
 		~EthernetInterface() {
 			Disconnect();
@@ -46,7 +62,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 				client.Client.ReceiveTimeout = 100;
 			} catch (Exception) { }
 
-			IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
+			//IPEndPoint ip = new IPEndPoint(TargetIp, ReceivePort);
 			byte[] pings = new byte[10];
 			random.NextBytes(pings);
 			int counts = 0;
@@ -83,8 +99,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 		protected override bool TryConnect() {
 			lock (this) {
 				try {
-					client = new UdpClient();
-					client.Client.Bind(new IPEndPoint(IPAddress.Any, ReceivePort));
+					client = new UdpClient(HostPort);
+					DestinationIP = new IPEndPoint(TargetIp, DestinationPort);
+					//ReceiverIP = new IPEndPoint(TargetIp, client.port);
+					//client.Client.Bind(ReceiverIP);
 					bool success = AutoConnect();
 					if (success) {
 						client.BeginReceive(new AsyncCallback(OnDataReceived), null);
@@ -110,11 +128,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 
 		protected override bool SendBytes(byte[] bytes) {
 			try {
-				client.Send(bytes, bytes.Length, TargetIp, DestinationPort);
+				client.Send(bytes, bytes.Length, DestinationIP);
 				return true;
 			} catch (Exception ex) {
-				Console.Error.WriteLine("Error sending packet: {0}", ex.Message);
-				Console.Error.WriteLine(ex.StackTrace);
+				Log.Error("Error sending packet: " + ex.Message); //Console.Error.WriteLine("Error sending packet: {0}", ex.Message);
+				Log.Debug(ex.StackTrace); //Console.Error.WriteLine(ex.StackTrace);
 				return false;
 			}
 		}
@@ -123,20 +141,25 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 			try {
 				byte[] data = null;
 				lock (this) { 
-					IPEndPoint ip = new IPEndPoint(IPAddress.Any, ReceivePort);
-					data = client.EndReceive(res, ref ip);
+					data = client.EndReceive(res, ref DestinationIP);
 					client.BeginReceive(new AsyncCallback(OnDataReceived), null);
 				}
 
 				UdpPacket packet = UdpPacket.ParseData(data);
 				if (packet != null) {
 					try {
-						InvokePacketReceived(packet); 
+						Log.Debug("Valid packet received: " + packet.Id);
+						InvokePacketReceived(packet);
 					} catch (Exception ex) {
 						throw ex;
 					}
-				} else Console.Out.WriteLine("Bad packet received.");
+				} else {
+					Log.Debug("Bad packet received.");
+					Log.All("Data received: " + ((data == null) ? "" : string.Join(", ", data.Select(x => x.ToString("X2")))));
+					//Console.Out.WriteLine("Bad packet received.");
+				}
 			} catch (Exception) {
+				Log.Fatal("Error when attempting to receive data.");
 				Disconnect();
 			}
 		}

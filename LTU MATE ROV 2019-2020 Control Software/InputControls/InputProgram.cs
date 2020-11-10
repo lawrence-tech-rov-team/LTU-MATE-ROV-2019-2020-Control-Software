@@ -33,18 +33,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 
 		private List<ThreadMethodLinker> eventListeners = new List<ThreadMethodLinker>();
 
-		private Form GUI;
+		protected Form GUI;
 
 		public InputProgram(ThreadPriority Priority = ThreadPriority.Normal) : base("Input Reader", Priority) {
 
 		}
 
-		protected override void MainThreadActivated() {
+		protected override sealed void MainThreadActivated() {
 			GUI = CreateGUI();
 			GUI?.Show();
 		}
 
-		protected override void MainThreadDeactivated() {
+		protected override sealed void MainThreadDeactivated() {
 			GUI?.Close();
 			GUI = null;
 		}
@@ -72,7 +72,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 		}
 
 
-		protected override bool SleepLoop() {
+		protected override sealed bool SleepLoop() {
 			ProcessEvents();
 			return true;
 		}
@@ -87,7 +87,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.InputControls {
 			}
 		}
 
-		public override string ToString() {
+		public override sealed string ToString() {
 			return Name;
 		}
 

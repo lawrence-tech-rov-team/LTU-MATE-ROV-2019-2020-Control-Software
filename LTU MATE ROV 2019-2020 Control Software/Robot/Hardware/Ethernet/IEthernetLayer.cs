@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
+﻿using CustomLogger;
+using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +88,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet {
 
 		protected void InvokePacketReceived(UdpPacket packet) {
 			if (packet != null) OnPacketReceived?.Invoke(packet);
+			else Log.Error("Packet was null when it should not be.");
 		}
 
 	}

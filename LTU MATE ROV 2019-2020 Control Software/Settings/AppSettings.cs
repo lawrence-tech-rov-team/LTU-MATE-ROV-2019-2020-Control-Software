@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using JsonSerializable;
@@ -22,6 +23,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		public GripperPosition SmallGripper = new GripperPosition("Small");
 		public GripperPosition TinyGripper = new GripperPosition("Tiny");
 		public GripperPosition NetGripper = new GripperPosition("Net");
+
+		public IPAddress RobotIP = IPAddress.Parse("192.168.0.130");
+		public int RobotPort = 9933;
 
 		public AppSettings(RobotThread robot) {
 			robot.OnConnected += Robot_OnConnected;
@@ -61,6 +65,18 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 				if (!ThrusterRanges.LoadFromJson(obj["Thruster Ranges"])) successful = false;
 				if (!LoadGripperPositions(obj["Gripper Positions"])) successful = false;
 
+				if(obj["Robot IP"] is JsonString jsonRobotIp && jsonRobotIp != null) {
+					IPAddress parsedIp;
+					if (IPAddress.TryParse(jsonRobotIp.Value, out parsedIp)) {
+						RobotIP = parsedIp;
+					}
+				}
+				if(obj["Robot Port"] is JsonInteger jsonRobotPort && jsonRobotPort != null) {
+					if(jsonRobotPort.Value >= IPEndPoint.MinPort && jsonRobotPort.Value <= IPEndPoint.MaxPort) {
+						RobotPort = (int)jsonRobotPort.Value;
+					}
+				}
+
 				return successful;
 			} else {
 				return false;
@@ -97,6 +113,9 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 
 				obj["Gripper Positions"] = grippers;
 			}
+			obj["Robot IP"] = new JsonString(RobotIP.ToString());
+			obj["Robot Port"] = new JsonInteger(RobotPort);
+
 			return obj;
 		}
 	}

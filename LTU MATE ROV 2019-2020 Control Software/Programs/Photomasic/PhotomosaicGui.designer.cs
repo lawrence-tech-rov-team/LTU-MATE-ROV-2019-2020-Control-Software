@@ -1,6 +1,6 @@
 ﻿namespace PhotoMosaic
 {
-    partial class Form1
+    partial class PhotomosaicGui
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PhotomosaicGui));
             this.Side1 = new System.Windows.Forms.PictureBox();
             this.Side2 = new System.Windows.Forms.PictureBox();
             this.Side3 = new System.Windows.Forms.PictureBox();

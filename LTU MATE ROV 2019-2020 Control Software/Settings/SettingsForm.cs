@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -45,6 +46,11 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			TinyClosedPos.Value = settings.TinyGripper.ClosedAngle;
 			NetOpenPos.Value = settings.NetGripper.OpenAngle;
 			NetClosedPos.Value = settings.NetGripper.ClosedAngle;
+
+			IpTextBox.Text = settings.RobotIP.ToString();
+
+			PortSelector.Maximum = IPEndPoint.MaxPort;
+			PortSelector.Value = settings.RobotPort;
 		}
 
 		private void SettingsForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -272,6 +278,24 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 		}
 		#endregion
 
+		private void PortSelector_ValueChanged(object sender, EventArgs e) {
+			int port = decimal.ToInt32(PortSelector.Value);
+			if(port >= IPEndPoint.MinPort && port <= IPEndPoint.MaxPort) {
+				settings.RobotPort = port;
+			}
+		}
+
+		private void IpTextBox_TextChanged(object sender, EventArgs e) {
+			IPAddress parsedAddress;
+			if(IPAddress.TryParse(IpTextBox.Text, out parsedAddress)) {
+				settings.RobotIP = parsedAddress;
+				IpTextBox.ForeColor = SystemColors.WindowText;
+			} else {
+				settings.RobotIP = null;
+				IpTextBox.ForeColor = Color.Red;
+			}
+		}
+
 		private class ServoWrapper {
 
 			public string Name;
@@ -303,5 +327,6 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Settings {
 			}
 
 		}
+
 	}
 }

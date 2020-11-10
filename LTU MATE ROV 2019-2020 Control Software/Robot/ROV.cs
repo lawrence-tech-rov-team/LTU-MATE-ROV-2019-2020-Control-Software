@@ -11,8 +11,8 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		private const float PwmRefreshRate = 20f;
 
 		protected override int BufferSize => 258;
-		protected override int TimeoutAttempts => 2; 
-		protected override int MessageTimemout => 500;
+		protected override int TimeoutAttempts => 3;
+		protected override int MessageTimemout => 1000;//500;
 
 		public RangedPWM PwmA1 { get; } = new RangedPWM(0, 1, PwmRefreshRate);
 		public RangedPWM PwmA2 { get; } = new RangedPWM(2, 3, PwmRefreshRate);
@@ -52,13 +52,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		public IMU IMU { get; } = new IMU(
 			//Register			Id		Refresh Rate
 			/*Temperature*/		58,		0.5f,
-			/*Accelerometer*/	59,		50f,
+			/*Accelerometer*/	59,		10f, //50f,
 			/*Magnometer*/		60,		10f,
-			/*Gyroscope*/		61,		50f,
-			/*Euler*/			62,		50f,
-			/*Linear Accel*/	63,		50f,
-			/*Gravity*/			64,		50f,
-			/*Quaternion*/		65,		50f
+			/*Gyroscope*/		61,		10f, //50f,
+			/*Euler*/			62,		10f, //50f,
+			/*Linear Accel*/    63,		10f, //50f,
+			/*Gravity*/         64,		10f, //50f,
+			/*Quaternion*/      65,		10f //50f,
 		);
 
 		public TwiRegister TwiSettings { get; } = new TwiRegister(66, 10f);
@@ -108,10 +108,10 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 
 		public ROV(IEthernetLayer ether) : base(ether) {
 			PWM = new Dictionary<char, PWM[]> () {
-				{ 'A', new PWM[] { PwmA1, PwmA2, PwmA3, PwmA4, PwmA5 } },
-				{ 'B', new PWM[] { PwmB1, PwmB2, PwmB3, PwmB4, PwmB5, PwmB6 } },
-				{ 'C', new PWM[] { PwmC1, PwmC2, PwmC3, PwmC4, PwmC5, PwmC6, PwmC7, PwmC8 } },
-				{ 'D', new PWM[] { PwmD1, PwmD2, PwmD3, PwmD4, PwmD5, PwmD6, PwmD7, PwmD8 } }
+				{ 'A', new PWM[] { PwmA1/*, PwmA2, PwmA3, PwmA4, PwmA5*/ } }//,
+				//{ 'B', new PWM[] { PwmB1, PwmB2, PwmB3, PwmB4, PwmB5, PwmB6 } },
+				//{ 'C', new PWM[] { PwmC1, PwmC2, PwmC3, PwmC4, PwmC5, PwmC6, PwmC7, PwmC8 } },
+				//{ 'D', new PWM[] { PwmD1, PwmD2, PwmD3, PwmD4, PwmD5, PwmD6, PwmD7, PwmD8 } }
 			};
 
 			FrontLeftServo = new Servo(PwmA1, 0, 270);
@@ -130,17 +130,17 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot {
 		}
 
 		protected override void RegisterAllDevices() {
-			RegisterDevice(Button0);
-			RegisterDevice(Button1);
-			RegisterDevice(Led);
-			RegisterDevice(PressureSensor);
+			//RegisterDevice(Button0);
+			//RegisterDevice(Button1);
+			//RegisterDevice(Led);
+			//RegisterDevice(PressureSensor);
 			RegisterDevice(IMU);
 			foreach (PWM[] pwms in PWM.Values) {
 				foreach (PWM pwm in pwms) {
 					RegisterDevice(pwm);
 				}
 			}
-			RegisterDevice(TwiSettings);
+			//RegisterDevice(TwiSettings);
 		}
 
 	}

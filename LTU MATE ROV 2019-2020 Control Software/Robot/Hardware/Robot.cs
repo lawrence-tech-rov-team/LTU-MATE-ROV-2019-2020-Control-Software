@@ -1,4 +1,5 @@
-﻿using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet;
+﻿using CustomLogger;
+using LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware.Ethernet;
 using LTU_MATE_ROV_2019_2020_Control_Software.Utils;
 using System;
 using System.Collections.Generic;
@@ -149,7 +150,7 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		
 		private void CheckForTimeout(int id) {
 			lock (registers[id]) {
-				if (messageReceived[id]) {
+				if (/*Volatile.Read(ref messageReceived[id])*/messageReceived[id]) {
 					timeoutTimers[id].Reset();
 					return;
 				}
@@ -162,15 +163,21 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 					n = ++numTimeouts;
 					if(numTimeouts >= TimeoutAttempts) {
 						StopAsync();
-						Console.Error.WriteLine("Robot Timeout!!");
+						Log.Error("Robot Timeout!"); //Console.Error.WriteLine("Robot Timeout!! (Register {0})", id);
+						Log.Debug("Robot timeout Register " + id);
 					}
 					BytesSent -= updateSize[id];
 				}
 				if (SendMessage(id, registers[id].ResendUpdate)) {
 					timeoutTimers[id].Restart();
+				} else {
+					Log.Error("Error on request resend!"); //Console.WriteLine("Error on request resend! (Register {0})", id);
+					Log.Debug("Resend Register " + id);
 				}
 				ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnTimeout?.Invoke(); }));
-				Console.Error.WriteLine("Message timeout! #{0}", n);
+				//Console.Error.WriteLine("Message timeout! #{0} (Register {1})", n, id);
+				Log.Error("Message timeout! #" + n);
+				Log.Debug("Timeout Register " + id);
 			}
 		}
 		
@@ -240,13 +247,15 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 		private void Ether_OnPacketReceived(UdpPacket packet) {
 			int id = packet.Id;
 			if(id == 0xFF) {
+				Log.Debug("Packet contained errors.");
 				ErrorCodes errors = ErrorCodes.Decode(packet);
 				if(errors != null) ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnErrorsReceived?.Invoke(this, errors); }));
 			}else if (registers[id] != null) {
 				bool timeoutWarning = false;
 				lock (registers[id]) {
 					if (registers[id].Update(packet.Data)) {
-						messageReceived[id] = true;
+						Log.All("Register update successful.");
+						/*Volatile.Write(ref messageReceived[id], true);*/ messageReceived[id] = true;
 
 						lock (this) {
 							BytesSent -= updateSize[id];
@@ -255,9 +264,13 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Robot.Hardware {
 						if (timeoutTimers[id].ElapsedMilliseconds > (MessageTimemout / 2)) {
 							timeoutWarning = true;
 						}
+					} else {
+						Log.Debug("Unable to update register: " + id);
 					}
 				}
 				if(timeoutWarning) ThreadPool.QueueUserWorkItem(new WaitCallback((object callback) => { OnTimeoutWarning?.Invoke(); }));
+			} else {
+				Log.Debug("Packet ID not a valid register: " + packet.Id);
 			}
 		}
 

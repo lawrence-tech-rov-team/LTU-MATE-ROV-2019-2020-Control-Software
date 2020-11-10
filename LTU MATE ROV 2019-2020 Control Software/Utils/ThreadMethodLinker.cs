@@ -21,14 +21,30 @@ namespace LTU_MATE_ROV_2019_2020_Control_Software.Utils {
 		private volatile object Args;
 
 		public bool Blocking { get; }
-		private Action<object> callbackFunc;
+		private Func<object, object> callbackFunc;
 
 		public ThreadMethodLinker(Action callback, bool blocking = false) {
-			this.callbackFunc = (object args) => callback();
+			this.callbackFunc = (object args) => {
+				callback();
+				return null;
+			};
 			this.Blocking = blocking;
 		}
 
 		public ThreadMethodLinker(Action<object> callback, bool blocking = false) {
+			this.callbackFunc = (object args) => {
+				callback(args);
+				return null;
+			};
+			this.Blocking = blocking;
+		}
+
+		public ThreadMethodLinker(Func<object> callback, bool blocking = false) {
+			this.callbackFunc = (object args) => { return callback(); };
+			this.Blocking = blocking;
+		}
+
+		public ThreadMethodLinker(Func<object, object> callback, bool blocking = false) {
 			this.callbackFunc = callback;
 			this.Blocking = blocking;
 		}
